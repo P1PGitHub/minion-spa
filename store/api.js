@@ -3,7 +3,8 @@ import moment from 'moment'
 export const state = function () {
   let baseURL = 'http://localhost:8000'
   if (process.env.NODE_ENV == 'production') {
-    baseURL = 'https://minion-api.herokuapp.com'
+    baseURL =
+      'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api.herokuapp.com'
   }
   return {
     accessToken: null,
