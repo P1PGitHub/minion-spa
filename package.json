@@ -13,11 +13,11 @@
     "moment": "^2.27.0",
     "nuxt": "^2.14.0",
     "signature_pad": "^3.0.0-beta.3",
-    "v-calendar": "^1.0.8"
+    "v-calendar": "^1.0.8",
+    "@nuxtjs/tailwindcss": "^2.1.0",
+    "@tailwindcss/custom-forms": "^0.2.1"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^2.1.0",
-    "@tailwindcss/custom-forms": "^0.2.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5"
