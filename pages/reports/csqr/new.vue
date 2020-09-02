@@ -1,5 +1,7 @@
 <template>
-  <div class="p-4 flex flex-col items-center w-full text-gray-800 space-y-4 overflow-x-hidden">
+  <div
+    class="p-4 flex flex-col items-center w-full text-gray-800 space-y-4 overflow-x-hidden"
+  >
     <div
       class="flex items-center pb-4 border-b border-dashed border-gray-400 w-full"
     >
@@ -111,8 +113,10 @@
           </button>
         </div>
 
-        <!-- overflow-x-scroll scrolling-touch -->
-        <div class="flex justify-start items-start space-x-4 w-full py-2">
+        <!-- scrolling-touch -->
+        <div
+          class="flex justify-start items-start space-x-4 w-full py-2 overflow-x-scroll"
+        >
           <div
             class="p-4 relative min-w-64 md:min-w-96 bg-white border border-blue-400 space-y-4 rounded shadow"
             v-for="(record, index) in timeRecords"
