@@ -111,9 +111,8 @@
           </button>
         </div>
 
-        <div
-          class="flex justify-start items-start space-x-4 w-full overflow-x-scroll py-2 scrolling-touch"
-        >
+        <!-- overflow-x-scroll scrolling-touch -->
+        <div class="flex justify-start items-start space-x-4 w-full py-2">
           <div
             class="p-4 relative min-w-64 md:min-w-96 bg-white border border-blue-400 space-y-4 rounded shadow"
             v-for="(record, index) in timeRecords"
