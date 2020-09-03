@@ -6,11 +6,15 @@
     <div
       class="p-4 w-5/6 sm:w-1/2 md:w-1/3 bg-white shadow-md rounded space-y-4"
     >
-      <h1
-        class="text-2xl text-blue-700 font-bold tracking-wide pb-4 border-b border-dashed border-gray-400"
+      <div
+        class="flex items-center space-x-4 w-full border-b border-dashed border-gray-400 pb-4"
       >
-        Log in
-      </h1>
+        <h1 class="text-2xl text-blue-700 font-bold tracking-wide">
+          Log in
+        </h1>
+        <loading v-if="isLoading" />
+      </div>
+
       <div
         class="rounded px-2 py-4 bg-gray-200 text-red-700 font-bold flex items-center space-x-4 border border-red-400"
         v-if="error"
@@ -69,10 +73,14 @@
 </template>
 
 <script>
+import loading from '@/components/common/Loading'
 import moment from 'moment'
 export default {
   name: 'LoginPage',
   layout: 'auth',
+  compponents: {
+    loading,
+  },
   data() {
     return {
       error: false,
@@ -85,6 +93,7 @@ export default {
   },
   methods: {
     async login() {
+      this.error = false
       this.isLoading = true
       this.$store.commit('startLoading')
       let tokens = await this.$store.dispatch('api/login', {
@@ -116,6 +125,7 @@ export default {
         this.$router.push('/')
       } else {
         this.error = true
+        this.isLoading = false
         console.log('failed login')
       }
       this.isLoading = false
