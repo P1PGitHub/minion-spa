@@ -41,7 +41,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: '@/plugins/vcalendar.js', ssr: false }],
+  plugins: [
+    { src: '@/plugins/vcalendar.js', ssr: false },
+    { src: '@/plugins/vue-moment.js', ssr: false },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
