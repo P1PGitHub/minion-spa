@@ -1,7 +1,8 @@
 import moment from 'moment'
 
 export const state = function () {
-  let baseURL = 'http://localhost:8000'
+  let baseURL =
+    'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
   if (process.env.NODE_ENV == 'production') {
     baseURL =
       'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api.herokuapp.com'
@@ -237,14 +238,14 @@ export const actions = {
     }
   },
   async login(context, credentials) {
-    let myHeaders = new Headers()
-    myHeaders.append('Content-Type', 'application/json')
+    let headers = new Headers()
+    headers.append('Content-Type', 'application/json')
 
     let raw = JSON.stringify(credentials)
 
     let requestOptions = {
       method: 'POST',
-      headers: myHeaders,
+      headers: headers,
       body: raw,
       redirect: 'follow',
     }
