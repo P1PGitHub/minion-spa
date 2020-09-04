@@ -165,6 +165,7 @@
                       :initMinute="0"
                       v-model="record.endTime"
                       :nameID="'endTime' + '-' + index"
+                      :side="'right'"
                     />
                   </div>
                 </div>

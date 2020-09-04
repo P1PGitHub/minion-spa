@@ -17,7 +17,8 @@
       v-if="showDropdown"
     ></button>
     <div
-      class="absolute left-0 mt-2 bg-white border border-blue-600 rounded shadow w-48 z-30"
+      class="absolute mt-2 bg-white border border-blue-600 rounded shadow w-48 z-30"
+      :class="{ 'left-0': side == 'left', 'right-0': side == 'right' }"
       v-show="showDropdown"
     >
       <div
@@ -82,6 +83,11 @@ export default {
       type: String,
       required: false,
       default: 'timepicker-' + String(Math.floor(Math.random() * 100)),
+    },
+    side: {
+      tpye: String,
+      required: false,
+      default: 'left',
     },
   },
   data() {
