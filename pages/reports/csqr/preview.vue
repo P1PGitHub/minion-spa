@@ -7,7 +7,7 @@
       <button
         type="button"
         class="px-2 py-1 bg-blue-600 text-white rounded text-sm whitespace-no-wrap"
-        @click="saveDraft"
+        @click="publish(true)"
       >
         Save as Draft
       </button>
@@ -251,8 +251,8 @@
         'bg-blue-600 text-white border-blue-600': signaturePad.data,
         'bg-white text-blue-400 border-blue-400': !signaturePad.data,
       }"
-      :disabled="!signaturePad.data"
-      @click="publish"
+      :disabled="!signaturePad.data || isLoading"
+      @click="publish(false)"
     >
       Publish
     </button>
@@ -267,6 +267,7 @@ export default {
   middleware: ['auth'],
   data() {
     return {
+      isLoading: false,
       overrideBeforeLeave: false,
       signaturePad: {
         canvas: null,
@@ -331,71 +332,54 @@ export default {
     onResize() {
       this.signaturePad.width = window.innerWidth - 64
     },
-    async publish() {
-      await this.uploadSignPad()
-      let data = this.buildReportData(false)
-      let report_data = await this.$store.dispatch('api/post', {
-        url: '/reports/customer_service/',
-        data,
-      })
-      if (this.inventory.length) {
-        await this.$store.dispatch('api/post', {
-          url: `/reports/${report_data.id}/inventory/`,
-          data: this.inventory,
+    async publish(draftStatus) {
+      this.$root.$emit('showLoading')
+      this.isLoading = true
+      try {
+        await this.uploadSignPad()
+        let data = this.buildReportData(draftStatus)
+        let report_data = await this.$store.dispatch('api/post', {
+          url: '/reports/customer_service/',
+          data,
         })
-      }
-      if (this.timeRecords.length) {
-        let timeRecords = this.buildTimeRecords()
-        if (timeRecords.length > 1) {
+        if (this.inventory.length) {
           await this.$store.dispatch('api/post', {
-            url: `/reports/${report_data.id}/time_entry/`,
-            data: timeRecords,
-          })
-        } else {
-          await this.$store.dispatch('api/post', {
-            url: `/reports/${report_data.id}/time_entry/`,
-            data: timeRecords[0],
+            url: `/reports/${report_data.id}/inventory/`,
+            data: this.inventory,
           })
         }
+        if (this.timeRecords.length) {
+          let timeRecords = this.buildTimeRecords()
+          if (timeRecords.length > 1) {
+            await this.$store.dispatch('api/post', {
+              url: `/reports/${report_data.id}/time_entry/`,
+              data: timeRecords,
+            })
+          } else {
+            await this.$store.dispatch('api/post', {
+              url: `/reports/${report_data.id}/time_entry/`,
+              data: timeRecords[0],
+            })
+          }
+        }
+        this.$root.$emit('showToast', {
+          type: 'success',
+          text: `CSQR for ${this.job.company.name} has been saved.`,
+        })
+        this.overrideBeforeLeave = true
+        this.$root.$emit('hideLoading')
+        this.$router.push({ name: 'reports-csqr' })
+      } catch (err) {
+        console.log(err)
+        this.$root.$emit('hideLoading')
+        this.isLoading = false
       }
-      this.$root.$emit('showToast', {
-        type: 'success',
-        text: `CSQR for ${this.job.company.name} has been saved.`,
-      })
-      this.overrideBeforeLeave = true
-      this.$router.push({ name: 'reports-csqr' })
     },
     async saveSignPad() {
       if (!this.signaturePad.pad.isEmpty()) {
         this.signaturePad.saved = true
         this.signaturePad.data = this.signaturePad.pad.toDataURL()
       }
-    },
-    async saveDraft() {
-      await this.uploadSignPad()
-      let data = this.buildReportData(true)
-      let report_data = await this.$store.dispatch('api/post', {
-        url: '/reports/customer_service/',
-        data,
-      })
-      if (this.inventory.length) {
-        await this.$store.dispatch('api/post', {
-          url: `/reports/${report_data.id}/inventory/`,
-          data: this.inventory,
-        })
-      }
-      if (this.timeRecords.length) {
-        await this.$store.dispatch('api/post', {
-          url: `/reports/${report_data.id}/time_entry/`,
-          data: this.buildTimeRecords(),
-        })
-      }
-      this.$root.$emit('showToast', {
-        type: 'success',
-        text: `CSQR for ${this.job.company.name} has been saved as a draft.`,
-      })
-      this.overrideBeforeLeave = true
-      this.$router.push({ name: 'reports-csqr' })
     },
     togglePreview() {
       this.signaturePad.hidePreview = !this.signaturePad.hidePreview
