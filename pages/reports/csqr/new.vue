@@ -7,7 +7,7 @@
     >
       <h1 class="text-xl">New Customer Service Quality Report</h1>
     </div>
-    <form @submit.prevent class="space-y-4">
+    <form @submit.prevent class="space-y-4 container">
       <div class="p-4 border border-dashed border-gray-400 rounded space-y-4">
         <h1 class="text-lg text-blue-600">Client & Job Details</h1>
         <div
@@ -113,16 +113,96 @@
           </button>
         </div>
 
-        <!-- scrolling-touch -->
-        <div
-          class="flex justify-start items-start space-x-4 w-full py-2 overflow-x-scroll"
-        >
+        <div class="space-y-4 md:flex md:flex-wrap md:items-start md:space-y-0">
           <div
-            class="p-4 relative min-w-64 md:min-w-96 bg-white border border-blue-400 space-y-4 rounded shadow"
+            class="md:w-1/2 py-2"
+            :class="{ 'md:pr-2': index % 2 == 0, 'md:pl-2': index % 2 == 1 }"
             v-for="(record, index) in timeRecords"
             :key="index"
           >
-            <div>
+            <div
+              class="relative w-full bg-white border border-blue-600 rounded shadow"
+            >
+              <div class="bg-blue-600 w-full flex items-center justify-center">
+                <v-date-picker
+                  :popover="{ placement: 'bottom', visibility: 'click' }"
+                  :value="record.date"
+                  v-model="record.date"
+                >
+                  <button
+                    type="button"
+                    class="flex items-center justify-center space-x-2 p-2 bg-blue-700 text-white text-center"
+                  >
+                    <h3>{{ record.date | moment('MMM DD, YYYY') }}</h3>
+                    <span
+                      ><img
+                        src="@/assets/svg/alerts/calendar-dates-white.svg"
+                        alt="Calendar Icon"
+                    /></span>
+                  </button>
+                </v-date-picker>
+              </div>
+
+              <div class="p-4 space-y-2 w-full">
+                <div class="space-x-2 flex">
+                  <div class="w-1/2">
+                    <label :for="'startTime' + '-' + index" class="block w-full"
+                      >Start Time</label
+                    >
+                    <timepicker
+                      :initHour="9"
+                      :initMinute="0"
+                      v-model="record.startTime"
+                      :nameID="'startTime' + '-' + index"
+                    />
+                  </div>
+                  <div class="w-1/2">
+                    <label :for="'endTime' + '-' + index" class="block"
+                      >End Time</label
+                    >
+                    <timepicker
+                      :initHour="12"
+                      :initMinute="0"
+                      v-model="record.endTime"
+                      :nameID="'endTime' + '-' + index"
+                    />
+                  </div>
+                </div>
+                <div class="">
+                  <div class="flex space-x-2">
+                    <label for="shift-employees" class="block w-1/2"
+                      >Employees</label
+                    >
+                    <label for="shift-start-time" class="block w-1/2"
+                      >Notes</label
+                    >
+                  </div>
+                  <div class="flex space-x-2">
+                    <select
+                      name="shift-employees"
+                      id="shift-employees"
+                      multiple
+                      class="form-multiselect bg-gray-100 w-1/2"
+                      v-model="record.employees"
+                    >
+                      <option
+                        :value="member.id"
+                        v-for="member in $store.state.team.members"
+                        :key="member.id"
+                        >{{ member.last_name }}, {{ member.first_name }}</option
+                      >
+                    </select>
+                    <textarea
+                      name="shift-start-time"
+                      id="shift-start-time"
+                      class="form-textarea bg-gray-100 w-1/2"
+                      placeholder="AM Shift"
+                      v-model="record.notes"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
               <button
                 type="button"
                 class="bg-red-200 border border-red-400 p-1 rounded absolute top-0 right-0 -mt-2 -mr-2"
@@ -130,73 +210,6 @@
               >
                 <img src="@/assets/svg/other/close-r.svg" alt="Delete Icon" />
               </button>
-              <label for="shift-date" class="block">Shift Date</label>
-              <v-date-picker
-                :input-props="{
-                  class: 'form-input bg-gray-100 w-full mt-2',
-                  name: 'shift-date',
-                  id: 'shift-date',
-                  placeholder: '12/21/2012',
-                }"
-                :value="record.date"
-                v-model="record.date"
-              />
-            </div>
-            <div
-              class="md:flex items-start space-y-2 md:space-x-2 md:space-y-0"
-            >
-              <div class="space-y-2 w-full md:w-1/2">
-                <label for="shift-start-time" class="block">Start Time</label>
-                <input
-                  name="shift-start-time"
-                  id="shift-start-time"
-                  type="text"
-                  class="form-input bg-gray-100 w-full"
-                  placeholder="9:00"
-                  v-model="record.startTime"
-                />
-              </div>
-              <div class="space-y-2 w-full md:w-1/2">
-                <label for="shift-end-time" class="block">End Time</label>
-                <input
-                  name="shift-end-time"
-                  id="shift-end-time"
-                  type="text"
-                  class="form-input bg-gray-100 w-full"
-                  placeholder="14:00"
-                  v-model="record.endTime"
-                />
-              </div>
-            </div>
-            <div
-              class="md:flex items-start space-y-2 md:space-x-2 md:space-y-0"
-            >
-              <div class="space-y-2 w-full md:w-1/2">
-                <label for="shift-employees" class="block">Employees</label>
-                <select
-                  name="shift-employees"
-                  id="shift-employees"
-                  multiple
-                  class="form-multiselect bg-gray-100 w-full h-32"
-                  v-model="record.employees"
-                >
-                  <option
-                    :value="member.id"
-                    v-for="member in $store.state.team.members"
-                    :key="member.id"
-                    >{{ member.last_name }}, {{ member.first_name }}</option
-                  >
-                </select>
-              </div>
-              <div class="space-y-2 w-full md:w-1/2">
-                <label for="shift-notes" class="block">Notes</label>
-                <textarea
-                  name="shift-notes"
-                  id="shift-notes"
-                  class="form-textarea w-full bg-gray-100 h-32"
-                  v-model="record.notes"
-                ></textarea>
-              </div>
             </div>
           </div>
         </div>
@@ -439,10 +452,15 @@
 </template>
 
 <script>
+import moment from 'moment'
 import SignaturePad from 'signature_pad'
+import timepicker from '@/components/ui/timepicker'
 export default {
   name: 'CSQRNewPage',
   middleware: ['auth'],
+  components: {
+    timepicker,
+  },
   props: {
     package: {
       type: Object,
@@ -486,7 +504,7 @@ export default {
       summary: null,
       timeRecords: [
         {
-          date: new Date(),
+          date: moment(),
           startTime: '9:00',
           endTime: '14:00',
           employees: [],
@@ -511,7 +529,7 @@ export default {
     },
     addNewRecord() {
       this.timeRecords.push({
-        date: new Date(),
+        date: moment(),
         startTime: null,
         endTime: null,
         employees: [],
