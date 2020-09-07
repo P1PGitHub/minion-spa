@@ -40,6 +40,11 @@ export const actions = {
       let auth = `${context.state.team.cw_company}+${context.rootState.account.account.cw_public}:${context.rootState.account.account.cw_private}`
       headers.append('clientID', '027cc308-7482-441d-9053-a9f8b0c94b4b')
       headers.append('Authorization', `Basic ${btoa(auth)}`)
+      if (process.env.NODE_ENV == 'production') {
+        headers.append('Origin', 'https://minion-spa.herokuapp.com/')
+      } else {
+        headers.append('Origin', 'http://localhost:8000/')
+      }
 
       let requestOptions = {
         method: 'GET',
