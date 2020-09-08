@@ -262,6 +262,7 @@
 <script>
 import moment from 'moment'
 import SignaturePad from 'signature_pad'
+var slugify = require('slugify')
 export default {
   name: 'CSQRPreview',
   middleware: ['auth'],
@@ -304,13 +305,13 @@ export default {
       let timeEntries = []
       this.timeRecords.forEach((timeRecord) => {
         let startDate = moment(timeRecord.date)
-        startDate.hour(timeRecord.startTime.split(':'[0]))
-        startDate.minute(timeRecord.startTime.split(':'[1]))
+        startDate.hour(Number(timeRecord.startTime.split(':')[0]))
+        startDate.minute(Number(timeRecord.startTime.split(':')[1]))
         startDate.second(0)
         startDate.millisecond(0)
         let endDate = moment(timeRecord.date)
-        endDate.hour(timeRecord.endTime.split(':'[0]))
-        endDate.minute(timeRecord.endTime.split(':'[1]))
+        endDate.hour(Number(timeRecord.endTime.split(':')[0]))
+        endDate.minute(Number(timeRecord.endTime.split(':')[1]))
         endDate.second(0)
         endDate.millisecond(0)
         timeEntries.push({
@@ -398,15 +399,25 @@ export default {
 
         let signFile = new File([u8arr], 'test.png', { type: mime })
 
-        let signData = await this.$store.dispatch('api/sign', {
-          file: signFile,
-          company: this.job.company.name,
-          client: this.job.clientName,
+        let signRefString = `${
+          this.$store.state.team.team.slug
+        }/signatures/${slugify(this.job.company.name.toLowerCase())}/${slugify(
+          this.job.clientName.toLowerCase()
+        )}/${moment().format('YYYYMMDD-HHmmSS')}.png`
+        let signRef = this.$fireStorage.ref().child(signRefString)
+
+        let signResponseData = await this.$store.dispatch('api/post', {
+          url: '/reports/sign/',
+          data: {
+            ref: signRefString,
+            company: this.job.company.name,
+            client: this.job.clientName,
+          },
         })
 
-        if (signData) {
-          this.signaturePad.id = signData.id
-        }
+        this.signaturePad.id = signResponseData.id
+
+        return await signRef.put(signFile)
       }
     },
   },
