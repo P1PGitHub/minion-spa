@@ -63,6 +63,34 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          production: {
+            apiKey: 'AIzaSyCPIawLPPiTOK-5Wzca8YLrkHzyljtuD-A',
+            authDomain: 'minion-upload.firebaseapp.com',
+            databaseURL: 'https://minion-upload.firebaseio.com',
+            projectId: 'minion-upload',
+            storageBucket: 'minion-upload.appspot.com',
+            messagingSenderId: '797588958304',
+            appId: '1:797588958304:web:1d5809dec4cbdf09c32705',
+          },
+          development: {
+            apiKey: 'AIzaSyCPIawLPPiTOK-5Wzca8YLrkHzyljtuD-A',
+            authDomain: 'minion-upload.firebaseapp.com',
+            databaseURL: 'https://minion-upload.firebaseio.com',
+            projectId: 'minion-upload',
+            storageBucket: 'minion-upload-dev',
+            messagingSenderId: '797588958304',
+            appId: '1:797588958304:web:1d5809dec4cbdf09c32705',
+          },
+        },
+        services: {
+          storage: true,
+        },
+      },
+    ],
   ],
   /*
    ** Axios module configuration
