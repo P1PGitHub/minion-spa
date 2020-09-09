@@ -97,7 +97,7 @@ export default {
       this.isLoading = true
       this.$store.commit('startLoading')
       let tokens = await this.$store.dispatch('api/login', {
-        email: this.user.email,
+        email: this.user.email.toLowerCase().trim(),
         password: this.user.password,
       })
       let account = await this.$store.dispatch('api/getAccount')
