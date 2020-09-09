@@ -287,6 +287,7 @@ export default {
         client_name: this.job.clientName,
         company_id: this.job.company.id,
         company_name: this.job.company.name,
+        location: this.job.location,
         report_type: 'CUSTOMER_SERVICE',
         draft: isDraft,
         service_type: this.job.type,
@@ -338,10 +339,12 @@ export default {
       try {
         await this.uploadSignPad()
         let data = this.buildReportData(draftStatus)
+        console.log(data)
         let report_data = await this.$store.dispatch('api/post', {
           url: '/reports/customer_service/',
           data,
         })
+        console.log(report_data)
         if (this.inventory.length) {
           await this.$store.dispatch('api/post', {
             url: `/reports/${report_data.id}/inventory/`,
