@@ -268,32 +268,6 @@ export const actions = {
       return null
     }
   },
-  // async loginFromLocalStorage(context) {
-  //   let storedToken = window.localStorage.getItem('refreshToken')
-  //   let storedExpiry = new moment(window.localStorage.getItem('refreshExpiry'))
-
-  //   console.log(storedExpiry.toDate())
-  //   console.log(new moment().isBefore(storedExpiry))
-  //   if (storedToken && storedExpiry) {
-  //     if (new moment().isBefore(storedExpiry)) {
-  //       console.log('not expired')
-  //       context.commit('setUpdateAccessToken', storedToken)
-  //       await context.dispatch('refresh')
-  //       let account = await context.dispatch('api/getAccount')
-  //       let team = await context.dispatch('api/getTeam')
-  //       context.commit('account/setAccount', account, { root: true })
-  //       context.commit('team/setTeam', team, { root: true })
-  //       Promise.all([
-  //         context.dispatch('team/getMembers', { root: true }),
-  //         context.dispatch('team/getCompanies', { root: true }),
-  //       ]).then(() => {
-  //         context.commit('stopLoading', { root: true })
-  //       })
-  //       return true
-  //     }
-  //   }
-  //   return false
-  // },
   async sign(context, data) {
     if (context.state.accessToken) {
       if (context.state.accessExpiry < moment()) {

@@ -102,7 +102,6 @@ export default {
       })
       let account = await this.$store.dispatch('api/getAccount')
       let team = await this.$store.dispatch('api/getTeam')
-      console.log(team)
       this.$store.commit('account/setAccount', account)
       this.$store.commit('team/setTeam', team)
       Promise.all([
@@ -132,13 +131,6 @@ export default {
       this.isLoading = false
     },
   },
-  // async created() {
-  //   console.log('creating page')
-  //   let loggedInFromStorage = await this.$store.dispatch(
-  //     'api/loginFromLocalStorage'
-  //   )
-  //   console.log(loggedInFromStorage)
-  // },
 }
 </script>
 

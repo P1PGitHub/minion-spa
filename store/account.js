@@ -4,7 +4,6 @@ export const state = () => ({
 
 export const mutations = {
   setAccount(state, val) {
-    console.log('set account')
     state.account = val
   },
 }

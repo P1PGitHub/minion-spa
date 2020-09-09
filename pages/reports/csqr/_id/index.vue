@@ -132,6 +132,7 @@ export default {
   },
   async created() {
     if (this.$route.params.id) {
+      this.$root.$emit('showLoading')
       this.report = await this.$store.dispatch(
         'api/get',
         `/reports/customer_service/${this.$route.params.id}/`
@@ -140,12 +141,8 @@ export default {
         .ref()
         .child(this.report.signature.ref)
         .getDownloadURL()
+      this.$root.$emit('hideLoading')
     }
-  },
-
-  async mounted() {
-    console.log(this.$fireStorage)
-    this.signURL = await this.$fireStorage
   },
 }
 </script>

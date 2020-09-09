@@ -38,9 +38,6 @@ export const actions = {
     if (context.state.team && context.rootState.account.account.cw_private) {
       let headers = new Headers()
       let auth = `${context.state.team.cw_company}+${context.rootState.account.account.cw_public}:${context.rootState.account.account.cw_private}`
-      console.log(context.state.team)
-      console.log(context.rootState.account.account.cw_public)
-      console.log(context.rootState.account.account.cw_private)
       headers.append('clientID', '027cc308-7482-441d-9053-a9f8b0c94b4b')
       headers.append('Authorization', `Basic ${btoa(auth)}`)
       if (process.env.NODE_ENV == 'production') {

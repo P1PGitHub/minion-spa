@@ -53,8 +53,7 @@
             <div class="flex items-start justify-between">
               <p class="pt-1">{{ recent.description }}</p>
               <nuxt-link
-                type="button"
-                class="flex items-center px-2 py-1 bg-blue-600 text-white rounded text-sm space-x-2 hover:bg-blue-700"
+                class="appearance-none flex items-center px-2 py-1 bg-blue-600 text-white rounded text-sm space-x-2 hover:bg-blue-700"
                 :to="{
                   name: 'reports-csqr-id',
                   params: { id: recent.id },
@@ -98,9 +97,9 @@
             <h5 class="text-gray-700">{{ draft.client_name }}</h5>
             <div class="flex items-start justify-between">
               <p class="pt-1">{{ draft.description }}</p>
-              <button
-                type="button"
+              <nuxt-link
                 class="flex items-center px-2 py-1 bg-blue-600 text-white rounded text-sm space-x-2 hover:bg-blue-700"
+                :to="{ name: 'reports-csqr-id-edit' }"
               >
                 <img
                   src="@/assets/svg/design/edit-white.svg"
@@ -108,7 +107,7 @@
                   class="w-4 h-4"
                 />
                 <span class="leading-none">Edit</span>
-              </button>
+              </nuxt-link>
             </div>
           </div>
         </div>

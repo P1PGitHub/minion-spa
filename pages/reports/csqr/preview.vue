@@ -324,7 +324,6 @@ export default {
       return timeEntries
     },
     clearSignPad() {
-      console.log(this.signaturePad.id)
       this.signaturePad.pad.clear()
       this.signaturePad.data = null
       this.signaturePad.saved = false
