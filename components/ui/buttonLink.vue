@@ -5,10 +5,10 @@
       'text-sm': fontSize == 'sm',
       'text-md': fontSize == 'md',
       'text-lg': fontSize == 'lg',
-      'space-y-0 px-2 py-1': spacing == 'none',
-      'space-y-2 px-2 py-1': spacing == 'sm',
-      'space-y-4 px-4 py-2': spacing == 'md',
-      'space-y-8 px-8 py-4': spacing == 'lg',
+      'space-x-0 px-2 py-1': spacing == 'none',
+      'space-x-2 px-2 py-1': spacing == 'sm',
+      'space-x-4 px-4 py-2': spacing == 'md',
+      'space-x-8 px-8 py-4': spacing == 'lg',
       'bg-blue-600 text-white border border-blue-600 hover:bg-blue-700 hover:border-blue-700':
         theme == 'primary',
       'bg-white text-teal-700 border border-teal-700 hover:bg-teal-200':
