@@ -284,6 +284,7 @@ export default {
   methods: {
     buildReportData(isDraft = False) {
       return {
+        team: this.$store.state.team.team.id,
         client_name: this.job.clientName,
         company_id: this.job.company.id,
         company_name: this.job.company.name,
