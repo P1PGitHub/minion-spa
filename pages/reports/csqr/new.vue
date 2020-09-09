@@ -337,6 +337,7 @@
       </div>
       <div class="p-4 border border-dashed border-gray-400 rounded space-y-4">
         <h1 class="text-lg text-blue-600">Work Summary</h1>
+        <p class="block text-gray-700 text-sm">Include the Reason for the Service, the Service Provided and the Results of the Service</p>
         <textarea
           name="work-summary"
           id="work-summary"
