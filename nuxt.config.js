@@ -1,3 +1,4 @@
+import redirectSSL from 'redirect-ssl'
 export default {
   /*
    ** Nuxt rendering mode
@@ -91,6 +92,11 @@ export default {
         },
       },
     ],
+  ],
+  serverMiddleware: [
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === 'production'
+     }),
   ],
   /*
    ** Axios module configuration

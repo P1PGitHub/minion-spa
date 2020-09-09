@@ -17,6 +17,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "nuxt": "^2.14.0",
+    "redirect-ssl": "^2.0.0",
     "signature_pad": "^3.0.0-beta.3",
     "slugify": "^1.4.5",
     "v-calendar": "^1.0.8",
