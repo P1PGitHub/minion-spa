@@ -19,14 +19,30 @@
       <p >{{ report.description }}</p>
       <ButtonLink
         :link="{
+          name: 'reports-csqr-id-edit',
+          params: { id: report.id },
+        }"
+        spacing="sm"
+        v-if="editLink"
+      >
+        <img
+          src="@/assets/svg/design/edit-white.svg"
+          alt="Edit Icon"
+          class="w-4 h-4"
+        />
+        <span class="leading-none">Edit</span>
+      </ButtonLink>
+      <ButtonLink
+        :link="{
           name: 'reports-csqr-id',
           params: { id: report.id },
         }"
         spacing="sm"
+        v-else
       >
         <img
           src="@/assets/svg/other/eye-white.svg"
-          alt="Edit Icon"
+          alt="View Icon"
           class="w-4 h-4"
         />
         <span class="leading-none">View</span>
@@ -53,6 +69,11 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+    editLink: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     hideAuthor: {
       type: Boolean,
