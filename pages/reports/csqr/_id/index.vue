@@ -85,6 +85,29 @@
           </FlexSection>
         </DashedSection>
       </FlexSection>
+      <DashedSection spacing="none" v-if="report.time_records.length">
+        <h2 class="text-xl text-blue-700">
+          Time Records
+        </h2>
+        <TimeRecordView
+          v-for="(record, index) in report.time_records"
+          :key="record.id"
+          :record="record"
+          :border="index !== report.time_records.length - 1"
+        />
+      </DashedSection>
+      <DashedSection spacing="none" v-if="report.inventory_checkouts.length">
+        <h2 class="text-xl text-blue-700">
+          Inventory Used
+        </h2>
+        <InventoryListHeader />
+        <InventoryListItem
+          v-for="(item, index) in report.inventory_checkouts"
+          :key="item.id"
+          :item="item"
+          :border="index !== report.inventory_checkouts.length - 1"
+        />
+      </DashedSection>
       <DashedSection>
         <h2 class="text-xl text-blue-700">Work Summary</h2>
         <p>{{ report.summary }}</p>
@@ -110,9 +133,12 @@
 import AgreementClause from '@/components/ui/agreementClause'
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
+import InventoryListHeader from '@/components/ui/inventoryListHeader'
+import InventoryListItem from '@/components/ui/inventoryListItem'
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import PageBody from '@/components/ui/pageBody'
+import TimeRecordView from '@/components/ui/timeRecordView'
 export default {
   name: 'CSQRIDPreviewPage',
   middleware: ['auth'],
@@ -120,9 +146,12 @@ export default {
     AgreementClause,
     ButtonLink,
     HeaderAside,
+    InventoryListHeader,
+    InventoryListItem,
     DashedSection,
     FlexSection,
     PageBody,
+    TimeRecordView,
   },
   data() {
     return {

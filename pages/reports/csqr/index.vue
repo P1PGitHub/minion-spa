@@ -46,39 +46,14 @@
           <h1 class="text-xl">Drafts</h1>
         </div>
         <div class="text-base">
-          <div
-            v-for="(draft, index) in drafts"
-            :key="draft.id"
-            class="p-2 border-b border-dashed border-gray-400"
-            :class="{ 'border-none': index == drafts.length - 1 }"
-          >
-            <div class="flex items-center justify-between">
-              <h3 class="font-bold">{{ draft.company_name }}</h3>
-              <div class="py-1 px-2 bg-gray-600 rounded" v-if="draft.billable">
-                <img
-                  src="@/assets/svg/other/dollar-white.svg"
-                  alt="billable icon"
-                  class="w-4 h-4"
-                />
-              </div>
-            </div>
-
-            <h5 class="text-gray-700">{{ draft.client_name }}</h5>
-            <div class="flex items-start justify-between">
-              <p class="pt-1">{{ draft.description }}</p>
-              <nuxt-link
-                class="flex items-center px-2 py-1 bg-blue-600 text-white rounded text-sm space-x-2 hover:bg-blue-700"
-                :to="{ name: 'reports-csqr-id-edit' }"
-              >
-                <img
-                  src="@/assets/svg/design/edit-white.svg"
-                  alt="Edit Icon"
-                  class="w-4 h-4"
-                />
-                <span class="leading-none">Edit</span>
-              </nuxt-link>
-            </div>
-          </div>
+          <ReportListItem
+          v-for="(draft, index) in drafts"
+          :key="draft.id"
+          :report="draft"
+          :hideAuthor="true"
+          :editLink="true"
+          :border="index !== drafts.length - 1"
+        />
         </div>
       </div>
     </template>
