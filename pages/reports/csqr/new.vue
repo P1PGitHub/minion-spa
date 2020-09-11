@@ -226,7 +226,7 @@
           <h3 class="w-1/2 md:w-2/12 py-1">Actions</h3>
         </div>
         <div
-          class="px-4 py-3 space-y-2 bg-white rounded shadow border border-blue-400"
+          class="px-4 py-3 bg-white rounded shadow border border-blue-400"
           v-if="inventory.length"
         >
           <div
@@ -241,7 +241,18 @@
             <div class="w-1/2 md:w-4/12 py-1">{{ item.description }}</div>
             <div class="w-1/2 md:w-3/12 py-1">{{ item.serial }}</div>
             <div class="w-1/2 md:w-3/12 py-1">{{ item.model }}</div>
-            <div class="w-1/2 md:w-2/12 py-1">
+            <div class="w-1/2 md:w-2/12 py-1 flex space-x-2">
+              <button
+                type="button"
+                class="bg-blue-200 border border-blue-400 rounded py-1 px-2 flex items-center justify-center"
+                @click="copyInventory(index)"
+              >
+                <img
+                  src="@/assets/svg/content/copy.svg"
+                  alt="Delete Icon"
+                  class="w-4"
+                />
+              </button>
               <button
                 type="button"
                 class="bg-red-200 border border-red-400 rounded py-1 px-2 flex items-center justify-center"
@@ -337,7 +348,10 @@
       </div>
       <div class="p-4 border border-dashed border-gray-400 rounded space-y-4">
         <h1 class="text-lg text-blue-600">Work Summary</h1>
-        <p class="block text-gray-700 text-sm">Include the Reason for the Service, the Service Provided and the Results of the Service</p>
+        <p class="block text-gray-700 text-sm">
+          Include the Reason for the Service, the Service Provided and the
+          Results of the Service
+        </p>
         <textarea
           name="work-summary"
           id="work-summary"
@@ -537,6 +551,10 @@ export default {
         employees: [],
         notes: null,
       })
+    },
+    copyInventory(index) {
+      this.newInventory.description = this.inventory[index].description
+      this.newInventory.model = this.inventory[index].model
     },
     pushPreview() {
       this.overrideBeforeLeave = true
