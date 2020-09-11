@@ -1,7 +1,14 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <h1 class="text-xl">CSQR Review</h1>
+      <h1 class="text-xl md:space-x-2">
+        <span>
+          CSQR Review
+        </span>
+        <span v-if="report" class="block md:inline text-base text-gray-700">
+          {{ report.created_at | moment('ddd MMM DD, YYYY - HH:mm') }}</span
+        >
+      </h1>
       <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }"
         >Back</ButtonLink
       >
@@ -10,16 +17,10 @@
       <FlexSection>
         <DashedSection class="w-full md:w-1/2" spacing="sm">
           <h2 class="text-xl text-blue-700">{{ report.company_name }}</h2>
-          <FlexSection>
-            <div class="w-1/2">
-              <h4>{{ report.client_name }}</h4>
-              <h4>{{ report.location }}</h4>
-            </div>
-            <div class="w-1/2">
-              <h4>{{ report.service_type }}</h4>
-              <h4 class="font-bold">{{ report.description }}</h4>
-            </div>
-          </FlexSection>
+          <h4>{{ report.client_name }}</h4>
+          <h4>{{ report.location }}</h4>
+          <h4>{{ report.service_type }}</h4>
+          <h4 class="font-bold">{{ report.description }}</h4>
         </DashedSection>
         <DashedSection class="w-full md:w-1/2">
           <h2 class="text-xl text-blue-700">Additional Information</h2>
@@ -156,6 +157,7 @@ export default {
   data() {
     return {
       report: null,
+      reportCreatedData: null,
       signURL: null,
     }
   },
