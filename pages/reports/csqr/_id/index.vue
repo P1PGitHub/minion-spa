@@ -98,16 +98,34 @@
         />
       </DashedSection>
       <DashedSection spacing="none" v-if="report.inventory_checkouts.length">
-        <h2 class="text-xl text-blue-700">
-          Inventory Used
-        </h2>
-        <InventoryListHeader />
-        <InventoryListItem
-          v-for="(item, index) in report.inventory_checkouts"
-          :key="item.id"
-          :item="item"
-          :border="index !== report.inventory_checkouts.length - 1"
-        />
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl text-blue-700">
+            Inventory Used
+          </h2>
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              name="count-view"
+              id="count-view"
+              class="form-checkbox rounded-full border-gray-600"
+              v-model="inventoryCountView"
+            />
+            <label for="count-view">Count View</label>
+          </div>
+        </div>
+
+        <div v-if="inventoryCountView">
+          <InventoryConsolidatedList :items="report.inventory_checkouts" />
+        </div>
+        <div v-else>
+          <InventoryListHeader />
+          <InventoryListItem
+            v-for="(item, index) in report.inventory_checkouts"
+            :key="item.id"
+            :item="item"
+            :border="index !== report.inventory_checkouts.length - 1"
+          />
+        </div>
       </DashedSection>
       <DashedSection>
         <h2 class="text-xl text-blue-700">Work Summary</h2>
@@ -124,8 +142,8 @@
 
       <HeaderAside>
         This report has already been signed and processed by Minion. You are
-        currently viewing historical data.</HeaderAside
-      >
+        currently viewing historical data.
+      </HeaderAside>
     </template>
   </PageBody>
 </template>
@@ -134,6 +152,7 @@
 import AgreementClause from '@/components/ui/agreementClause'
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
+import InventoryConsolidatedList from '@/components/ui/inventoryConsolidatedList'
 import InventoryListHeader from '@/components/ui/inventoryListHeader'
 import InventoryListItem from '@/components/ui/inventoryListItem'
 import DashedSection from '@/components/ui/dashedSection'
@@ -147,6 +166,7 @@ export default {
     AgreementClause,
     ButtonLink,
     HeaderAside,
+    InventoryConsolidatedList,
     InventoryListHeader,
     InventoryListItem,
     DashedSection,
@@ -156,6 +176,7 @@ export default {
   },
   data() {
     return {
+      inventoryCountView: false,
       report: null,
       reportCreatedData: null,
       signURL: null,
