@@ -16,7 +16,7 @@
 
     <h5 class="text-gray-700">{{ report.client_name }}</h5>
     <div class="flex items-start justify-between">
-      <p >{{ report.description }}</p>
+      <p>{{ report.description }}</p>
       <ButtonLink
         :link="{
           name: 'reports-csqr-id-edit',
@@ -48,11 +48,19 @@
         <span class="leading-none">View</span>
       </ButtonLink>
     </div>
-    <div class="flex items-center space-x-2" v-if="authorName && !hideAuthor">
-      <img src="@/assets/svg/other/user.svg" alt="user icon" />
-      <p class="text-black">
-        {{ authorName }}
-      </p>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2" v-if="authorName && !hideAuthor">
+        <img src="@/assets/svg/other/user.svg" alt="user icon" />
+        <p class="text-black">
+          {{ authorName }}
+        </p>
+      </div>
+      <div class="flex items-center space-x-2">
+        <img src="@/assets/svg/other/time.svg" alt="clock icon" />
+        <p class="text-gray-700">
+          {{ report.created_at | moment('M/D/YYYY HH:mm') }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -73,12 +81,12 @@ export default {
     editLink: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     hideAuthor: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     report: {
       type: Object,
