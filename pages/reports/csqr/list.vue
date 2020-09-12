@@ -15,17 +15,24 @@
           :border="index !== reports.length - 1"
         />
       </div>
+      <div class="flex items-center justify-end space-x-2">
+        <ButtonLink theme="hollow" spacing="sm">&lt;</ButtonLink>
+        <ButtonLink theme="primary" spacing="sm">1 / 4</ButtonLink>
+        <ButtonLink theme="hollow" spacing="sm">&gt;</ButtonLink>
+      </div>
     </template>
   </PageBody>
 </template>
 
 <script>
+import ButtonLink from '@/components/ui/buttonLink'
 import Loading from '@/components/common/Loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 export default {
   name: 'CSQRList',
   components: {
+    ButtonLink,
     Loading,
     PageBody,
     ReportListItem,
