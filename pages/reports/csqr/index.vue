@@ -41,19 +41,25 @@
       </div>
       <div>
         <div
-          class="flex items-center pb-4 border-b border-dashed border-gray-400"
+          class="flex items-center justify-between pb-4 border-b border-dashed border-gray-400"
         >
           <h1 class="text-xl">Drafts</h1>
+          <ButtonLink
+            :link="{ name: 'reports-csqr-drafts' }"
+            theme="hollow"
+            spacing="sm"
+            >View all...</ButtonLink
+          >
         </div>
         <div class="text-base">
           <ReportListItem
-          v-for="(draft, index) in drafts"
-          :key="draft.id"
-          :report="draft"
-          :hideAuthor="true"
-          :editLink="true"
-          :border="index !== drafts.length - 1"
-        />
+            v-for="(draft, index) in drafts"
+            :key="draft.id"
+            :report="draft"
+            :hideAuthor="true"
+            :editLink="true"
+            :border="index !== drafts.length - 1"
+          />
         </div>
       </div>
     </template>
@@ -83,7 +89,7 @@ export default {
   async created() {
     this.drafts = await this.$store.dispatch(
       'api/get',
-      '/reports/customer_service/drafts/'
+      '/reports/customer_service/drafts/recent/'
     )
     this.recents = await this.$store.dispatch(
       'api/get',
