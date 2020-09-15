@@ -9,7 +9,7 @@
           {{ report.created_at | moment('ddd MMM DD, YYYY - HH:mm') }}</span
         >
       </h1>
-      <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }"
+      <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }" theme="hollow"
         >Back</ButtonLink
       >
     </template>
