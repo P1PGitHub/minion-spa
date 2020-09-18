@@ -149,6 +149,7 @@ export default {
       reviewed: this.report.reviewed,
       satisfied: this.report.satisfied,
       tested: this.report.tested,
+      followup: this.report.followup,
     }
     // this.signURL = await this.$fireStorage
     //   .ref()
