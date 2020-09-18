@@ -151,7 +151,6 @@ export default {
     validate() {
       this.errors = []
       Object.keys(this.value).forEach((key) => {
-        console.log(key)
         if (typeof this.value[key] == 'object' && this.value[key] !== null) {
           if (!this.value[key].id) {
             this.errors.push(key)

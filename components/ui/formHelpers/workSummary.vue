@@ -60,10 +60,10 @@ export default {
       this.$emit('input', this.value)
     },
     validate() {
-      if (!this.value) {
+      if (!this.value || this.value.length == 0) {
         this.error = true
         this.$root.$emit('showToast', {
-          text: 'Please add a summary for this csqr.',
+          text: 'Please add a summary for this report.',
           type: 'error',
         })
         return false

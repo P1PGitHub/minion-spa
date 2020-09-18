@@ -84,11 +84,10 @@ export default {
   },
   methods: {
     buildReport() {
-      if (
-        this.$refs.clientDetails.validate() &&
-        this.$refs.timeRecords.validate() &&
-        this.$refs.workSummary.validate()
-      ) {
+      let clientDetialsValid = this.$refs.clientDetails.validate()
+      let timeRecordsValid = this.$refs.timeRecords.validate()
+      let workSummaryValid = this.$refs.workSummary.validate()
+      if (clientDetialsValid && timeRecordsValid && workSummaryValid) {
         return {
           ...this.report,
           ...this.addInfo,
@@ -123,7 +122,6 @@ export default {
       })
     },
     async save(pushDrafts) {
-      console.log(pushDrafts)
       let reportObj = this.buildReport()
       if (reportObj) {
         this.$root.$emit('showLoading')
