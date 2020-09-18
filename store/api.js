@@ -76,6 +76,31 @@ export const actions = {
     }
   },
   // General API Calls
+  async delete(context, url) {
+    if (context.state.accessToken) {
+      if (context.state.accessExpiry < moment()) {
+        await context.dispatch('refresh')
+      }
+      let headers = new Headers()
+      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+
+      let requestOptions = {
+        method: 'DELETE',
+        headers,
+        redirect: 'follow',
+      }
+
+      let response = await fetch(context.state.baseURL + url, requestOptions)
+
+      if (response.ok) {
+        return await response
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  },
   async get(context, url) {
     if (context.state.accessToken) {
       if (context.state.accessExpiry < moment()) {
@@ -128,7 +153,7 @@ export const actions = {
       return null
     }
   },
-  async put(context, url, data) {
+  async put(context, { url, data }) {
     if (context.state.accessToken) {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
@@ -137,6 +162,7 @@ export const actions = {
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
       headers.append('Content-Type', 'application/json')
 
+      console.log(data)
       let requestOptions = {
         method: 'PUT',
         headers,
