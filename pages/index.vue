@@ -14,7 +14,12 @@
     </template>
     <template v-slot:page-content>
       <FlexSection>
-        <SolidSection class="w-full md:w-1/2"> </SolidSection>
+        <SolidSection class="w-full md:w-1/2">
+          <SectionHeader text="Time Tracking" />
+          <HeaderAside>
+            Time tracking coming in a future update...
+          </HeaderAside>
+        </SolidSection>
         <DashedSection class="w-full md:w-1/2">
           <SolidSection>
             <div class="flex items-center justify-between">
@@ -29,7 +34,12 @@
               :editLink="true"
               :border="index !== drafts.length - 1"
             />
-            <ButtonLink spacing="sm" theme="hollow">View All...</ButtonLink>
+            <ButtonLink
+              spacing="sm"
+              theme="hollow"
+              :link="{ name: 'reports-csqr-drafts' }"
+              >View All...</ButtonLink
+            >
           </SolidSection>
           <SolidSection>
             <div class="flex items-center justify-between">
@@ -44,7 +54,12 @@
               :hideAuthor="true"
               :border="index !== recents.length - 1"
             />
-            <ButtonLink spacing="sm" theme="hollow">View All...</ButtonLink>
+            <ButtonLink
+              spacing="sm"
+              theme="hollow"
+              :link="{ name: 'reports-csqr-list' }"
+              >View All...</ButtonLink
+            >
           </SolidSection>
         </DashedSection>
       </FlexSection>
