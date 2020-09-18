@@ -2,7 +2,7 @@
   <aside
     class="flex items-center p-4 bg-gray-200 border border-gray-400 rounded"
   >
-    <p>
+    <p class="w-full">
       <slot></slot>
     </p>
   </aside>

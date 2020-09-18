@@ -67,18 +67,8 @@
 
 <script>
 export default {
-  name: 'timepicker',
+  name: 'TimePicker',
   props: {
-    initHour: {
-      type: Number,
-      required: false,
-      default: 9,
-    },
-    initMinute: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
     nameID: {
       type: String,
       required: false,
@@ -89,12 +79,16 @@ export default {
       required: false,
       default: 'left',
     },
+    value: {
+      type: String,
+      requied: true,
+    },
   },
   data() {
     return {
       showDropdown: false,
-      hour: 9,
-      minute: 0,
+      hour: this.value.split(':')[0],
+      minute: this.value.split(':')[1],
     }
   },
   computed: {
@@ -118,10 +112,6 @@ export default {
     show() {
       this.showDropdown = true
     },
-  },
-  created() {
-    this.hour = this.initHour
-    this.minute = this.initMinute
   },
 }
 </script>

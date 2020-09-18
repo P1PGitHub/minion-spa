@@ -25,26 +25,26 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      routeOverride: this.override,
-    }
-  },
   methods: {
     confirm(next) {
-      if (!this.routeOverride) {
+      if (!this.override) {
         this.$root.$emit('showModal', {
           allowText: this.allowText,
           denyText: this.denyText,
           message: this.message,
         })
         this.$root.$once('modalClose', (choice) => {
-          this.routeOverride = choice
           next(choice)
         })
       } else {
         next()
       }
+    },
+    toggleOverride() {
+      this.override = !this.override
+    },
+    setOverride(val) {
+      this.override = val
     },
   },
 }

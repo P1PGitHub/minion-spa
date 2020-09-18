@@ -16,7 +16,7 @@ import Modal from '@/components/ui/modal'
 import PageLoading from '@/components/ui/pageLoading'
 import Toast from '@/components/ui/toast'
 export default {
-  name: 'DefualtLayout',
+  name: 'DefaultLayout',
   components: {
     Modal,
     PageLoading,

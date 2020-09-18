@@ -7,6 +7,7 @@
       'space-y-4': spacing == 'md',
       'space-y-8': spacing == 'lg',
       'flex items-center': flex,
+      'justify-center': flexCenter,
     }"
   >
     <slot></slot>
