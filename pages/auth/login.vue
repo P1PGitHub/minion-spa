@@ -94,41 +94,40 @@ export default {
   methods: {
     async login() {
       this.error = false
-      this.isLoading = true
-      this.$store.commit('startLoading')
-      let tokens = await this.$store.dispatch('api/login', {
-        email: this.user.email.toLowerCase().trim(),
-        password: this.user.password,
-      })
-      let account = await this.$store.dispatch('api/getAccount')
-      let team = await this.$store.dispatch('api/getTeam')
-      this.$store.commit('account/setAccount', account)
-      this.$store.commit('team/setTeam', team)
-      Promise.all([
-        this.$store.dispatch('team/getMembers'),
-        this.$store.dispatch('team/getCompanies'),
-      ]).then(() => {
-        this.$store.commit('stopLoading')
-        this.$root.$emit('showToast', {
-          text: 'Connectwise resources have been loaded.',
-          type: 'success',
+      if (this.user.email && this.user.password) {
+        this.isLoading = true
+        this.$store.commit('startLoading')
+        let tokens = await this.$store.dispatch('api/login', {
+          email: this.user.email.toLowerCase().trim(),
+          password: this.user.password,
         })
-      })
+        let account = await this.$store.dispatch('api/getAccount')
+        let team = await this.$store.dispatch('api/getTeam')
+        this.$store.commit('account/setAccount', account)
+        this.$store.commit('team/setTeam', team)
+        Promise.all([
+          this.$store.dispatch('team/getMembers'),
+          this.$store.dispatch('team/getCompanies'),
+        ]).then(() => {
+          this.$store.commit('stopLoading')
+          this.$root.$emit('showToast', {
+            text: 'Connectwise resources have been loaded.',
+            type: 'success',
+          })
+        })
 
-      if (tokens && account) {
-        this.error = false
-        window.localStorage.setItem('refreshToken', tokens.refresh)
-        window.localStorage.setItem(
-          'refreshExpiry',
-          JSON.stringify(moment().add(1, 'days').toDate())
-        )
-        this.$router.push('/')
-      } else {
-        this.error = true
+        if (tokens && account) {
+          this.error = false
+          this.$router.push('/')
+        } else {
+          this.error = true
+          this.isLoading = false
+          console.log('failed login')
+        }
         this.isLoading = false
-        console.log('failed login')
+      } else {
+        console.log('no credentials')
       }
-      this.isLoading = false
     },
   },
 }

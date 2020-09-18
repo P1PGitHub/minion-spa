@@ -142,7 +142,7 @@
       </SolidSection>
       <SolidSection>
         <h2 class="text-xl text-blue-700">Work Summary</h2>
-        <p>{{ report.summary }}</p>
+        <p class="whitespace-pre">{{ report.summary }}</p>
       </SolidSection>
       <SolidSection v-if="report.draft">
         <SectionHeader text="Client Agreement" />

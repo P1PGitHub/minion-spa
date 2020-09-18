@@ -42,6 +42,7 @@ import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 export default {
   name: 'CSQRList',
+  middleware: ['auth'],
   components: {
     ActionButton,
     ButtonLink,

@@ -1,6 +1,12 @@
 <template>
   <DashedSection>
-    <SectionHeader text="Work Summary" />
+    <div class="flex items center justify-between">
+      <SectionHeader text="Work Summary" />
+      <ActionButton spacing="sm" theme="hollow" @click="generate"
+        ><img src="@/assets/svg/other/time.svg" alt="clock icon"
+      /></ActionButton>
+    </div>
+
     <HeaderAside
       >Please include the reason for the service, the service provided, and the
       final results of the service.</HeaderAside
@@ -21,12 +27,14 @@
 </template>
 
 <script>
+import ActionButton from '@/components/ui/actionButton'
 import DashedSection from '@/components/ui/dashedSection'
 import HeaderAside from '@/components/ui/headerAside'
 import SectionHeader from '@/components/ui/sectionHeader'
 export default {
   name: 'WorkSummaryFormHelper',
   components: {
+    ActionButton,
     DashedSection,
     HeaderAside,
     SectionHeader,
@@ -43,6 +51,10 @@ export default {
     }
   },
   methods: {
+    generate() {
+      this.error = false
+      this.$emit('generate')
+    },
     update() {
       this.error = false
       this.$emit('input', this.value)

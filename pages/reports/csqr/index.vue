@@ -2,7 +2,10 @@
   <PageBody>
     <template v-slot:page-header>
       <h1 class="text-xl">Customer Service Quality Report</h1>
-      <ButtonLink :link="{ name: 'reports-csqr-new' }" spacing="sm">
+      <ButtonLink
+        :link="{ name: 'reports-csqr-id-edit', params: { id: 'new' } }"
+        spacing="sm"
+      >
         <span>New</span>
         <span class="font-bold text-xl">+</span>
       </ButtonLink>
@@ -102,13 +105,13 @@ export default {
       .dispatch('api/get', '/reports/customer_service/drafts/recent/')
       .then((drafts) => {
         this.drafts = drafts
-        this.loadingRecents = false
+        this.loadingDrafts = false
       })
     this.recents = this.$store
       .dispatch('api/get', '/reports/customer_service/recent/')
       .then((recents) => {
         this.recents = recents
-        this.loadingDrafts = false
+        this.loadingRecents = false
       })
   },
 }

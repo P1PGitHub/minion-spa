@@ -40,7 +40,7 @@ export default {
   },
   props: {
     reportID: {
-      type: Number,
+      type: String,
       required: true,
     },
     value: {
