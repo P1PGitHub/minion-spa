@@ -41,6 +41,10 @@ import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 export default {
   name: 'CSQRList',
+  middleware: ['auth'],
+  head: {
+    title: 'Minion - CSQR',
+  },
   components: {
     ActionButton,
     ButtonLink,

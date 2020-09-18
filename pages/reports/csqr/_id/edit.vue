@@ -65,6 +65,9 @@ import WorkSummaryFormHelper from '@/components/ui/formHelpers/workSummary'
 export default {
   name: 'CSQRIDEditPage',
   middleware: ['auth'],
+  head: {
+    title: 'Minion - CSQR Edit',
+  },
   components: {
     ActionButton,
     AdditionalInfoFormHelper,

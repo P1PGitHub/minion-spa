@@ -83,6 +83,9 @@ import ReportListItem from '@/components/ui/reportListItem'
 export default {
   name: 'CSQRPage',
   middleware: ['auth'],
+  head: {
+    title: 'Minion - CSQR',
+  },
   components: {
     ButtonLink,
     HeaderAside,

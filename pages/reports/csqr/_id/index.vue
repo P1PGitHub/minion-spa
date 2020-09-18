@@ -214,6 +214,9 @@ import TimeRecordView from '@/components/ui/timeRecordView'
 export default {
   name: 'CSQRIDPreviewPage',
   middleware: ['auth'],
+  head: {
+    title: 'Minion - CSQR Preview',
+  },
   components: {
     AgreementClause,
     ButtonLink,

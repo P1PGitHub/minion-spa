@@ -78,6 +78,9 @@ import moment from 'moment'
 export default {
   name: 'LoginPage',
   layout: 'auth',
+  head: {
+    title: 'Minion Login',
+  },
   compponents: {
     loading,
   },
