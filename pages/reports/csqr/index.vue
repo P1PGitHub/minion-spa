@@ -2,13 +2,10 @@
   <PageBody>
     <template v-slot:page-header>
       <h1 class="text-xl">Customer Service Quality Report</h1>
-      <nuxt-link
-        class="flex items-center justify-center space-x-2 bg-blue-600 text-white font-bold py-1 px-4 rounded"
-        :to="{ name: 'reports-csqr-new' }"
-      >
+      <ButtonLink :link="{ name: 'reports-csqr-new' }" spacing="sm">
         <span>New</span>
         <span class="font-bold text-xl">+</span>
-      </nuxt-link>
+      </ButtonLink>
     </template>
     <template v-slot:page-content>
       <HeaderAside>
@@ -23,7 +20,11 @@
         <div
           class="flex items-center justify-between pb-4 border-b border-dashed border-gray-400"
         >
-          <h1 class="text-xl">Recent Reports</h1>
+          <div class="flex items-center space-x-4">
+            <h1 class="text-xl">Recent Reports</h1>
+            <Loading v-if="loadingRecents" />
+          </div>
+
           <ButtonLink
             :link="{ name: 'reports-csqr-list' }"
             theme="hollow"
@@ -43,7 +44,11 @@
         <div
           class="flex items-center justify-between pb-4 border-b border-dashed border-gray-400"
         >
-          <h1 class="text-xl">Drafts</h1>
+          <div class="flex items-center space-x-4">
+            <h1 class="text-xl">Drafts</h1>
+            <Loading v-if="loadingDrafts" />
+          </div>
+
           <ButtonLink
             :link="{ name: 'reports-csqr-drafts' }"
             theme="hollow"
@@ -69,6 +74,7 @@
 <script>
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
+import Loading from '@/components/common/Loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 export default {
@@ -77,6 +83,7 @@ export default {
   components: {
     ButtonLink,
     HeaderAside,
+    Loading,
     PageBody,
     ReportListItem,
   },
@@ -84,17 +91,25 @@ export default {
     return {
       drafts: [],
       recents: [],
+      loadingDrafts: false,
+      loadingRecents: false,
     }
   },
-  async created() {
-    this.drafts = await this.$store.dispatch(
-      'api/get',
-      '/reports/customer_service/drafts/recent/'
-    )
-    this.recents = await this.$store.dispatch(
-      'api/get',
-      '/reports/customer_service/recent/'
-    )
+  created() {
+    this.loadingDrafts = true
+    this.loadingRecents = true
+    this.$store
+      .dispatch('api/get', '/reports/customer_service/drafts/recent/')
+      .then((drafts) => {
+        this.drafts = drafts
+        this.loadingRecents = false
+      })
+    this.recents = this.$store
+      .dispatch('api/get', '/reports/customer_service/recent/')
+      .then((recents) => {
+        this.recents = recents
+        this.loadingDrafts = false
+      })
   },
 }
 </script>

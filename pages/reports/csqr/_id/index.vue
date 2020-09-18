@@ -1,6 +1,6 @@
 <template>
   <PageBody>
-    <template v-slot:page-header>
+    <template v-slot:page-header v-if="report">
       <h1 class="text-xl md:space-x-2">
         <span>
           CSQR Review
@@ -9,20 +9,33 @@
           {{ report.created_at | moment('ddd MMM DD, YYYY - HH:mm') }}</span
         >
       </h1>
-      <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }" theme="hollow"
+      <ButtonLink
+        fontSize="sm"
+        :link="{ name: 'reports-csqr-id-edit', params: { id: report.id } }"
+        theme="hollow"
+        v-if="report.draft"
+        >Back</ButtonLink
+      >
+      <ButtonLink
+        fontSize="sm"
+        :link="{ name: 'reports-csqr' }"
+        theme="hollow"
+        v-else
         >Back</ButtonLink
       >
     </template>
     <template v-slot:page-content v-if="report">
       <FlexSection>
-        <DashedSection class="w-full md:w-1/2" spacing="sm">
-          <h2 class="text-xl text-blue-700">{{ report.company_name }}</h2>
-          <h4>{{ report.client_name }}</h4>
-          <h4>{{ report.location }}</h4>
-          <h4>{{ report.service_type }}</h4>
-          <h4 class="font-bold">{{ report.description }}</h4>
-        </DashedSection>
-        <DashedSection class="w-full md:w-1/2">
+        <SolidSection class="w-full md:w-1/2">
+          <div class="space-y-2">
+            <h2 class="text-xl text-blue-700">{{ report.company_name }}</h2>
+            <h4>{{ report.client_name }}</h4>
+            <h4>{{ report.location }}</h4>
+            <h4>{{ report.service_type }}</h4>
+            <h4>{{ report.description }}</h4>
+          </div>
+        </SolidSection>
+        <SolidSection class="w-full md:w-1/2">
           <h2 class="text-xl text-blue-700">Additional Information</h2>
           <FlexSection spacing="sm">
             <div class="w-full md:w-1/2 space-y-2">
@@ -84,9 +97,9 @@
               </div>
             </div>
           </FlexSection>
-        </DashedSection>
+        </SolidSection>
       </FlexSection>
-      <DashedSection spacing="none" v-if="report.time_records.length">
+      <SolidSection v-if="report.time_records.length">
         <h2 class="text-xl text-blue-700">
           Time Records
         </h2>
@@ -96,8 +109,8 @@
           :record="record"
           :border="index !== report.time_records.length - 1"
         />
-      </DashedSection>
-      <DashedSection spacing="none" v-if="report.inventory_checkouts.length">
+      </SolidSection>
+      <SolidSection v-if="report.inventory_checkouts.length">
         <div class="flex items-center justify-between">
           <h2 class="text-xl text-blue-700">
             Inventory Used
@@ -126,21 +139,54 @@
             :border="index !== report.inventory_checkouts.length - 1"
           />
         </div>
-      </DashedSection>
-      <DashedSection>
+      </SolidSection>
+      <SolidSection>
         <h2 class="text-xl text-blue-700">Work Summary</h2>
         <p>{{ report.summary }}</p>
-      </DashedSection>
-      <DashedSection>
+      </SolidSection>
+      <SolidSection v-if="report.draft">
+        <SectionHeader text="Client Agreement" />
+        <div class="flex items-start space-x-4">
+          <input
+            type="checkbox"
+            name="client-agreement"
+            id="client-agreement"
+            class="form-checkbox rounded-full border-gray-600 mt-1"
+            v-model="clientAgreement"
+            :disabled="clientAgreement"
+          />
+          <AgreementClause :client="report.client_name" />
+        </div>
+        <SignPad v-if="clientAgreement" @save="saveSignature" />
+        <SignPreview
+          :data="signData"
+          :clientName="report.client_name"
+          @clear="clearSignData"
+          v-if="signData"
+        />
+      </SolidSection>
+      <SolidSection v-else>
         <h2 class="text-xl text-blue-700">Client Agreement</h2>
         <AgreementClause :client="report.client_name" />
-        <HeaderAside>
+        <HeaderAside v-if="report.signature">
           <img :src="signURL" alt="Client Signature" class="h-24" />
           <h4 class="font-bold text-teal-700 mt-4">{{ report.client_name }}</h4>
         </HeaderAside>
-      </DashedSection>
+      </SolidSection>
 
-      <HeaderAside>
+      <FlexSection v-if="report.draft">
+        <div class="w-full md:w-1/2">
+          <ActionButton theme="hollow" class="w-full" @click="saveDraft"
+            >Save as Draft</ActionButton
+          >
+        </div>
+        <div class="w-full md:w-1/2">
+          <ActionButton class="w-full" :disabled="!signFile" @click="publish"
+            >Publish</ActionButton
+          >
+        </div>
+      </FlexSection>
+      <HeaderAside v-else>
         This report has already been signed and processed by Minion. You are
         currently viewing historical data.
       </HeaderAside>
@@ -149,6 +195,8 @@
 </template>
 
 <script>
+var slugify = require('slugify')
+import moment from 'moment'
 import AgreementClause from '@/components/ui/agreementClause'
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
@@ -158,6 +206,10 @@ import InventoryListItem from '@/components/ui/inventoryListItem'
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import PageBody from '@/components/ui/pageBody'
+import SolidSection from '@/components/ui/solidSection'
+import SignPad from '@/components/ui/signPad'
+import SignPreview from '@/components/ui/signPreview'
+import SectionHeader from '@/components/ui/sectionHeader'
 import TimeRecordView from '@/components/ui/timeRecordView'
 export default {
   name: 'CSQRIDPreviewPage',
@@ -172,15 +224,100 @@ export default {
     DashedSection,
     FlexSection,
     PageBody,
+    SectionHeader,
+    SignPad,
+    SignPreview,
+    SolidSection,
     TimeRecordView,
   },
   data() {
     return {
+      clientAgreement: false,
       inventoryCountView: false,
       report: null,
       reportCreatedData: null,
+      signData: null,
+      signFile: null,
+      signID: null,
       signURL: null,
     }
+  },
+  methods: {
+    clearSignData() {
+      this.signData = null
+      this.signFile = null
+      this.clientAgreement = false
+    },
+    async publish() {
+      if (this.signFile) {
+        this.$root.$emit('showLoading')
+        await this.uploadSignature()
+        let reportCopy = { ...this.report }
+        delete reportCopy.inventory_checkouts
+        delete reportCopy.time_records
+        let reportResponse = await this.$store.dispatch('api/put', {
+          url: `/reports/customer_service/${this.report.id}/`,
+          data: { ...reportCopy, draft: false, signatureID: this.signID },
+        })
+        this.$root.$emit('hideLoading')
+        this.$router.push({ name: 'reports-csqr' })
+      }
+    },
+    async saveDraft() {
+      this.$root.$emit('showLoading')
+      let reportCopy = { ...this.report }
+      delete reportCopy.inventory_checkouts
+      delete reportCopy.time_records
+      let reportResponse = await this.$store.dispatch('api/put', {
+        url: `/reports/customer_service/${this.report.id}/`,
+        data: { ...reportCopy, draft: true },
+      })
+      this.$root.$emit('hideLoading')
+      this.$router.push({ name: 'reports-csqr-drafts' })
+    },
+    async uploadSignature() {
+      if (this.signFile) {
+        let signRefString = `${
+          this.$store.state.team.team.slug
+        }/signatures/${slugify(
+          this.report.company_name.toLowerCase()
+        )}/${slugify(this.report.client_name.toLowerCase())}/${moment().format(
+          'YYYYMMDD-HHmmSS'
+        )}.png`
+        let signRef = this.$fireStorage.ref().child(signRefString)
+
+        let signResponseData = await this.$store.dispatch('api/post', {
+          url: '/reports/sign/',
+          data: {
+            ref: signRefString,
+            company: this.report.company_name,
+            client: this.report.client_name,
+          },
+        })
+        this.signID = signResponseData.id
+
+        return await signRef.put(this.signFile)
+      }
+    },
+    saveSignature(data) {
+      if (data) {
+        let arr = data.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n)
+
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n)
+        }
+        this.signData = data
+        this.signFile = new File([u8arr], 'signature.png', {
+          type: mime,
+        })
+      } else {
+        this.signFile = null
+      }
+    },
   },
   async created() {
     if (this.$route.params.id) {
@@ -189,10 +326,12 @@ export default {
         'api/get',
         `/reports/customer_service/${this.$route.params.id}/`
       )
-      this.signURL = await this.$fireStorage
-        .ref()
-        .child(this.report.signature.ref)
-        .getDownloadURL()
+      if (this.report.signature) {
+        this.signURL = await this.$fireStorage
+          .ref()
+          .child(this.report.signature.ref)
+          .getDownloadURL()
+      }
       this.$root.$emit('hideLoading')
     }
   },
