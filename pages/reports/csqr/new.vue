@@ -546,8 +546,8 @@ export default {
     addNewRecord() {
       this.timeRecords.push({
         date: moment(),
-        startTime: null,
-        endTime: null,
+        startTime: '9:00',
+        endTime: '14:00',
         employees: [],
         notes: null,
       })
