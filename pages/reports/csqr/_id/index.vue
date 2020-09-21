@@ -144,6 +144,10 @@
         <h2 class="text-xl text-blue-700">Work Summary</h2>
         <p class="whitespace-pre-wrap">{{ report.summary }}</p>
       </SolidSection>
+      <SolidSection v-if="report.followup">
+        <h2 class="text-xl text-blue-700">Followup Notes</h2>
+        <p class="whitespace-pre-wrap">{{ report.followup }}</p>
+      </SolidSection>
       <SolidSection v-if="report.draft">
         <SectionHeader text="Client Agreement" />
         <div class="flex items-start space-x-4">

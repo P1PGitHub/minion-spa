@@ -86,7 +86,7 @@
           </SolidSection>
         </div>
 
-        <DashedSection class="w-full md:w-1/2">
+        <div class="w-full md:w-1/2 space-y-4">
           <SolidSection>
             <div class="flex items-center justify-between">
               <SectionHeader text="CSQR Drafts" />
@@ -127,7 +127,7 @@
               >View All...</ButtonLink
             >
           </SolidSection>
-        </DashedSection>
+        </div>
       </FlexSection>
     </template>
   </PageBody>

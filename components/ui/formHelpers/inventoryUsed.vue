@@ -1,5 +1,5 @@
 <template>
-  <DashedSection>
+  <div class="space-y-4">
     <SectionHeader text="Inventory Used" />
     <SolidSection spacing="sm">
       <InventoryHeader
@@ -19,11 +19,10 @@
       </HeaderAside>
     </SolidSection>
     <InventoryNew @add="add" ref="newItem" />
-  </DashedSection>
+  </div>
 </template>
 
 <script>
-import DashedSection from '@/components/ui/dashedSection'
 import HeaderAside from '@/components/ui/headerAside'
 import InventoryHeader from '@/components/ui/formHelpers/inventory/header'
 import InventoryItem from '@/components/ui/formHelpers/inventory/item'
@@ -33,7 +32,6 @@ import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'InventoryUsedFormHelper',
   components: {
-    DashedSection,
     HeaderAside,
     InventoryHeader,
     InventoryItem,

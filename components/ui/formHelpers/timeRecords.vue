@@ -1,5 +1,5 @@
 <template>
-  <DashedSection>
+  <div>
     <div class="flex items-center space-x-4">
       <ActionButton spacing="sm" @click="add">Add +</ActionButton>
       <SectionHeader text="Time Tracking" />
@@ -19,13 +19,12 @@
       >No entries to display. Please add a new time entry before attempting to
       save.</HeaderAside
     >
-  </DashedSection>
+  </div>
 </template>
 
 <script>
 import moment from 'moment'
 import ActionButton from '@/components/ui/actionButton'
-import DashedSection from '@/components/ui/dashedSection'
 import HeaderAside from '@/components/ui/headerAside'
 import SectionHeader from '@/components/ui/sectionHeader'
 import TimeEntry from '@/components/ui/formHelpers/timeRecord/entry'
@@ -33,7 +32,6 @@ export default {
   name: 'TimeRecordsFormHelper',
   components: {
     ActionButton,
-    DashedSection,
     HeaderAside,
     SectionHeader,
     TimeEntry,

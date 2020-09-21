@@ -45,35 +45,37 @@
             />
           </div>
         </div>
-        <div class="">
-          <div class="flex space-x-2">
-            <label for="shift-employees" class="block w-1/2">Employees</label>
-            <label for="shift-start-time" class="block w-1/2">Notes</label>
-          </div>
-          <div class="flex space-x-2">
-            <select
-              name="shift-employees"
-              id="shift-employees"
-              multiple
-              class="form-multiselect bg-gray-100 w-1/2"
-              v-model="value.users"
-              @click="update"
-            >
-              <option
-                :value="member.id"
-                v-for="member in $store.state.team.members"
-                :key="member.id"
-                >{{ member.last_name }}, {{ member.first_name }}</option
+        <div>
+          <div class="space-y-2 md:flex md:space-x-2 md:space-y-0">
+            <div class="md:w-1/2">
+              <label for="shift-employees" class="block">Employees</label>
+              <select
+                name="shift-employees"
+                id="shift-employees"
+                multiple
+                class="form-multiselect bg-gray-100 w-full h-32"
+                v-model="value.users"
+                @click="update"
               >
-            </select>
-            <textarea
-              name="shift-start-time"
-              id="shift-start-time"
-              class="form-textarea bg-gray-100 w-1/2"
-              placeholder="AM Shift"
-              v-model="value.notes"
-              @input="update"
-            ></textarea>
+                <option
+                  :value="member.id"
+                  v-for="member in $store.state.team.members"
+                  :key="member.id"
+                  >{{ member.last_name }}, {{ member.first_name }}</option
+                >
+              </select>
+            </div>
+            <div class="md:w-1/2">
+              <label for="shift-start-time" class="block">Notes</label>
+              <textarea
+                name="shift-start-time"
+                id="shift-start-time"
+                class="form-textarea bg-gray-100 w-full h-32"
+                placeholder="AM Shift"
+                v-model="value.notes"
+                @input="update"
+              ></textarea>
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,18 @@
     id="navbar"
   >
     <div class="flex items-center space-x-4">
-      <nuxt-link class="text-2xl font-bold" to="/" id="brand">Minion</nuxt-link>
+      <nuxt-link
+        class="text-2xl font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300"
+        to="/"
+        id="brand"
+      >
+        <img
+          src="@/assets/svg/other/minion_logo.svg"
+          alt="Minion Logo"
+          class="h-6"
+        />
+        <span>Minion</span></nuxt-link
+      >
       <img
         src="@/assets/svg/other/spinner-two-theme.svg"
         alt="Loading Icon"

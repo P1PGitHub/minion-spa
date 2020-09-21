@@ -6,7 +6,7 @@
       <slot name="page-header"> </slot>
     </section>
     <main
-      class="p-4 text-gray-800 container"
+      class="px-2 py-4 md:px-4 text-gray-800 container"
       :class="{
         'space-y-0': spacing == 'none',
         'space-y-2': spacing == 'sm',
