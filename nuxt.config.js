@@ -27,6 +27,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', type: 'image/png', href: '/png/logo.png' },
       {
         rel: 'stylesheet',
         href:
@@ -95,8 +96,8 @@ export default {
   ],
   serverMiddleware: [
     redirectSSL.create({
-      enabled: process.env.NODE_ENV === 'production'
-     }),
+      enabled: process.env.NODE_ENV === 'production',
+    }),
   ],
   /*
    ** Axios module configuration
