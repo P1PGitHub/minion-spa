@@ -10,6 +10,9 @@ module.exports = {
       sans: ['Red Hat Display', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
+      maxHeight: {
+        '128': '32rem',
+      },
       maxWidth: {
         '64': '16rem',
         '96': '24rem',
@@ -19,10 +22,10 @@ module.exports = {
         '64': '16rem',
         '96': '24rem',
       },
-
       spacing: {
         '22': '5.5rem',
         '96': '24rem',
+        '128': '32rem',
       },
     },
   },

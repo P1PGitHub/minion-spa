@@ -67,7 +67,6 @@ export default {
       }
       this.show = true
     })
-    this.$root.$on('showModal', () => (this.show = true))
   },
 }
 </script>

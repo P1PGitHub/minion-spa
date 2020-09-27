@@ -4,6 +4,7 @@
     :class="{ 'overflow-y-hidden': scrollLock }"
   >
     <Navbar />
+    <JournalEntryModal />
     <Modal />
     <Toast />
     <PageLoading />
@@ -12,12 +13,14 @@
 </template>
 
 <script>
+import JournalEntryModal from '@/components/ui/journalEntryModal'
 import Modal from '@/components/ui/modal'
 import PageLoading from '@/components/ui/pageLoading'
 import Toast from '@/components/ui/toast'
 export default {
   name: 'DefaultLayout',
   components: {
+    JournalEntryModal,
     Modal,
     PageLoading,
     Toast,

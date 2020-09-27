@@ -93,7 +93,7 @@
 
 <script>
 import moment from 'moment'
-import TimePicker from '@/components/ui/timepicker'
+import TimePicker from '@/components/ui/timePicker'
 export default {
   name: 'TimeRecordEntry',
   components: {

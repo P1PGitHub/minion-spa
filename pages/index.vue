@@ -1,7 +1,7 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <SectionHeader text="Your Dashboard" />
+      <SectionHeader text="Bello!" />
       <div
         class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center"
       >
@@ -17,8 +17,12 @@
         <div class="w-full md:w-1/2">
           <SolidSection class="w-full">
             <div class="flex items-center justify-between">
-              <SectionHeader :text="today.format('dddd MMMM Do')" />
-              <ActionButton spacing="sm">Add +</ActionButton>
+              <SectionHeader :text="today.format('ddd MMM Do')" />
+              <ActionButton
+                spacing="sm"
+                @click="$root.$emit('showJournalModal')"
+                >Add +</ActionButton
+              >
             </div>
 
             <HeaderAside>

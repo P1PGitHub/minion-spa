@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center justify-center font-bold rounded"
+    class="flex items-center justify-center font-bold rounded whitepsace-no-wrap"
     :class="{
       'text-sm': fontSize == 'sm',
       'text-md': fontSize == 'md',
