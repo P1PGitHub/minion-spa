@@ -11,7 +11,7 @@
     >
       <div class="flex items-center justify-between">
         <SectionHeader text="New Journal Entry" />
-        <ActionButton spacing="sm" theme="hollow"
+        <ActionButton spacing="sm" theme="hollow" @click="reset"
           ><img src="@/assets/svg/arrows/sync.svg" alt="Reset Icon" class="h-4"
         /></ActionButton>
       </div>
@@ -168,6 +168,19 @@ export default {
   methods: {
     close() {
       this.show = false
+    },
+    reset() {
+      this.entry = {
+        company_id: null,
+        company_name: null,
+        client_name: null,
+        start: moment().subtract('30', 'minutes').format('HH:mm'),
+        end: moment().format('HH:mm'),
+        description: null,
+        summary: null,
+        followup: null,
+        resolved: true,
+      }
     },
   },
   created() {

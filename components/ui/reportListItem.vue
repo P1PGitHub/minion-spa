@@ -14,7 +14,22 @@
       </div>
     </div>
 
-    <h5 class="text-gray-700">{{ report.client_name }}</h5>
+    <div class="flex items-center justify-between">
+      <h5 class="text-gray-700">{{ report.client_name }}</h5>
+      <ActionButton
+        @click="download"
+        spacing="sm"
+        theme="hollow"
+        v-if="!editLink"
+      >
+        <img
+          src="@/assets/svg/arrows/arrow-down-r.svg"
+          alt="Download Icon"
+          class="w-4 h-4"
+        />
+      </ActionButton>
+    </div>
+
     <div class="flex items-start justify-between">
       <p>{{ report.description }}</p>
       <ButtonLink
@@ -66,10 +81,12 @@
 </template>
 
 <script>
+import ActionButton from '@/components/ui/actionButton'
 import ButtonLink from '@/components/ui/buttonLink'
 export default {
   name: 'ReportListItem',
   components: {
+    ActionButton,
     ButtonLink,
   },
   props: {
@@ -98,6 +115,29 @@ export default {
       authorName: null,
       editorName: null,
     }
+  },
+  methods: {
+    async download() {
+      this.$root.$emit('showModal', {
+        allowText: 'Yes',
+        denyText: 'No',
+        message: 'Are you sure you want to download this report?',
+      })
+      this.$root.$once('modalClose', (choice) => {
+        if (choice) {
+          let refString = `${this.$store.state.team.team.slug}/reports/csqr/${this.report.id}.xlsx`
+          let ref = this.$fireStorage.ref().child(refString)
+          let downloadurl = ref.getDownloadURL().then((url) => {
+            const link = document.createElement('a')
+            link.href = url
+            link.download = `${this.report.id}.xlsx`
+            document.body.appendChild(link)
+            link.click()
+            console.log(url)
+          })
+        }
+      })
+    },
   },
   created() {
     if (this.report.author) {
