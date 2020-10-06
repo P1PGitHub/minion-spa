@@ -162,7 +162,6 @@ export const actions = {
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
       headers.append('Content-Type', 'application/json')
 
-      console.log(data)
       let requestOptions = {
         method: 'PUT',
         headers,

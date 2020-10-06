@@ -60,7 +60,7 @@ export const actions = {
         let companies = []
         let rawCompanies = await companiesResponse.json()
         rawCompanies.forEach((company) => {
-          if (company.types[0].id == 1 || company.types[0] == 26) {
+          if (company.types[0].id == 1 || company.types[0].id == 26) {
             companies.push({
               id: company.id,
               identifier: company.identifier,
