@@ -123,7 +123,8 @@
             <ButtonLink
               spacing="sm"
               theme="hollow"
-              :link="{ name: 'reports-csqr-list' }"
+              :link="{ name: 'reports-csqr-list-page', params: { page: 1 } }"
+              class="w-full"
               >View All...</ButtonLink
             >
           </SolidSection>

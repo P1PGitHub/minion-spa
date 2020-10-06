@@ -29,7 +29,7 @@
           </div>
 
           <ButtonLink
-            :link="{ name: 'reports-csqr-list' }"
+            :link="{ name: 'reports-csqr-list-page', params: { page: 1 } }"
             theme="hollow"
             spacing="sm"
             >View all...</ButtonLink

@@ -11,16 +11,12 @@
       </h1>
       <ButtonLink
         fontSize="sm"
-        :link="{ name: 'reports-csqr-id-edit', params: { id: report.id } }"
+        :link="prevPage"
         theme="hollow"
         v-if="report.draft"
         >Back</ButtonLink
       >
-      <ButtonLink
-        fontSize="sm"
-        :link="{ name: 'reports-csqr' }"
-        theme="hollow"
-        v-else
+      <ButtonLink fontSize="sm" :link="prevPage" theme="hollow" v-else
         >Back</ButtonLink
       >
     </template>
@@ -241,6 +237,7 @@ export default {
     return {
       clientAgreement: false,
       inventoryCountView: false,
+      prevPage: {},
       report: null,
       reportCreatedData: null,
       signData: null,
@@ -341,6 +338,11 @@ export default {
       }
       this.$root.$emit('hideLoading')
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.prevPage = { name: from.name, params: from.params }
+    })
   },
 }
 </script>

@@ -99,6 +99,28 @@ export default {
       editorName: null,
     }
   },
+  methods: {
+    async download() {
+      this.$root.$emit('showModal', {
+        allowText: 'Yes',
+        denyText: 'No',
+        message: 'Are you sure you want to download this report?',
+      })
+      this.$root.$once('modalClose', (choice) => {
+        if (choice) {
+          let refString = `${this.$store.state.team.team.slug}/reports/csqr/${this.report.id}.xlsx`
+          let ref = this.$fireStorage.ref().child(refString)
+          let downloadurl = ref.getDownloadURL().then((url) => {
+            const link = document.createElement('a')
+            link.href = url
+            link.download = `${this.report.id}.xlsx`
+            document.body.appendChild(link)
+            link.click()
+          })
+        }
+      })
+    },
+  },
   created() {
     if (this.report.author) {
       let authorObj = this.$store.state.team.members.find(

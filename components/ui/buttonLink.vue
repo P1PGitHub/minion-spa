@@ -17,8 +17,11 @@
         theme == 'hollow',
       'text-white border border-white hover:bg-gray-400 hover:bg-opacity-25':
         theme == 'hollow-light',
+      'cursor-not-allowed': disable,
     }"
     :to="link"
+    tag="button"
+    :disabled="disable"
   >
     <slot></slot>
   </nuxt-link>
@@ -28,6 +31,11 @@
 export default {
   name: 'buttonLink',
   props: {
+    disable: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     link: {
       type: Object,
       required: false,

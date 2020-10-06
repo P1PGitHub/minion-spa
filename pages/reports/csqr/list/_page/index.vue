@@ -19,14 +19,30 @@
         />
       </div>
       <div class="flex items-center justify-end space-x-2">
-        <ActionButton theme="hollow" spacing="sm" @click="getPrevious"
-          >&lt;</ActionButton
+        <ButtonLink
+          theme="hollow"
+          spacing="sm"
+          :link="{
+            name: 'reports-csqr-list-page',
+            params: { page: currentPage - 1 },
+          }"
+          :disable="!(currentPage > 1)"
+          >&lt;</ButtonLink
         >
         <ActionButton theme="primary" spacing="sm"
           >{{ currentPage }} / {{ maxPage }}</ActionButton
         >
-        <ActionButton theme="hollow" spacing="sm" @click="getNext"
-          >&gt;</ActionButton
+        <ButtonLink
+          theme="hollow"
+          spacing="sm"
+          :link="{
+            name: 'reports-csqr-list-page',
+            params: {
+              page: currentPage + 1,
+            },
+          }"
+          :disable="currentPage >= maxPage"
+          >&gt;</ButtonLink
         >
       </div>
     </template>
@@ -89,13 +105,27 @@ export default {
     },
   },
   async created() {
-    let reportResponse = await this.$store.dispatch(
-      'api/get',
-      '/reports/customer_service/simple/'
-    )
-    this.maxPage = Math.ceil(reportResponse.count / 25)
-    this.reports = reportResponse.results
-    this.isLoading = false
+    this.currentPage = this.$route.params.page
+    try {
+      let reportResponse = await this.$store.dispatch(
+        'api/get',
+        `/reports/customer_service/simple?page=${this.currentPage}`
+      )
+      this.maxPage = Math.ceil(reportResponse.count / 25)
+      this.reports = reportResponse.results
+      this.isLoading = false
+    } catch (err) {
+      console.log(err)
+      this.$route.params.page = 1
+      this.currentPage = 1
+      let reportResponse = await this.$store.dispatch(
+        'api/get',
+        `/reports/customer_service/simple?page=${this.currentPage}`
+      )
+      this.maxPage = Math.ceil(reportResponse.count / 25)
+      this.reports = reportResponse.results
+      this.isLoading = false
+    }
   },
 }
 </script>
