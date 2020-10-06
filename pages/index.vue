@@ -62,6 +62,7 @@
               spacing="sm"
               theme="hollow"
               :link="{ name: 'reports-csqr-drafts' }"
+              class="w-full"
               >View All...</ButtonLink
             >
           </SolidSection>
