@@ -5,6 +5,10 @@
  ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
 module.exports = {
+  experimental: {
+    darkModeVariant: true,
+  },
+  dark: 'class',
   theme: {
     fontFamily: {
       sans: ['Red Hat Display', 'Helvetica', 'Arial', 'sans-serif'],
