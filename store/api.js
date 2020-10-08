@@ -89,6 +89,9 @@ export const actions = {
         headers,
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
 
       let response = await fetch(context.state.baseURL + url, requestOptions)
 
@@ -113,6 +116,9 @@ export const actions = {
         method: 'GET',
         headers,
         redirect: 'follow',
+      }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
       }
 
       let response = await fetch(context.state.baseURL + url, requestOptions)
@@ -141,6 +147,9 @@ export const actions = {
         body: JSON.stringify(data),
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
 
       let response = await fetch(context.state.baseURL + url, requestOptions)
 
@@ -168,6 +177,9 @@ export const actions = {
         body: JSON.stringify(data),
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
 
       let response = await fetch(context.state.baseURL + url, requestOptions)
 
@@ -193,6 +205,9 @@ export const actions = {
         method: 'GET',
         headers: headers,
         redirect: 'follow',
+      }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
       }
 
       let accountResponse = await fetch(
@@ -221,6 +236,9 @@ export const actions = {
         headers: headers,
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
 
       let membersResponse = await fetch(
         `${context.state.baseURL}/teams/members/`,
@@ -248,6 +266,9 @@ export const actions = {
         headers: headers,
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
 
       let teamResponse = await fetch(
         `${context.state.baseURL}/teams/`,
@@ -265,12 +286,6 @@ export const actions = {
   async login(context, credentials) {
     let headers = new Headers()
     headers.append('Content-Type', 'application/json')
-    if (process.env.NODE_ENV == 'production') {
-      headers.append(
-        'Access-Control-Allow-Origin',
-        'https://minion-spa.herokuapp.com'
-      )
-    }
 
     let raw = JSON.stringify(credentials)
 
@@ -279,6 +294,9 @@ export const actions = {
       headers: headers,
       body: raw,
       redirect: 'follow',
+    }
+    if (process.env.NODE_ENV == 'production') {
+      requestOptions.credentials = 'include'
     }
 
     try {
@@ -318,6 +336,10 @@ export const actions = {
         body: formdata,
         redirect: 'follow',
       }
+      if (process.env.NODE_ENV == 'production') {
+        requestOptions.credentials = 'include'
+      }
+
       let signResponse = await fetch(
         `${context.state.baseURL}/reports/sign/`,
         requestOptions
