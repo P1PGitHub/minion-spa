@@ -45,7 +45,7 @@
           </button>
         </div>
         <div
-          class="w-1/2 h-32 overflow-y-scroll scrolling-touch bg-gray-200 rounded-br border-t border-blue-600 hover:bg-white hover:bg-white dark:bg-gray-700 dark:text-white"
+          class="w-1/2 h-32 overflow-y-scroll scrolling-touch bg-gray-200 rounded-br border-t border-blue-600 hover:bg-white dark:bg-gray-700 dark:text-white"
         >
           <button
             v-for="minuteOpt in Array(60).keys()"
