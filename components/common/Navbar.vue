@@ -79,8 +79,9 @@
         </span>
         <span>Team</span>
       </li>
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        :to="{ name: 'settings' }"
       >
         <span>
           <inline-svg
@@ -89,7 +90,7 @@
             class="h-6 w-auto text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
-      </li>
+      </nuxt-link>
       <li
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
       >
@@ -176,8 +177,9 @@
           <span>Team</span>
         </li>
         <div class="flex items-center">
-          <li
+          <nuxt-link
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+            :to="{ name: 'settings' }"
           >
             <span>
               <inline-svg
@@ -186,7 +188,7 @@
                 class="h-6 w-auto text-gray-800 dark:text-white"
               ></inline-svg>
             </span>
-          </li>
+          </nuxt-link>
           <li
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
           >
