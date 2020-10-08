@@ -105,6 +105,10 @@ export default {
     hide() {
       this.showDropdown = false
     },
+    reset(time) {
+      this.hour = time.split(':')[0]
+      this.minute = time.split(':')[1]
+    },
     setMinute(minuteOpt) {
       this.minute = minuteOpt
       this.hide()

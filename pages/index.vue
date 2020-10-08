@@ -25,18 +25,38 @@
                 <Loading v-if="loadingLogs" />
               </div>
 
-              <ActionButton
-                spacing="sm"
-                @click="$root.$emit('showJournalModal')"
-                >Add +</ActionButton
-              >
+              <div class="flex items-center space-x-2">
+                <ActionButton
+                  spacing="sm"
+                  theme="hollow"
+                  @click="toggleLogOrder"
+                >
+                  <inline-svg
+                    :src="require('@/assets/svg/arrows/arrow-up.svg')"
+                    class="h-4 w-auto"
+                    v-if="logOrdering == 'ASC'"
+                  ></inline-svg>
+                  <inline-svg
+                    :src="require('@/assets/svg/arrows/arrow-down.svg')"
+                    class="h-4 w-auto"
+                    v-else
+                  ></inline-svg>
+                </ActionButton>
+                <ActionButton
+                  spacing="sm"
+                  @click="$root.$emit('showJournalModal')"
+                  >Add +</ActionButton
+                >
+              </div>
             </div>
 
             <HeaderAside v-if="(!loadingLogs && !logs.length)">
               No time tracking entries found for today.
             </HeaderAside>
+            <div class="space-y-4">
+              <TimeEntry v-for="log in logs" :key="log.id" :entry="log" />
+            </div>
 
-            <TimeEntry v-for="log in logs" :key="log.id" :entry="log" />
             <ButtonLink
               :link="{ name: 'home' }"
               spacing="sm"
@@ -102,7 +122,7 @@ import ButtonLink from '@/components/ui/buttonLink'
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import HeaderAside from '@/components/ui/headerAside'
-import Loading from '@/components/common/Loading'
+import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
@@ -135,38 +155,68 @@ export default {
       drafts: [],
       recents: [],
       logs: [],
+      logOrdering: 'ASC',
       today: moment(),
     }
   },
+  methods: {
+    getDrafts() {
+      this.loadingDrafts = true
+      this.$store
+        .dispatch('api/get', '/reports/customer_service/drafts/recent/')
+        .then((drafts) => {
+          this.drafts = drafts.splice(0, 2)
+          this.loadingDrafts = false
+        })
+    },
+    getLogs() {
+      this.loadingLogs = true
+      let ordering = localStorage.getItem('logOrdering')
+      if (ordering) {
+        this.logOrdering = ordering
+      }
+      this.$store
+        .dispatch(
+          'api/get',
+          `/logs/entry/${moment()
+            .set({ hour: 0, minute: 0 })
+            .utc()
+            .format('YYYYMMDDHHmm')}`
+        )
+        .then((logs) => {
+          this.logs = logs
+          if (this.logOrdering == 'DESC') {
+            this.logs.reverse()
+          }
+          this.loadingLogs = false
+        })
+    },
+    getRecents() {
+      this.loadingRecents = true
+      this.$store
+        .dispatch('api/get', '/reports/customer_service/recent/')
+        .then((recents) => {
+          this.recents = recents.splice(0, 2)
+          this.loadingRecents = false
+        })
+    },
+    toggleLogOrder() {
+      if (this.logOrdering == 'ASC') {
+        this.logOrdering = 'DESC'
+      } else {
+        this.logOrdering = 'ASC'
+      }
+      localStorage.setItem('logOrdering', this.logOrdering)
+      this.logs.reverse()
+    },
+  },
   created() {
-    this.loadingDrafts = true
-    this.loadingLogs = true
-    this.loadingRecents = true
-    this.$store
-      .dispatch('api/get', '/reports/customer_service/drafts/recent/')
-      .then((drafts) => {
-        this.drafts = drafts.splice(0, 2)
-        this.loadingDrafts = false
-      })
-    this.$store
-      .dispatch('api/get', '/reports/customer_service/recent/')
-      .then((recents) => {
-        this.recents = recents.splice(0, 2)
-        this.loadingRecents = false
-      })
-    this.$store
-      .dispatch(
-        'api/get',
-        `/logs/entry/${moment()
-          .set({ hour: 0, minute: 0 })
-          .utc()
-          .format('YYYYMMDDHHmm')}`
-      )
-      .then((logs) => {
-        console.log(logs)
-        this.logs = logs
-        this.loadingLogs = false
-      })
+    this.getDrafts()
+    this.getLogs()
+    this.getRecents()
+    this.$root.$on('updateEntries', () => {
+      this.getLogs()
+    })
   },
 }
 </script>
