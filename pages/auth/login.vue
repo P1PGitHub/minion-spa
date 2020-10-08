@@ -26,14 +26,18 @@
             >
               Log in
             </h1>
-            <loading size="lg" v-if="isLoading" />
+            <Loading size="lg" v-if="isLoading" />
           </div>
 
           <div
             class="rounded px-2 py-4 bg-gray-200 text-red-700 font-bold flex items-center space-x-4 border-2 border-red-400 dark:bg-gray-800 dark:text-red-300 dark:border-red-300"
             v-if="error"
           >
-            <img src="@/assets/svg/alerts/danger.svg" alt="Error Icon" />
+            <inline-svg
+              :src="require('@/assets/svg/alerts/danger.svg')"
+              fill="fill-current"
+              class="h-6 w-auto"
+            ></inline-svg>
             <p>Bee Do Bee Do Bee Do</p>
           </div>
           <form @submit.prevent class="space-y-4" @submit="login">
@@ -105,9 +109,7 @@
 </template>
 
 <script>
-import loading from '@/components/common/Loading'
-
-// import MailIcon from '~/assets/svg/other/mail.svg'
+import Loading from '@/components/common/loading'
 
 import moment from 'moment'
 export default {
@@ -117,8 +119,7 @@ export default {
     title: 'Minion Login',
   },
   compponents: {
-    loading,
-    // MailIcon,
+    Loading,
   },
   data() {
     return {
