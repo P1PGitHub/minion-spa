@@ -1,6 +1,6 @@
 <template>
   <section
-    class="bg-white rounded shadow border border-blue-400"
+    class="bg-white rounded shadow border border-blue-400 dark:bg-gray-800"
     :class="{
       'p-1 space-y-0': spacing == 'none',
       'p-2 space-y-2': spacing == 'sm',

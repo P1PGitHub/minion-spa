@@ -1,11 +1,14 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <SectionHeader text="Your Dashboard" />
+      <SectionHeader text="Bello!" />
       <div
         class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center"
       >
-        <img src="@/assets/svg/other/boy-white.svg" alt="Account Icon" />
+        <inline-svg
+          :src="require('@/assets/svg/other/boy.svg')"
+          class="h-6 w-auto text-white"
+        ></inline-svg>
         <span>
           {{ $store.state.account.account.last_name }},
           {{ $store.state.account.account.first_name }}
@@ -17,72 +20,50 @@
         <div class="w-full md:w-1/2">
           <SolidSection class="w-full">
             <div class="flex items-center justify-between">
-              <SectionHeader :text="today.format('dddd MMMM Do')" />
-              <ActionButton spacing="sm">Add +</ActionButton>
+              <div class="flex items-center space-x-2">
+                <SectionHeader :text="today.format('ddd MMM Do')" />
+                <Loading v-if="loadingLogs" />
+              </div>
+
+              <div class="flex items-center space-x-2">
+                <ActionButton
+                  spacing="sm"
+                  theme="hollow"
+                  @click="toggleLogOrder"
+                >
+                  <inline-svg
+                    :src="require('@/assets/svg/arrows/arrow-up.svg')"
+                    class="h-4 w-auto"
+                    v-if="logOrdering == 'ASC'"
+                  ></inline-svg>
+                  <inline-svg
+                    :src="require('@/assets/svg/arrows/arrow-down.svg')"
+                    class="h-4 w-auto"
+                    v-else
+                  ></inline-svg>
+                </ActionButton>
+                <ActionButton
+                  spacing="sm"
+                  @click="$root.$emit('showJournalModal')"
+                  >Add +</ActionButton
+                >
+              </div>
             </div>
 
-            <HeaderAside>
-              Time tracking coming in a future update...
+            <HeaderAside v-if="(!loadingLogs && !logs.length)">
+              No time tracking entries found for today.
             </HeaderAside>
-            <div
-              class="p-2 bg-green-100 border border-green-300 rounded space-y-2 relative"
-            >
-              <div class="flex space-x-2">
-                <div class="text-right text-green-800 font-bold">
-                  <p>9:00</p>
-                  <p>14:00</p>
-                </div>
-                <div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                </div>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <p>Colin Williams</p>
-                <p>Juicy Crab Albany</p>
-              </div>
-              <div>
-                <div
-                  class="absolute top-0 right-0 -mt-2 -mr-2 rounded-full bg-green-300 h-6 w-6 flex items-center justify-center text-white italic"
-                >
-                  <img
-                    src="@/assets/svg/buttons/more-alt.svg"
-                    alt="More Info Icon"
-                  />
-                </div>
-              </div>
+            <div class="space-y-4">
+              <TimeEntry v-for="log in logs" :key="log.id" :entry="log" />
             </div>
-            <div
-              class="p-2 bg-orange-100 border border-orange-300 rounded space-y-2 relative"
+
+            <ButtonLink
+              :link="{ name: 'home' }"
+              spacing="sm"
+              theme="hollow"
+              class="w-full"
+              >View All...</ButtonLink
             >
-              <div class="flex space-x-2">
-                <div class="text-right text-orange-800 font-bold">
-                  <p>9:00</p>
-                  <p>14:00</p>
-                </div>
-                <div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                </div>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <p>Colin Williams</p>
-                <p>Juicy Crab Albany</p>
-              </div>
-              <div>
-                <button
-                  class="absolute top-0 right-0 -mt-2 -mr-2 rounded-full bg-orange-300 h-6 w-6 flex items-center justify-center"
-                >
-                  <img
-                    src="@/assets/svg/buttons/more-alt.svg"
-                    alt="More Info Icon"
-                  />
-                </button>
-                <button
-                  class="absolute bottom-0 right-0 -mb-2 -mr-2 bg-orange-300 rounded-full h-6 w-6 flex items-center justify-center"
-                >
-                  &check;
-                </button>
-              </div>
-            </div>
           </SolidSection>
         </div>
 
@@ -104,6 +85,7 @@
               spacing="sm"
               theme="hollow"
               :link="{ name: 'reports-csqr-drafts' }"
+              class="w-full"
               >View All...</ButtonLink
             >
           </SolidSection>
@@ -141,11 +123,12 @@ import ButtonLink from '@/components/ui/buttonLink'
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import HeaderAside from '@/components/ui/headerAside'
-import Loading from '@/components/common/Loading'
+import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
+import TimeEntry from '@/components/ui/timeEntry'
 export default {
   name: 'HomePage',
   middleware: ['auth'],
@@ -163,31 +146,78 @@ export default {
     ReportListItem,
     SectionHeader,
     SolidSection,
+    TimeEntry,
   },
   data() {
     return {
       loadingDrafts: false,
+      loadingLogs: false,
       loadingRecents: false,
       drafts: [],
       recents: [],
+      logs: [],
+      logOrdering: 'ASC',
       today: moment(),
     }
   },
+  methods: {
+    getDrafts() {
+      this.loadingDrafts = true
+      this.$store
+        .dispatch('api/get', '/reports/customer_service/drafts/recent/')
+        .then((drafts) => {
+          this.drafts = drafts.splice(0, 2)
+          this.loadingDrafts = false
+        })
+    },
+    getLogs() {
+      this.loadingLogs = true
+      let ordering = localStorage.getItem('logOrdering')
+      if (ordering) {
+        this.logOrdering = ordering
+      }
+      this.$store
+        .dispatch(
+          'api/get',
+          `/logs/entry/${moment()
+            .set({ hour: 0, minute: 0 })
+            .utc()
+            .format('YYYYMMDDHHmm')}`
+        )
+        .then((logs) => {
+          this.logs = logs
+          if (this.logOrdering == 'DESC') {
+            this.logs.reverse()
+          }
+          this.loadingLogs = false
+        })
+    },
+    getRecents() {
+      this.loadingRecents = true
+      this.$store
+        .dispatch('api/get', '/reports/customer_service/recent/')
+        .then((recents) => {
+          this.recents = recents.splice(0, 2)
+          this.loadingRecents = false
+        })
+    },
+    toggleLogOrder() {
+      if (this.logOrdering == 'ASC') {
+        this.logOrdering = 'DESC'
+      } else {
+        this.logOrdering = 'ASC'
+      }
+      localStorage.setItem('logOrdering', this.logOrdering)
+      this.logs.reverse()
+    },
+  },
   created() {
-    this.loadingDrafts = true
-    this.loadingRecents = true
-    this.$store
-      .dispatch('api/get', '/reports/customer_service/drafts/recent/')
-      .then((drafts) => {
-        this.drafts = drafts.splice(0, 2)
-        this.loadingDrafts = false
-      })
-    this.recents = this.$store
-      .dispatch('api/get', '/reports/customer_service/recent/')
-      .then((recents) => {
-        this.recents = recents.splice(0, 2)
-        this.loadingRecents = false
-      })
+    this.getDrafts()
+    this.getLogs()
+    this.getRecents()
+    this.$root.$on('updateEntries', () => {
+      this.getLogs()
+    })
   },
 }
 </script>

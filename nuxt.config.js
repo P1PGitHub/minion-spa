@@ -48,6 +48,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    { src: '@/plugins/inline-svg.js' },
     { src: '@/plugins/vcalendar.js', ssr: false },
     { src: '@/plugins/vue-moment.js', ssr: false },
   ],
@@ -61,6 +62,24 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
+    [
+      '@nuxtjs/color-mode',
+      {
+        classSuffix: '',
+      },
+    ],
+    [
+      '@nuxtjs/pwa',
+      {
+        manifest: {
+          name: 'Minion',
+          short_name: 'Minion',
+          description:
+            "Priority1 POS's key to staying organized and provided plenty of inside joke laughs.",
+          theme_color: '#81e6d9',
+        },
+      },
+    ],
     '@nuxtjs/tailwindcss',
   ],
   /*
@@ -68,7 +87,6 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
     [
       '@nuxtjs/firebase',
       {
@@ -103,11 +121,6 @@ export default {
       enabled: process.env.NODE_ENV === 'production',
     }),
   ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

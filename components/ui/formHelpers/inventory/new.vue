@@ -8,7 +8,7 @@
         name="inventory-description"
         id="inventory-description"
         type="text"
-        class="form-input w-full bg-gray-100"
+        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"
@@ -24,7 +24,7 @@
         name="inventory-sn"
         id="inventory-sn"
         type="text"
-        class="form-input w-full bg-gray-100"
+        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"
@@ -42,7 +42,7 @@
         name="inventory-model-number"
         id="inventory-model-number"
         type="text"
-        class="form-input w-full bg-gray-100"
+        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"
@@ -53,9 +53,13 @@
     <div class="w-full md:w-2/12 space-y-2">
       <h3>Actions</h3>
       <div class="flex items-stretch space-x-2">
-        <ActionButton theme="danger" spacing="sm" @click="reset" class="w-1/3"
-          ><img src="@/assets/svg/other/remove-r.svg" alt="Reset Icon"
-        /></ActionButton>
+        <ActionButton theme="danger" spacing="sm" @click="reset" class="w-1/3">
+          <inline-svg
+            :src="require('@/assets/svg/other/remove-r.svg')"
+            fill="fill-current"
+            class="h-6 w-auto text-red-800"
+          ></inline-svg>
+        </ActionButton>
         <ActionButton spacing="sm" @click="add" class="w-2/3"
           ><span>Add</span> <span>+</span></ActionButton
         >

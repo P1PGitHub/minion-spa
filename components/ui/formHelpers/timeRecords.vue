@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-y-2">
     <div class="flex items-center space-x-4">
       <ActionButton spacing="sm" @click="add">Add +</ActionButton>
       <SectionHeader text="Time Tracking" />

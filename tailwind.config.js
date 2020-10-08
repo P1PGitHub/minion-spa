@@ -5,11 +5,18 @@
  ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
 module.exports = {
+  experimental: {
+    darkModeVariant: true,
+  },
+  dark: 'class',
   theme: {
     fontFamily: {
       sans: ['Red Hat Display', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
+      maxHeight: {
+        '128': '32rem',
+      },
       maxWidth: {
         '64': '16rem',
         '96': '24rem',
@@ -19,10 +26,12 @@ module.exports = {
         '64': '16rem',
         '96': '24rem',
       },
-
       spacing: {
+        '-36': '-9rem;',
+        '-34': '-8.5rem',
         '22': '5.5rem',
         '96': '24rem',
+        '128': '32rem',
       },
     },
   },

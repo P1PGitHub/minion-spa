@@ -8,7 +8,7 @@
           <select
             name="company-name"
             id="company-name"
-            class="form-select w-full bg-gray-100"
+            class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             :class="{
               'border-red-400': this.errors.includes('company_id'),
             }"
@@ -30,7 +30,7 @@
           <input
             name="location"
             id="location"
-            class="form-input w-full bg-gray-100"
+            class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             :class="{
               'border-red-400': this.errors.includes('location'),
             }"
@@ -46,7 +46,7 @@
           <input
             name="client-name"
             id="client-name"
-            class="form-input w-full bg-gray-100"
+            class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             :class="{
               'border-red-400': this.errors.includes('client_name'),
             }"
@@ -60,7 +60,7 @@
           <select
             name="job-type"
             id="job-type"
-            class="form-select w-full bg-gray-100"
+            class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             :class="{
               'border-red-400': this.errors.includes('service_type'),
             }"
@@ -83,7 +83,7 @@
           type="text"
           name="description"
           id="description"
-          class="form-input w-full bg-gray-100"
+          class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
           :class="{
             'border-red-400': this.errors.includes('description'),
           }"

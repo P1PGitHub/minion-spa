@@ -82,7 +82,7 @@
         >
         <input
           type="text"
-          class="form-input w-full bg-gray-100 text-sm"
+          class="form-input w-full bg-gray-100 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
           placeholder="Return with New Printer"
           v-model="value.followup"
           @input="update"

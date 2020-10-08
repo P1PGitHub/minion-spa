@@ -37,7 +37,7 @@
 <script>
 import ActionButton from '@/components/ui/actionButton'
 import ButtonLink from '@/components/ui/buttonLink'
-import Loading from '@/components/common/Loading'
+import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 export default {

@@ -2,7 +2,7 @@
   <div class="w-full relative">
     <input
       type="text"
-      class="form-input w-full bg-gray-100"
+      class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
       @click="show"
       v-if="this.hour !== null"
       v-model="time"
@@ -29,7 +29,7 @@
       </div>
       <div class="flex items-start text-gray-600">
         <div
-          class="w-1/2 h-32 overflow-y-scroll scrolling-touch border-r border-t border-blue-600 bg-gray-200 rounded-bl hover:bg-white"
+          class="w-1/2 h-32 overflow-y-scroll scrolling-touch border-r border-t border-blue-600 bg-gray-200 rounded-bl hover:bg-white dark:bg-gray-700 dark:text-white"
         >
           <button
             v-for="hourOpt in Array(24).keys()"
@@ -37,7 +37,7 @@
             class="block px-6 py-1 text-right w-full"
             :class="{
               'bg-blue-600 text-white': hourOpt == hour,
-              'hover:bg-blue-200': hourOpt !== hour,
+              'hover:bg-blue-200 dark:hover:bg-blue-600': hourOpt !== hour,
             }"
             @click="hour = hourOpt"
           >
@@ -45,7 +45,7 @@
           </button>
         </div>
         <div
-          class="w-1/2 h-32 overflow-y-scroll scrolling-touch bg-gray-200 rounded-br border-t border-blue-600 hover:bg-white"
+          class="w-1/2 h-32 overflow-y-scroll scrolling-touch bg-gray-200 rounded-br border-t border-blue-600 hover:bg-white hover:bg-white dark:bg-gray-700 dark:text-white"
         >
           <button
             v-for="minuteOpt in Array(60).keys()"
@@ -53,7 +53,7 @@
             class="block px-6 py-1 text-right w-full"
             :class="{
               'bg-blue-600 text-white': minuteOpt == minute,
-              'hover:bg-blue-200': minuteOpt !== minute,
+              'hover:bg-blue-200 dark:hover:bg-blue-600': minuteOpt !== minute,
             }"
             @click="setMinute(minuteOpt)"
           >
@@ -104,6 +104,10 @@ export default {
   methods: {
     hide() {
       this.showDropdown = false
+    },
+    reset(time) {
+      this.hour = time.split(':')[0]
+      this.minute = time.split(':')[1]
     },
     setMinute(minuteOpt) {
       this.minute = minuteOpt

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex items-center justify-center fixed bottom-0 left-0 right-0 z-30 px-4 mb-4 transform duration-300 ease-in-out"
+    class="flex items-center justify-center fixed bottom-0 mx-auto z-30 px-4 mb-4 transform duration-300 ease-in-out"
     :class="{ 'translate-y-48': !show }"
   >
     <div
-      class="relative bg-white border-2 rounded shadow-lg p-4"
+      class="relative bg-white dark:bg-gray-800 dark:text-white border-2 rounded shadow-lg p-4"
       :class="{
         'border-blue-500': message.type == 'info',
         'border-teal-300': message.type == 'success',
@@ -21,11 +21,11 @@
             'bg-red-400': message.type == 'error',
           }"
         >
-          <img
-            src="@/assets/svg/alerts/bolt-white.svg"
-            alt="alert icon"
-            class="w-4"
-          />
+          <inline-svg
+            :src="require('@/assets/svg/alerts/bolt.svg')"
+            fill="fill-current"
+            class="h-4 w-auto text-white"
+          ></inline-svg>
         </div>
         <p class="text-lg">{{ message.text }}</p>
       </div>
@@ -34,7 +34,11 @@
         class="bg-red-200 border border-red-400 p-1 rounded absolute top-0 right-0 -mt-4 -mr-4"
         @click="close"
       >
-        <img src="@/assets/svg/other/close-r.svg" alt="Delete Icon" />
+        <inline-svg
+          :src="require('@/assets/svg/other/close-r.svg')"
+          fill="fill-current"
+          class="h-6 w-auto text-black"
+        ></inline-svg>
       </button>
     </div>
   </div>
