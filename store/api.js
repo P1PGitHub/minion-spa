@@ -44,6 +44,13 @@ export const actions = {
     if (context.state.refreshToken) {
       let headers = new Headers()
       headers.append('Content-Type', 'application/json')
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
+
       let body = JSON.stringify({
         refresh: context.state.refreshToken,
       })
@@ -82,6 +89,12 @@ export const actions = {
       }
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'DELETE',
@@ -107,6 +120,12 @@ export const actions = {
       }
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -133,6 +152,12 @@ export const actions = {
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
       headers.append('Content-Type', 'application/json')
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'POST',
@@ -185,12 +210,18 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let myHeaders = new Headers()
-      myHeaders.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = new Headers()
+      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'GET',
-        headers: myHeaders,
+        headers: headers,
         redirect: 'follow',
       }
 
@@ -214,6 +245,12 @@ export const actions = {
       }
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -239,12 +276,18 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let myHeaders = new Headers()
-      myHeaders.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = new Headers()
+      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
 
       let requestOptions = {
         method: 'GET',
-        headers: myHeaders,
+        headers: headers,
         redirect: 'follow',
       }
 
@@ -264,6 +307,12 @@ export const actions = {
   async login(context, credentials) {
     let headers = new Headers()
     headers.append('Content-Type', 'application/json')
+    if (process.env.NODE_ENV == 'production') {
+      headers.appened(
+        'Access-Control-Allow-Origin',
+        'https://minion-spa.herokuapp.com'
+      )
+    }
 
     let raw = JSON.stringify(credentials)
 
@@ -299,6 +348,13 @@ export const actions = {
       }
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      if (process.env.NODE_ENV == 'production') {
+        headers.appened(
+          'Access-Control-Allow-Origin',
+          'https://minion-spa.herokuapp.com'
+        )
+      }
+
       let formdata = new FormData()
       formdata.append('file', data.file, 'test.png')
       formdata.append('company', data.company)
