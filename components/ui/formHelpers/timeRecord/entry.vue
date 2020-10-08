@@ -3,13 +3,16 @@
     class="md:w-1/2 py-2"
     :class="{ 'md:pr-2': index % 2 == 0, 'md:pl-2': index % 2 == 1 }"
   >
-    <div class="relative w-full bg-white border border-blue-600 rounded shadow">
+    <div
+      class="relative w-full bg-white border border-blue-600 rounded shadow dark:bg-gray-800"
+    >
       <div class="bg-blue-600 w-full flex items-center justify-center">
         <v-date-picker
           :popover="{ placement: 'bottom', visibility: 'click' }"
           :value="value.start"
           v-model="value.start"
           @input="update"
+          :is-dark="$colorMode.value == 'dark'"
         >
           <button
             type="button"
@@ -53,7 +56,7 @@
                 name="shift-employees"
                 id="shift-employees"
                 multiple
-                class="form-multiselect bg-gray-100 w-full h-32"
+                class="form-multiselect bg-gray-100 w-full h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 v-model="value.users"
                 @click="update"
               >
@@ -70,7 +73,7 @@
               <textarea
                 name="shift-start-time"
                 id="shift-start-time"
-                class="form-textarea bg-gray-100 w-full h-32"
+                class="form-textarea bg-gray-100 w-full h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 placeholder="AM Shift"
                 v-model="value.notes"
                 @input="update"
@@ -85,7 +88,11 @@
         class="bg-red-200 border border-red-400 p-1 rounded absolute top-0 right-0 -mt-2 -mr-2"
         @click="remove()"
       >
-        <img src="@/assets/svg/other/close-r.svg" alt="Delete Icon" />
+        <inline-svg
+          :src="require('@/assets/svg/other/close-r.svg')"
+          fill="fill-current"
+          class="h-4 w-auto text-red-800"
+        ></inline-svg>
       </button>
     </div>
   </div>

@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col items-center px-4">
     <section
-      class="flex items-center justify-between w-full pb-4 border-b border-dashed border-gray-400"
+      class="flex items-center justify-between w-full pb-4 border-b border-dashed border-gray-400 text-gray-800 dark:text-white"
     >
       <slot name="page-header"> </slot>
     </section>
     <main
-      class="px-2 py-4 md:px-4 text-gray-800 container"
+      class="px-2 py-4 md:px-4 text-gray-800 dark:text-white container"
       :class="{
         'space-y-0': spacing == 'none',
         'space-y-2': spacing == 'sm',

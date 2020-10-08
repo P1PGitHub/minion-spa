@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4 w-full" v-show="!saved">
     <canvas
-      class="rounded border bg-gray-100"
+      class="rounded border bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
       :class="{
         'border-green-400': saved,
         'border-blue-400': !saved,

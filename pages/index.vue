@@ -5,7 +5,10 @@
       <div
         class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center"
       >
-        <img src="@/assets/svg/other/boy-white.svg" alt="Account Icon" />
+        <inline-svg
+          :src="require('@/assets/svg/other/boy.svg')"
+          class="h-6 w-auto text-white"
+        ></inline-svg>
         <span>
           {{ $store.state.account.account.last_name }},
           {{ $store.state.account.account.first_name }}

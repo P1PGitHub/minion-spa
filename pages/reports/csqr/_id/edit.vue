@@ -8,7 +8,10 @@
         <span>
           CSQR Draft Edit
         </span>
-        <span v-if="report" class="block md:inline text-base text-gray-700">
+        <span
+          v-if="report"
+          class="block md:inline text-base text-gray-700 dark:text-gray-300"
+        >
           {{ report.created_at | moment('ddd MMM DD, YYYY - HH:mm') }}</span
         >
       </h1>

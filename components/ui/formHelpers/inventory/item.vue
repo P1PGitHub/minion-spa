@@ -19,18 +19,18 @@
       class="w-full md:w-2/12 whitespace-no-wrap overflow-x-hidden flex space-x-2"
     >
       <ActionButton spacing="sm" theme="secondary" @click="copy" class="w-1/2">
-        <img
-          src="@/assets/svg/content/copy.svg"
-          alt="Delete Icon"
-          class="w-4"
-        />
+        <inline-svg
+          :src="require('@/assets/svg/content/copy.svg')"
+          fill="fill-current"
+          class="h-4 w-auto"
+        ></inline-svg>
       </ActionButton>
       <ActionButton spacing="sm" theme="danger" @click="remove" class="w-1/2">
-        <img
-          src="@/assets/svg/other/remove-r.svg"
-          alt="Delete Icon"
-          class="w-4"
-        />
+        <inline-svg
+          :src="require('@/assets/svg/other/remove-r.svg')"
+          fill="fill-current"
+          class="h-4 w-auto text-red-800"
+        ></inline-svg>
       </ActionButton>
     </div>
   </div>

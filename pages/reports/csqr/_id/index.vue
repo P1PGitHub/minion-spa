@@ -5,7 +5,10 @@
         <span>
           CSQR Review
         </span>
-        <span v-if="report" class="block md:inline text-base text-gray-700">
+        <span
+          v-if="report"
+          class="block md:inline text-base text-gray-700 dark:text-gray-300"
+        >
           {{ report.created_at | moment('ddd MMM DD, YYYY - HH:mm') }}</span
         >
       </h1>
@@ -28,7 +31,9 @@
       <FlexSection>
         <SolidSection class="w-full md:w-1/2">
           <div class="space-y-2">
-            <h2 class="text-xl text-blue-700">{{ report.company_name }}</h2>
+            <h2 class="text-xl text-blue-700 dark:text-blue-300">
+              {{ report.company_name }}
+            </h2>
             <h4>{{ report.client_name }}</h4>
             <h4>{{ report.location }}</h4>
             <h4>{{ report.service_type }}</h4>
@@ -36,7 +41,9 @@
           </div>
         </SolidSection>
         <SolidSection class="w-full md:w-1/2">
-          <h2 class="text-xl text-blue-700">Additional Information</h2>
+          <h2 class="text-xl text-blue-700 dark:text-blue-300">
+            Additional Information
+          </h2>
           <FlexSection spacing="sm">
             <div class="w-full md:w-1/2 space-y-2">
               <div class="flex items-center space-x-2">
@@ -100,7 +107,7 @@
         </SolidSection>
       </FlexSection>
       <SolidSection v-if="report.time_records.length">
-        <h2 class="text-xl text-blue-700">
+        <h2 class="text-xl text-blue-700 dark:text-blue-300">
           Time Records
         </h2>
         <TimeRecordView
@@ -112,7 +119,7 @@
       </SolidSection>
       <SolidSection v-if="report.inventory_checkouts.length">
         <div class="flex items-center justify-between">
-          <h2 class="text-xl text-blue-700">
+          <h2 class="text-xl text-blue-700 dark:text-blue-300">
             Inventory Used
           </h2>
           <div class="flex items-center space-x-2">
@@ -141,11 +148,11 @@
         </div>
       </SolidSection>
       <SolidSection>
-        <h2 class="text-xl text-blue-700">Work Summary</h2>
+        <h2 class="text-xl text-blue-700 dark:text-blue-300">Work Summary</h2>
         <p class="whitespace-pre-wrap">{{ report.summary }}</p>
       </SolidSection>
       <SolidSection v-if="report.followup">
-        <h2 class="text-xl text-blue-700">Followup Notes</h2>
+        <h2 class="text-xl text-blue-700 dark:text-blue-300">Followup Notes</h2>
         <p class="whitespace-pre-wrap">{{ report.followup }}</p>
       </SolidSection>
       <SolidSection v-if="report.draft">
@@ -170,11 +177,15 @@
         />
       </SolidSection>
       <SolidSection v-else>
-        <h2 class="text-xl text-blue-700">Client Agreement</h2>
+        <h2 class="text-xl text-blue-700 dark:text-blue-300">
+          Client Agreement
+        </h2>
         <AgreementClause :client="report.client_name" />
         <HeaderAside v-if="report.signature">
           <img :src="signURL" alt="Client Signature" class="h-24" />
-          <h4 class="font-bold text-teal-700 mt-4">{{ report.client_name }}</h4>
+          <h4 class="font-bold text-teal-700 mt-4 dark:text-teal-300">
+            {{ report.client_name }}
+          </h4>
         </HeaderAside>
       </SolidSection>
 

@@ -14,7 +14,7 @@
     <textarea
       name="work-summary"
       id="work-summary"
-      class="form-textarea w-full h-40 shadow border"
+      class="form-textarea w-full h-40 shadow border dark:bg-gray-700 dark:text-white dark:border-gray-600"
       :class="{
         'border-red-400': this.error,
         'border-blue-400': !this.error,

@@ -1,11 +1,15 @@
 <template>
   <div
-    class="fixed top-0 z-30 max-w-128 bg-white border-2 border-teal-300 rounded shadow-lg mt-4 mx-4 p-4 space-y-4 transform duration-300 ease-in-out"
+    class="fixed top-0 z-30 max-w-128 bg-white border-2 border-teal-300 rounded shadow-lg mt-4 mx-4 p-4 space-y-4 transform duration-300 ease-in-out dark:bg-gray-800 dark:text-white"
     :class="{ '-translate-y-96': !show }"
   >
     <div class="flex items-center space-x-4">
       <div class="p-1 rounded-full bg-teal-300">
-        <img src="@/assets/svg/alerts/bolt-white.svg" alt="alert icon" />
+        <inline-svg
+          :src="require('@/assets/svg/alerts/bolt.svg')"
+          fill="fill-current"
+          class="h-6 w-auto text-gray-800"
+        ></inline-svg>
       </div>
       <h1 class="text-xl font-bold">Bello</h1>
     </div>
@@ -13,27 +17,27 @@
       <p>{{ options.message }}</p>
     </div>
     <div class="flex items-center justify-center space-x-4">
-      <button
-        type="button"
-        class="px-4 py-1 border border-teal-300 text-teal-700 rounded hover:bg-teal-300 hover:text-gray-800"
-        @click="deny"
+      <ActionButton spacing="sm" theme="secondary" @click="deny">
+        <span class="font-normal">
+          {{ options.denyText }}
+        </span></ActionButton
       >
-        {{ options.denyText }}
-      </button>
-      <button
-        type="button"
-        class="px-4 py-1 bg-blue-500 border border-blue-500 text-white rounded hover:bg-blue-700 hover:border-blue-700"
-        @click="allow"
-      >
-        {{ options.allowText }}
-      </button>
+      <ActionButton spacing="sm" @click="allow">
+        <span class="font-normal">
+          {{ options.allowText }}
+        </span>
+      </ActionButton>
     </div>
   </div>
 </template>
 
 <script>
+import ActionButton from '@/components/ui/actionButton'
 export default {
   name: 'Modal',
+  components: {
+    ActionButton,
+  },
   data() {
     return {
       options: {
