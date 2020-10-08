@@ -21,12 +21,7 @@
         ></inline-svg>
         <span>Minion</span></nuxt-link
       >
-      <img
-        src="@/assets/svg/other/spinner-two-theme.svg"
-        alt="Loading Icon"
-        class="animate-spin"
-        v-if="$store.state.isLoading"
-      />
+      <Loading v-if="$store.state.isLoading" />
     </div>
 
     <ul class="hidden md:flex items-center space-x-4 text-lg">
@@ -214,8 +209,12 @@
 </template>
 
 <script>
+import Loading from '@/components/common/loading'
 export default {
   name: 'Navbar',
+  components: {
+    Loading,
+  },
   data() {
     return {
       isOpen: false,
