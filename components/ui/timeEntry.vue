@@ -62,12 +62,13 @@
           }"
           v-if="contextOpen"
         >
-          <div
-            class="px-2 py-1 flex items-center space-x-2"
+          <button
+            class="w-full px-2 py-1 flex items-center space-x-2"
             :class="{
               'border-b border-green-300 hover:text-green-600': entry.resolved,
               'border-b border-orange-300 hover:text-orange-600': !entry.resolved,
             }"
+            @click="edit"
           >
             <inline-svg
               :src="require('@/assets/svg/design/edit.svg')"
@@ -75,7 +76,7 @@
               class="h-4 w-auto"
             ></inline-svg>
             <span>Edit</span>
-          </div>
+          </button>
           <div
             class="px-2 py-1 flex items-center space-x-2"
             :class="{
@@ -174,6 +175,10 @@ export default {
           }
         }
       })
+    },
+    edit() {
+      this.$root.$emit('editJournalEntry', this.entry.id)
+      this.close()
     },
     open() {
       this.contextOpen = true

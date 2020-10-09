@@ -11,7 +11,8 @@
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
-          <SectionHeader text="New Journal Entry" />
+          <SectionHeader text="Edit Journal Entry" v-if="entry.id" />
+          <SectionHeader text="New Journal Entry" v-else />
           <Loading v-if="$store.state.isLoading" />
         </div>
         <ActionButton spacing="sm" theme="hollow" @click="reset">
@@ -139,8 +140,10 @@
           class="w-full md:w-1/2"
           :disable="isLoading"
           @click="saveEntry"
-          >Add</ActionButton
         >
+          <span v-if="entry.id">Update</span>
+          <span v-else>Add</span>
+        </ActionButton>
       </FlexSection>
     </div>
     <div
@@ -223,6 +226,9 @@ export default {
         console.log('no company selected')
       }
     },
+    open() {
+      this.show = true
+    },
     reset() {
       this.errors = []
       this.entry = {
@@ -245,16 +251,26 @@ export default {
       if (this.validate()) {
         console.log('saving')
         let formattedEntry = this.formatEntry()
-        console.log(formattedEntry)
         try {
-          let entryResponse = await this.$store.dispatch('api/post', {
-            url: `/logs/entry/`,
-            data: formattedEntry,
-          })
-          this.$root.$emit('showToast', {
-            text: `Time Entry for ${this.entry.company_name} has been added.`,
-            type: 'success',
-          })
+          if (formattedEntry.id) {
+            let entryResponse = await this.$store.dispatch('api/put', {
+              url: `/logs/entry/id/${formattedEntry.id}/`,
+              data: formattedEntry,
+            })
+            this.$root.$emit('showToast', {
+              text: `Time Entry for ${this.entry.company_name} has been updated.`,
+              type: 'success',
+            })
+          } else {
+            let entryResponse = await this.$store.dispatch('api/post', {
+              url: `/logs/entry/`,
+              data: formattedEntry,
+            })
+            this.$root.$emit('showToast', {
+              text: `Time Entry for ${this.entry.company_name} has been added.`,
+              type: 'success',
+            })
+          }
           this.$root.$emit('updateEntries')
           this.close()
           this.reset()
@@ -275,6 +291,10 @@ export default {
           this.errors.push(key)
         }
       })
+      let followupIndex = this.errors.indexOf('followup')
+      if (followupIndex >= 0) {
+        this.errors.splice(followupIndex, 1)
+      }
       if (this.errors.length) {
         this.$root.$emit('showToast', {
           text: 'Please correct errors in the new journal entry.',
@@ -287,7 +307,30 @@ export default {
     },
   },
   created() {
-    this.$root.$on('showJournalModal', () => (this.show = true))
+    this.$root.$on('showJournalModal', () => {
+      if (this.entry.id) {
+        this.reset()
+      }
+      this.open()
+    })
+    this.$root.$on('editJournalEntry', async (id) => {
+      try {
+        let entry = await this.$store.dispatch(
+          'api/get',
+          `/logs/entry/id/${id}/`
+        )
+        this.entry = {
+          ...entry,
+          start: moment(entry.start).format('HH:mm'),
+          end: moment(entry.end).format('HH:mm'),
+        }
+        this.$refs.journalEntryStartTime.reset(this.entry.start)
+        this.$refs.journalEntryEndTime.reset(this.entry.end)
+        this.open()
+      } catch (err) {
+        console.log(err)
+      }
+    })
   },
 }
 </script>
