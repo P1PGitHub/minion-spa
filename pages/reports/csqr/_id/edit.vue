@@ -198,6 +198,7 @@ export default {
         'api/get',
         `/reports/customer_service/${this.$route.params.id}/`
       )
+      this.report.last_edited_by = this.$store.state.account.account.id
       this.clientDetails = {
         company_id: this.report.company_id,
         company_name: this.report.company_name,
@@ -222,6 +223,7 @@ export default {
         report_type: 'CUSTOMER_SERVICE',
         summary: '',
         team: this.$store.state.team.team.id,
+        last_edited_by = this.$store.state.account.account.id,
         time_records: [
           {
             end: new Date(),
