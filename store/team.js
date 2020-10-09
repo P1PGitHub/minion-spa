@@ -2,11 +2,13 @@ import moment from 'moment'
 
 import * as account from './account.js'
 
-export const state = () => ({
+const getDefaultState = () => ({
   members: [],
   team: null,
-  cwCompanies: null,
+  cwCompanies: [],
 })
+
+export const state = getDefaultState()
 
 export const mutations = {
   setMembers(state, val) {
@@ -17,6 +19,9 @@ export const mutations = {
   },
   setTeam(state, val) {
     state.team = val
+  },
+  reset(state) {
+    Object.assign(state, getDefaultState())
   },
 }
 

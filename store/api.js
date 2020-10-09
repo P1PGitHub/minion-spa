@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export const state = function () {
+const getDefaultState = () => {
   let baseURL =
     'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
   if (process.env.NODE_ENV == 'production') {
@@ -15,6 +15,8 @@ export const state = function () {
   }
 }
 
+export const state = getDefaultState()
+
 export const mutations = {
   setAccessToken(state, val) {
     state.accessToken = val
@@ -27,6 +29,9 @@ export const mutations = {
   },
   updateRefreshExpiry(state) {
     state.refreshExpiry = moment().add(1, 'days')
+  },
+  reset(state) {
+    Object.assign(state, getDefaultState())
   },
 }
 

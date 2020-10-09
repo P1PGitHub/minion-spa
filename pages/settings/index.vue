@@ -72,11 +72,23 @@
           </div>
         </div>
       </SolidSection>
+      <SolidSection>
+        <SectionHeader text="Actions" />
+        <div class="w-full flex items-center space-x-2">
+          <ActionButton spacing="sm" theme="hollow" @click="reloadCW"
+            >Reload CW</ActionButton
+          >
+          <ActionButton spacing="sm" theme="hollow" @click="logout"
+            >Log Out</ActionButton
+          >
+        </div>
+      </SolidSection>
     </template>
   </PageBody>
 </template>
 
 <script>
+import ActionButton from '@/components/ui/actionButton'
 import PageBody from '@/components/ui/pageBody'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
@@ -84,6 +96,7 @@ export default {
   name: 'ApplicationSettings',
   middleware: ['auth'],
   components: {
+    ActionButton,
     PageBody,
     SectionHeader,
     SolidSection,
@@ -94,8 +107,29 @@ export default {
     }
   },
   methods: {
+    logout() {
+      this.$store.dispatch('account/logout')
+      this.$router.push({ name: 'auth-login' })
+    },
     onSelectChange() {
       this.$router.push({ name: `settings-${this.selectedPage}` })
+    },
+    async reloadCW() {
+      this.$store.commit('startLoading')
+      try {
+        await this.$store.dispatch('team/getCompanies')
+        this.$store.commit('stopLoading')
+        this.$root.$emit('showToast', {
+          text: 'Connectwise resources have been loaded.',
+          type: 'success',
+        })
+      } catch (err) {
+        this.$store.commit('stopLoading')
+        this.$root.$emit('showToast', {
+          text: 'Uh oh... Minion failed to load the CW resources.',
+          type: 'error',
+        })
+      }
     },
     updateDarkModePreference(val) {
       this.$colorMode.preference = val
