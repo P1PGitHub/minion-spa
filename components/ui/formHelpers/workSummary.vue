@@ -2,9 +2,13 @@
   <DashedSection>
     <div class="flex items center justify-between">
       <SectionHeader text="Work Summary" />
-      <ActionButton spacing="sm" theme="hollow" @click="generate"
-        ><img src="@/assets/svg/other/time.svg" alt="clock icon"
-      /></ActionButton>
+      <ActionButton spacing="sm" theme="hollow" @click="generate">
+        <inline-svg
+          :src="require('@/assets/svg/other/time.svg')"
+          fill="fill-current"
+          class="h-6 w-auto text-gray-800 dark:text-white"
+        ></inline-svg>
+      </ActionButton>
     </div>
 
     <HeaderAside

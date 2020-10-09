@@ -46,6 +46,7 @@
           <inline-svg
             :src="require('@/assets/svg/buttons/more.svg')"
             fill="fill-current"
+            class="h-6 w-auto"
             :class="{
               'text-green-700': entry.resolved,
               'text-orange-700': !entry.resolved,
