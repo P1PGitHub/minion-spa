@@ -344,7 +344,6 @@ export default {
       if (this.report.draft) {
         this.report.last_edited_by = this.$store.state.account.account.id
       }
-
       if (this.report.signature) {
         this.signURL = await this.$fireStorage
           .ref()

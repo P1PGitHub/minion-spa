@@ -223,7 +223,7 @@ export default {
         report_type: 'CUSTOMER_SERVICE',
         summary: '',
         team: this.$store.state.team.team.id,
-        last_edited_by = this.$store.state.account.account.id,
+        last_edited_by: this.$store.state.account.account.id,
         time_records: [
           {
             end: new Date(),
