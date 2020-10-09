@@ -11,14 +11,6 @@
       </ButtonLink>
     </template>
     <template v-slot:page-content>
-      <HeaderAside>
-        Complete transparency is key to our business. That transparency allows
-        us to communicate better as a team and offers our clients a level of
-        understanding that is unique to our identity. The Customer Service
-        Quality Report is made to document client work. This process gives us
-        insight into the scope and frequency of our work with specific clients.
-        Without the CSQR, our work has no story.</HeaderAside
-      >
       <div>
         <div
           class="flex items-center justify-between pb-4 border-b border-dashed border-gray-400"
@@ -42,6 +34,9 @@
           :hideAuthor="true"
           :border="index !== recents.length - 1"
         />
+        <HeaderAside v-if="recents.length == 0 && !loadingRecents"
+          >No reports to display.</HeaderAside
+        >
       </div>
       <div>
         <div
@@ -68,6 +63,9 @@
             :editLink="true"
             :border="index !== drafts.length - 1"
           />
+          <HeaderAside v-if="drafts.length == 0 && !loadingDrafts"
+            >No reports to display.</HeaderAside
+          >
         </div>
       </div>
     </template>
