@@ -182,7 +182,7 @@ export default {
           `/logs/entry/${moment()
             .set({ hour: 0, minute: 0 })
             .utc()
-            .format('YYYYMMDDHHmm')}`
+            .format('YYYYMMDDHHmm')}/`
         )
         .then((logs) => {
           this.logs = logs
