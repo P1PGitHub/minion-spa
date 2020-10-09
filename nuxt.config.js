@@ -68,18 +68,18 @@ export default {
         classSuffix: '',
       },
     ],
-    // [
-    //   '@nuxtjs/pwa',
-    //   {
-    //     manifest: {
-    //       name: 'Minion',
-    //       short_name: 'Minion',
-    //       description:
-    //         "Priority1 POS's key to staying organized and provided plenty of inside joke laughs.",
-    //       theme_color: '#81e6d9',
-    //     },
-    //   },
-    // ],
+    [
+      '@nuxtjs/pwa',
+      {
+        manifest: {
+          name: 'Minion',
+          short_name: 'Minion',
+          description:
+            "Priority1 POS's key to staying organized and provided plenty of inside joke laughs.",
+          theme_color: '#81e6d9',
+        },
+      },
+    ],
     '@nuxtjs/tailwindcss',
   ],
   /*
