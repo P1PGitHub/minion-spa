@@ -34,7 +34,7 @@
           :hideAuthor="true"
           :border="index !== recents.length - 1"
         />
-        <HeaderAside v-if="recents.length == 0 && !loadingRecents"
+        <HeaderAside v-if="recents.length == 0 && !loadingRecents" class="mt-4"
           >No reports to display.</HeaderAside
         >
       </div>
@@ -63,7 +63,7 @@
             :editLink="true"
             :border="index !== drafts.length - 1"
           />
-          <HeaderAside v-if="drafts.length == 0 && !loadingDrafts"
+          <HeaderAside v-if="drafts.length == 0 && !loadingDrafts" class="mt-4"
             >No reports to display.</HeaderAside
           >
         </div>
