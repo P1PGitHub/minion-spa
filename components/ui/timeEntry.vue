@@ -18,11 +18,33 @@
         <p>{{ entry.start | moment('HH:mm') }}</p>
         <p>{{ entry.end | moment('HH:mm') }}</p>
       </div>
-      <div>
-        <p class="whitespace-no-wrap">{{ entry.description }}</p>
-        <p class="whitespace-no-wrap">{{ entry.company_name }}</p>
+      <div class="overflow-x-hidden">
+        <p class="whitespace-no-wrap">
+          {{ entry.description }}
+        </p>
+        <p class="whitespace-no-wrap">
+          {{ entry.company_name }}
+        </p>
       </div>
     </div>
+    <div v-if="view">
+      <div class="flex items-center justify-between">
+        <p>{{ entry.client_name }}</p>
+        <p>{{ entry.company_name }}</p>
+      </div>
+      <div>
+        <!-- prettier-ignore -->
+        <p
+          class="whitespace-pre-wrap mt-2 pt-2"
+          :class="{
+            'border-t border-dashed border-green-700 dark:border-green-300':
+              entry.resolved,
+            'border-t border-dashed border-orange-700 dark:border-orange-300': !entry.resolved,
+          }"
+        >{{ entry.summary }}</p>
+      </div>
+    </div>
+
     <div>
       <div
         class="absolute top-0 right-0 -mt-2 -mr-2 flex items-center space-x-2"
@@ -77,20 +99,22 @@
             ></inline-svg>
             <span>Edit</span>
           </button>
-          <div
-            class="px-2 py-1 flex items-center space-x-2"
+          <button
+            class="w-full px-2 py-1 flex items-center space-x-2"
             :class="{
               'border-b border-green-300 hover:text-green-600': entry.resolved,
               'border-b border-orange-300 hover:text-orange-600': !entry.resolved,
             }"
+            @click="toggleView"
           >
             <inline-svg
               :src="require('@/assets/svg/other/eye.svg')"
               fill="fill-current"
               class="h-4 w-auto"
             ></inline-svg>
-            <span>View</span>
-          </div>
+            <span v-if="view">Hide</span>
+            <span v-else>View</span>
+          </button>
           <button
             class="w-full px-2 py-1 flex items-center space-x-2"
             :class="{
@@ -140,6 +164,7 @@ export default {
   data() {
     return {
       contextOpen: false,
+      view: false,
     }
   },
   methods: {
@@ -211,6 +236,10 @@ export default {
     },
     toggle() {
       this.contextOpen = !this.contextOpen
+    },
+    toggleView() {
+      this.view = !this.view
+      this.close()
     },
   },
 }

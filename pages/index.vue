@@ -33,12 +33,12 @@
                 >
                   <inline-svg
                     :src="require('@/assets/svg/arrows/arrow-up.svg')"
-                    class="h-4 w-auto"
+                    class="h-6 w-auto"
                     v-if="logOrdering == 'ASC'"
                   ></inline-svg>
                   <inline-svg
                     :src="require('@/assets/svg/arrows/arrow-down.svg')"
-                    class="h-4 w-auto"
+                    class="h-6 w-auto"
                     v-else
                   ></inline-svg>
                 </ActionButton>
@@ -58,7 +58,7 @@
             </div>
 
             <ButtonLink
-              :link="{ name: 'home' }"
+              :link="{ name: 'today' }"
               spacing="sm"
               theme="hollow"
               class="w-full"

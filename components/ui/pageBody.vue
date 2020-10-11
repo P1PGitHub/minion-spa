@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center px-4">
     <section
-      class="flex items-center justify-between w-full pb-4 border-b border-dashed border-gray-400 text-gray-800 dark:text-white"
+      class="flex items-center justify-between w-full pb-4 px-2 border-b border-dashed border-gray-400 text-gray-800 dark:text-white"
     >
       <slot name="page-header"> </slot>
     </section>

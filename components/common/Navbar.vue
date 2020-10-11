@@ -25,8 +25,9 @@
     </div>
 
     <ul class="hidden md:flex items-center space-x-4 text-lg">
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        :to="{ name: 'today' }"
       >
         <span>
           <inline-svg
@@ -36,7 +37,7 @@
           ></inline-svg>
         </span>
         <span>Today</span>
-      </li>
+      </nuxt-link>
       <li
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
       >
@@ -122,8 +123,9 @@
       id="sidebar"
     >
       <ul class="space-y-4 text-xl">
-        <li
+        <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+          :to="{ name: 'today' }"
         >
           <span>
             <inline-svg
@@ -133,7 +135,7 @@
             ></inline-svg>
           </span>
           <span>Today</span>
-        </li>
+        </nuxt-link>
         <li
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
         >
