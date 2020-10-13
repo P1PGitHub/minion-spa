@@ -82,7 +82,7 @@ export default {
         this.isLoading = true
         let reportResponse = await this.$store.dispatch(
           'api/get',
-          `/reports/customer_service/simple?page=${this.currentPage + 1}`
+          `/reports/customer_service/simple/?page=${this.currentPage + 1}`
         )
         this.reports = reportResponse.results
         this.currentPage++
@@ -95,7 +95,7 @@ export default {
         this.isLoading = true
         let reportResponse = await this.$store.dispatch(
           'api/get',
-          `/reports/customer_service/simple?page=${this.currentPage - 1}`
+          `/reports/customer_service/simple/?page=${this.currentPage - 1}`
         )
         this.reports = reportResponse.results
         this.currentPage--
@@ -109,7 +109,7 @@ export default {
     try {
       let reportResponse = await this.$store.dispatch(
         'api/get',
-        `/reports/customer_service/simple?page=${this.currentPage}`
+        `/reports/customer_service/simple/?page=${this.currentPage}`
       )
       this.maxPage = Math.ceil(reportResponse.count / 25)
       this.reports = reportResponse.results
@@ -120,7 +120,7 @@ export default {
       this.currentPage = 1
       let reportResponse = await this.$store.dispatch(
         'api/get',
-        `/reports/customer_service/simple?page=${this.currentPage}`
+        `/reports/customer_service/simple/?page=${this.currentPage}`
       )
       this.maxPage = Math.ceil(reportResponse.count / 25)
       this.reports = reportResponse.results
