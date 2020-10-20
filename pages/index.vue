@@ -58,7 +58,7 @@
             </div>
 
             <ButtonLink
-              :link="{ name: 'today' }"
+              :link="{ name: 'journal' }"
               spacing="sm"
               theme="hollow"
               class="w-full"

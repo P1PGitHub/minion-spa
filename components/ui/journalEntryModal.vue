@@ -1,150 +1,171 @@
 <template>
   <div>
     <div
-      class="fixed left-0 top-0 z-30 md:w-full max-w-128 max-h-128 md:max-h-full bg-white dark:bg-gray-900 dark:text-white border-2 rounded shadow-lg mt-4 p-4 space-y-4 transform duration-300 ease-in-out overflow-y-auto"
-      :class="{
-        '-translate-x-128': !show,
-        'mx-4': show,
-        'border-green-300': entry.resolved,
-        'border-orange-300': !entry.resolved,
-      }"
+      class="fixed left-0 top-0 py-4 z-30 transform duration-300 ease-in-out h-screen"
+      :class="{ '-translate-x-128': !show, 'mx-4': show }"
     >
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <SectionHeader text="Edit Journal Entry" v-if="entry.id" />
-          <SectionHeader text="New Journal Entry" v-else />
-          <Loading v-if="$store.state.isLoading" />
-        </div>
-        <ActionButton spacing="sm" theme="hollow" @click="reset">
-          <inline-svg
-            :src="require('@/assets/svg/arrows/sync.svg')"
-            fill="fill-current"
-            class="h-4 w-auto text-gray-800 dark:text-white"
-          ></inline-svg>
-        </ActionButton>
-      </div>
+      <div
+        class="md:w-full max-h-full max-w-128 bg-white dark:bg-gray-900 dark:text-white border-2 rounded shadow-lg p-4 space-y-4 overflow-y-scroll z-40"
+        :class="{
+          'border-green-300': entry.resolved,
+          'border-orange-300': !entry.resolved,
+        }"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex md:items-center space-x-2">
+            <SectionHeader text="Edit Journal Entry" v-if="entry.id" />
+            <SectionHeader text="New Journal Entry" v-else />
 
-      <div class="space-y-2">
-        <label for="company-id" class="block">Company</label>
-        <select
-          name="company-id"
-          id="company-id"
-          class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-          :class="{
-            'border-red-400 dark:border-red-400 dark:border-red-400 dark:border-red-400': this.errors.includes(
-              'company_id'
-            ),
-          }"
-          v-model="entry.company_id"
-          @change="onCompanyChange"
-        >
-          <option :value="null">Select a Company...</option>
-          <option
-            :value="company.id"
-            v-for="company in $store.state.team.cwCompanies"
-            :key="company.id"
-            >{{ company.name }}</option
+            <Loading v-if="$store.state.isLoading" class="mt-1 md:mt-0" />
+          </div>
+          <ActionButton spacing="sm" theme="hollow" @click="reset">
+            <inline-svg
+              :src="require('@/assets/svg/arrows/sync.svg')"
+              fill="fill-current"
+              class="h-4 w-auto text-gray-800 dark:text-white"
+            ></inline-svg>
+          </ActionButton>
+        </div>
+
+        <div class="space-y-2">
+          <label for="company-id" class="block">Company</label>
+          <select
+            name="company-id"
+            id="company-id"
+            class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            :class="{
+              'border-red-400 dark:border-red-400 dark:border-red-400 dark:border-red-400': this.errors.includes(
+                'company_id'
+              ),
+            }"
+            v-model="entry.company_id"
+            @change="onCompanyChange"
           >
-        </select>
-      </div>
-      <div class="space-y-2">
-        <label for="client-name" class="block">Client Name</label>
-        <input
-          name="client-name"
-          id="client-name"
-          placeholder="John Doe"
-          class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-          :class="{
-            'border-red-400 dark:border-red-400': this.errors.includes(
-              'client_name'
-            ),
-          }"
-          v-model="entry.client_name"
-        />
-      </div>
-
-      <div class="space-y-2">
-        <label for="description" class="block">Description</label>
-        <input
-          name="description"
-          id="description"
-          placeholder="UTG Reset"
-          class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-          :class="{
-            'border-red-400 dark:border-red-400': this.errors.includes(
-              'description'
-            ),
-          }"
-          v-model="entry.description"
-        />
-      </div>
-
-      <div class="space-x-2 flex items-start">
-        <div class="space-y-2 w-1/2">
-          <label for="entry-start" class="block">Start</label>
-          <TimePicker
-            nameID="entry-start"
-            v-model="entry.start"
-            ref="journalEntryStartTime"
+            <option :value="null">Select a Company...</option>
+            <option
+              :value="company.id"
+              v-for="company in $store.state.team.cwCompanies"
+              :key="company.id"
+              >{{ company.name }}</option
+            >
+          </select>
+        </div>
+        <div class="space-y-2">
+          <label for="client-name" class="block">Client Name</label>
+          <input
+            name="client-name"
+            id="client-name"
+            placeholder="John Doe"
+            class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            :class="{
+              'border-red-400 dark:border-red-400': this.errors.includes(
+                'client_name'
+              ),
+            }"
+            v-model="entry.client_name"
           />
         </div>
-        <div class="space-y-2 w-1/2">
-          <label for="entry-end" class="block">End</label>
-          <TimePicker
-            nameID="entry-end"
-            side="right"
-            v-model="entry.end"
-            ref="journalEntryEndTime"
+
+        <div class="space-y-2">
+          <label for="description" class="block">Description</label>
+          <input
+            name="description"
+            id="description"
+            placeholder="UTG Reset"
+            class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            :class="{
+              'border-red-400 dark:border-red-400': this.errors.includes(
+                'description'
+              ),
+            }"
+            v-model="entry.description"
           />
         </div>
-      </div>
 
-      <div class="space-y-2">
-        <label for="summary" class="block">Summary</label>
-        <textarea
-          name="summary"
-          id="summary"
-          placeholder="Restarted UTG and FPOS."
-          class="form-textarea w-full bg-gray-100 h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-          :class="{
-            'border-red-400 dark:border-red-400': this.errors.includes(
-              'summary'
-            ),
-          }"
-          v-model="entry.summary"
-        ></textarea>
-      </div>
+        <div>
+          <label for="journal-entry-date" class="block w-full">Date</label>
+          <v-date-picker
+            color="blue"
+            :input-props="{
+              class:
+                'form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600',
+              id: 'journal-entry-date',
+            }"
+            :is-dark="$colorMode.value == 'dark'"
+            :max-date="new Date()"
+            :popover="{ visibility: 'click' }"
+            title-position="left"
+            v-model="entry.date"
+          />
+        </div>
 
-      <div class="space-x-2 flex items-center">
-        <input
-          name="resolved"
-          id="resolved"
-          placeholder="John Doe"
-          class="form-checkbox rounded-full bg-gray-200 border-gray-600"
-          type="checkbox"
-          v-model="entry.resolved"
-        />
-        <label for="resolved">Resolved</label>
+        <div class="space-x-2 flex items-start">
+          <div class="space-y-2 w-1/2">
+            <label for="entry-start" class="block">Start</label>
+            <TimePicker
+              nameID="entry-start"
+              v-model="entry.start"
+              ref="journalEntryStartTime"
+            />
+          </div>
+          <div class="space-y-2 w-1/2">
+            <label for="entry-end" class="block">End</label>
+            <TimePicker
+              nameID="entry-end"
+              side="right"
+              v-model="entry.end"
+              ref="journalEntryEndTime"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label for="summary" class="block">Summary</label>
+          <textarea
+            name="summary"
+            id="summary"
+            placeholder="Restarted UTG and FPOS."
+            class="form-textarea w-full bg-gray-100 h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            :class="{
+              'border-red-400 dark:border-red-400': this.errors.includes(
+                'summary'
+              ),
+            }"
+            v-model="entry.summary"
+          ></textarea>
+        </div>
+
+        <div class="space-x-2 flex items-center">
+          <input
+            name="resolved"
+            id="resolved"
+            placeholder="John Doe"
+            class="form-checkbox rounded-full bg-gray-200 border-gray-600"
+            type="checkbox"
+            v-model="entry.resolved"
+          />
+          <label for="resolved">Resolved</label>
+        </div>
+        <FlexSection class="pb-4">
+          <ActionButton
+            spacing="sm"
+            theme="hollow"
+            class="w-full md:w-1/2"
+            @click="close"
+            :disable="isLoading"
+            >Close</ActionButton
+          >
+          <ActionButton
+            spacing="sm"
+            class="w-full md:w-1/2"
+            :disable="isLoading"
+            @click="saveEntry"
+          >
+            <span v-if="entry.id">Update</span>
+            <span v-else>Add</span>
+          </ActionButton>
+        </FlexSection>
       </div>
-      <FlexSection class="pb-4">
-        <ActionButton
-          spacing="sm"
-          theme="hollow"
-          class="w-full md:w-1/2"
-          @click="close"
-          :disable="isLoading"
-          >Close</ActionButton
-        >
-        <ActionButton
-          spacing="sm"
-          class="w-full md:w-1/2"
-          :disable="isLoading"
-          @click="saveEntry"
-        >
-          <span v-if="entry.id">Update</span>
-          <span v-else>Add</span>
-        </ActionButton>
-      </FlexSection>
     </div>
     <div
       class="fixed inset-0 z-20 bg-gray-400 bg-opacity-25"
@@ -177,6 +198,7 @@ export default {
         company_id: null,
         company_name: null,
         client_name: null,
+        date: new Date(),
         start: moment().subtract('30', 'minutes').format('HH:mm'),
         end: moment().format('HH:mm'),
         description: null,
@@ -195,11 +217,11 @@ export default {
     formatEntry() {
       console.log(this.entry.start)
       console.log(this.entry.end)
-      let endDate = moment().set({
+      let endDate = moment(this.entry.date).set({
         hours: this.entry.end.split(':')[0],
         minutes: this.entry.end.split(':')[1],
       })
-      let startDate = moment().set({
+      let startDate = moment(this.entry.date).set({
         hours: this.entry.start.split(':')[0],
         minutes: this.entry.start.split(':')[1],
       })
@@ -235,16 +257,21 @@ export default {
         company_id: null,
         company_name: null,
         client_name: null,
+        date: moment().set({ hours: 0, minutes: 0, seconds: 0 }).toDate(),
         start: moment().subtract('30', 'minutes').format('HH:mm'),
         end: moment().format('HH:mm'),
         description: null,
         summary: null,
         resolved: true,
       }
-      this.$refs.journalEntryStartTime.reset(
-        moment().subtract('30', 'minutes').format('HH:mm')
-      )
-      this.$refs.journalEntryEndTime.reset(moment().format('HH:mm'))
+      if (this.$refs.journalEntryStartTime) {
+        this.$refs.journalEntryStartTime.reset(
+          moment().subtract('30', 'minutes').format('HH:mm')
+        )
+      }
+      if (this.$refs.journalEntryEndTime) {
+        this.$refs.journalEntryEndTime.reset(moment().format('HH:mm'))
+      }
     },
     async saveEntry() {
       this.isLoading = true
@@ -321,11 +348,18 @@ export default {
         )
         this.entry = {
           ...entry,
+          date: moment(entry.start)
+            .set({ hours: 0, minutes: 0, seconds: 0 })
+            .toDate(),
           start: moment(entry.start).format('HH:mm'),
           end: moment(entry.end).format('HH:mm'),
         }
-        this.$refs.journalEntryStartTime.reset(this.entry.start)
-        this.$refs.journalEntryEndTime.reset(this.entry.end)
+        if (this.$refs.journalEntryStartTime) {
+          this.$refs.journalEntryStartTime.reset(this.entry.start)
+        }
+        if (this.$refs.journalEntryEndTime) {
+          this.$refs.journalEntryEndTime.reset(this.entry.end)
+        }
         this.open()
       } catch (err) {
         console.log(err)

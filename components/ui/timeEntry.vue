@@ -1,32 +1,43 @@
 <template>
   <div
-    class="p-2 rounded space-y-2 relative"
+    class="p-2 rounded relative space-y-2"
     :class="{
-      'bg-green-100 dark:bg-green-700 border border-green-300 dark:border-green-700':
+      'bg-gray-100 dark:bg-gray-700 border-2 border-green-300 dark:border-green-300':
         entry.resolved,
-      'bg-orange-100 dark:bg-orange-700 border border-orange-300 dark:border-orange-700': !entry.resolved,
+      'bg-gray-100 dark:bg-gray-700 border-2 border-orange-300 dark:border-orange-300': !entry.resolved,
     }"
   >
-    <div class="flex space-x-2">
-      <div
-        class="text-right font-bold"
+    <div>
+      <p
+        class="font-bold"
         :class="{
-          'text-green-800 dark:text-white': entry.resolved,
-          'text-orange-800 dark:text-white': !entry.resolved,
+          'text-green-700 dark:text-green-400': entry.resolved,
+          'text-orange-700 dark:text-orange-400': !entry.resolved,
         }"
+        v-if="displayDate"
       >
-        <p>{{ entry.start | moment('HH:mm') }}</p>
-        <p>{{ entry.end | moment('HH:mm') }}</p>
-      </div>
-      <div class="overflow-x-hidden">
-        <p class="whitespace-no-wrap">
-          {{ entry.description }}
-        </p>
-        <p class="whitespace-no-wrap">
-          {{ entry.company_name }}
-        </p>
+        {{ entry.start | moment('ddd MMM D, YYYY') }}
+      </p>
+      <div>
+        <div class="flex space-x-2">
+          <p class="w-12 font-bold text-right">
+            {{ entry.start | moment('HH:mm') }}
+          </p>
+          <p>
+            {{ entry.description }}
+          </p>
+        </div>
+        <div class="flex space-x-2">
+          <p class="w-12 font-bold text-right">
+            {{ entry.end | moment('HH:mm') }}
+          </p>
+          <p>
+            {{ entry.company_name }}
+          </p>
+        </div>
       </div>
     </div>
+
     <div v-if="view">
       <div class="flex items-center justify-between">
         <p>{{ entry.client_name }}</p>
@@ -48,6 +59,7 @@
     <div>
       <div
         class="absolute top-0 right-0 -mt-2 -mr-2 flex items-center space-x-2"
+        v-if="editButton"
       >
         <button
           class="bg-orange-300 text-orange-700 rounded-full h-6 w-6 flex items-center justify-center"
@@ -156,6 +168,16 @@ import moment from 'moment'
 export default {
   name: 'TimeEntry',
   props: {
+    displayDate: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    editButton: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     entry: {
       type: Object,
       required: true,
@@ -170,6 +192,9 @@ export default {
   methods: {
     close() {
       this.contextOpen = false
+    },
+    closeDetails() {
+      this.view = false
     },
     async deleteLog() {
       this.$root.$emit('showModal', {
@@ -207,6 +232,9 @@ export default {
     },
     open() {
       this.contextOpen = true
+    },
+    openDetails() {
+      this.view = true
     },
     async resolve() {
       try {
