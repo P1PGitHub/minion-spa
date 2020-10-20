@@ -305,6 +305,9 @@ export default {
     },
   },
   async created() {
+    this.$root.$on('updateEntries', () => {
+      this.getLogs()
+    })
     await this.getLogs()
   },
 }
