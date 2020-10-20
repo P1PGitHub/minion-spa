@@ -11,12 +11,12 @@
       >
         <inline-svg
           :src="require('@/assets/svg/other/minion_logo.svg')"
-          class="h-6 w-auto"
+          class="h-6 w-6"
           v-if="$colorMode.value !== 'dark'"
         ></inline-svg>
         <inline-svg
           :src="require('@/assets/svg/other/minion_logo_dark.svg')"
-          class="h-6 w-auto"
+          class="h-6 w-6"
           v-else
         ></inline-svg>
         <span>Minion</span></nuxt-link
@@ -25,18 +25,19 @@
     </div>
 
     <ul class="hidden md:flex items-center space-x-4 text-lg">
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        :to="{ name: 'journal' }"
       >
         <span>
           <inline-svg
-            :src="require('@/assets/svg/other/today.svg')"
+            :src="require('@/assets/svg/multimedia/album.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
-        <span>Today</span>
-      </li>
+        <span>Journal</span>
+      </nuxt-link>
       <li
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
       >
@@ -44,7 +45,7 @@
           <inline-svg
             :src="require('@/assets/svg/content/clipboard.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
         <span>Projects</span>
@@ -57,7 +58,7 @@
           <inline-svg
             :src="require('@/assets/svg/other/briefcase.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
         <span>CSQR</span>
@@ -69,7 +70,7 @@
           <inline-svg
             :src="require('@/assets/svg/other/user-list.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
         <span>Team</span>
@@ -82,7 +83,7 @@
           <inline-svg
             :src="require('@/assets/svg/other/options.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
       </nuxt-link>
@@ -93,7 +94,7 @@
           <inline-svg
             :src="require('@/assets/svg/other/notifications.svg')"
             fill="fill-current"
-            class="h-6 w-auto text-gray-800 dark:text-white"
+            class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
           <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0">
             <div
@@ -113,7 +114,7 @@
       <inline-svg
         :src="require('@/assets/svg/other/menu-cake.svg')"
         fill="fill-current"
-        class="h-6 w-auto text-gray-800 dark:text-white"
+        class="h-6 w-6 text-gray-800 dark:text-white"
       ></inline-svg>
     </button>
     <nav
@@ -122,18 +123,19 @@
       id="sidebar"
     >
       <ul class="space-y-4 text-xl">
-        <li
+        <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+          :to="{ name: 'journal' }"
         >
           <span>
             <inline-svg
-              :src="require('@/assets/svg/other/today.svg')"
+              :src="require('@/assets/svg/multimedia/album.svg')"
               fill="fill-current"
-              class="h-6 w-auto text-gray-800 dark:text-white"
+              class="h-6 w-6 text-gray-800 dark:text-white"
             ></inline-svg>
           </span>
-          <span>Today</span>
-        </li>
+          <span>Journal</span>
+        </nuxt-link>
         <li
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
         >
@@ -141,7 +143,7 @@
             <inline-svg
               :src="require('@/assets/svg/content/clipboard.svg')"
               fill="fill-current"
-              class="h-6 w-auto text-gray-800 dark:text-white"
+              class="h-6 w-6 text-gray-800 dark:text-white"
             ></inline-svg>
           </span>
           <span>Projects</span>
@@ -154,7 +156,7 @@
             <inline-svg
               :src="require('@/assets/svg/other/briefcase.svg')"
               fill="fill-current"
-              class="h-6 w-auto text-gray-800 dark:text-white"
+              class="h-6 w-6 text-gray-800 dark:text-white"
             ></inline-svg>
           </span>
           <span>CSQR</span>
@@ -166,7 +168,7 @@
             <inline-svg
               :src="require('@/assets/svg/other/user-list.svg')"
               fill="fill-current"
-              class="h-6 w-auto text-gray-800 dark:text-white"
+              class="h-6 w-6 text-gray-800 dark:text-white"
             ></inline-svg>
           </span>
           <span>Team</span>
@@ -180,7 +182,7 @@
               <inline-svg
                 :src="require('@/assets/svg/other/options.svg')"
                 fill="fill-current"
-                class="h-6 w-auto text-gray-800 dark:text-white"
+                class="h-6 w-6 text-gray-800 dark:text-white"
               ></inline-svg>
             </span>
           </nuxt-link>
@@ -191,7 +193,7 @@
               <inline-svg
                 :src="require('@/assets/svg/other/notifications.svg')"
                 fill="fill-current"
-                class="h-6 w-auto text-gray-800 dark:text-white"
+                class="h-6 w-6 text-gray-800 dark:text-white"
               ></inline-svg>
               <div
                 class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0"

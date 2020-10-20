@@ -1,14 +1,23 @@
 <template>
   <div class="w-full relative">
-    <input
-      type="text"
-      class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-      @click="show"
-      v-if="this.hour !== null"
-      v-model="time"
-      :id="nameID"
-      :name="nameID"
-    />
+    <div class="relative">
+      <input
+        type="text"
+        class="form-input w-full pl-10 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        @click="show"
+        v-if="this.hour !== null"
+        v-model="time"
+        :id="nameID"
+        :name="nameID"
+      />
+      <button class="absolute top-0 bottom-0 left-0 px-2" @click="setNow">
+        <inline-svg
+          :src="require('@/assets/svg/other/time.svg')"
+          fill="fill-current"
+          class="h-6 w-auto text-gray-800 dark:text-white"
+        ></inline-svg>
+      </button>
+    </div>
     <button
       type="button"
       class="fixed inset-0 block w-full h-full z-20 cursor-default"
@@ -66,6 +75,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'TimePicker',
   props: {
@@ -112,6 +122,10 @@ export default {
     setMinute(minuteOpt) {
       this.minute = minuteOpt
       this.hide()
+    },
+    setNow() {
+      let now = moment().format('HH:mm')
+      this.reset(now)
     },
     show() {
       this.showDropdown = true
