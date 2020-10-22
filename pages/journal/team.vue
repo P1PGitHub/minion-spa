@@ -37,6 +37,7 @@
             :dateRange="dateRange"
             :teamLog="true"
             ref="jounalLogs"
+            @download="download"
           />
         </div>
       </div>
@@ -85,6 +86,39 @@ export default {
     }
   },
   methods: {
+    download() {
+      this.$root.$emit('showModal', {
+        allowText: 'Yes',
+        denyText: 'No',
+        message: 'Are you sure you want to download this activity report?',
+      })
+      this.$root.$once('modalClose', (choice) => {
+        if (choice) {
+          this.$store
+            .dispatch(
+              'api/get',
+              `/logs/entry/team/${moment(this.dateRange.start)
+                .set({ hour: 0, minute: 0 })
+                .utc()
+                .format('YYYYMMDDHHmm')}/${moment(this.dateRange.end)
+                .set({ hour: 0, minute: 0 })
+                .utc()
+                .format('YYYYMMDDHHmm')}/download/`
+            )
+            .then((data) => {
+              let ref = this.$fireStorage.ref().child(data.ref)
+              ref.getDownloadURL().then((url) => {
+                const link = document.createElement('a')
+                link.href = url
+                link.download = `${data.name}.xlsx`
+                document.body.appendChild(link)
+                link.click()
+                link.remove()
+              })
+            })
+        }
+      })
+    },
     setDisplayDateRange() {
       this.displayDateRange = {
         start: moment(this.dateRange.start)

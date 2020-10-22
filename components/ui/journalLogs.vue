@@ -146,7 +146,7 @@
         />
         <span>{{ $store.state.team.team.name }}</span>
       </ButtonLink>
-      <ActionButton spacing="sm" theme="hollow">
+      <ActionButton spacing="sm" theme="hollow" @click="download">
         <inline-svg
           :src="require('@/assets/svg/buttons/software-download.svg')"
           fill="fill-current"
@@ -205,6 +205,9 @@ export default {
       } else {
         this.hiddenUsers = []
       }
+    },
+    download() {
+      this.$emit('download')
     },
     getLogs(dateRange = null) {
       this.loading = true
