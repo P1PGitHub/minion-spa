@@ -355,7 +355,14 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      vm.prevPage = { name: from.name, params: from.params }
+      if (from.name == 'reports-csqr-id-edit') {
+        vm.prevPage = {
+          name: from.name,
+          params: to.params,
+        }
+      } else {
+        vm.prevPage = { name: from.name, params: from.params }
+      }
     })
   },
 }
