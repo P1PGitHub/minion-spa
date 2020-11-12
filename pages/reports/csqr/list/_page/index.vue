@@ -10,7 +10,7 @@
       >
     </template>
     <template v-slot:page-content>
-      <div>
+      <div class="space-y-2">
         <ReportListItem
           v-for="(report, index) in reports"
           :key="report.id"

@@ -76,10 +76,12 @@
             <ReportListItem
               v-for="(draft, index) in drafts"
               :key="draft.id"
+              :draft="true"
               :report="draft"
               :hideAuthor="true"
               :editLink="true"
               :border="index !== drafts.length - 1"
+              @reload="getDrafts"
             />
             <ButtonLink
               spacing="sm"
