@@ -10,13 +10,15 @@
       >
     </template>
     <template v-slot:page-content>
-      <div>
+      <div class="space-y-2">
         <ReportListItem
           v-for="(report, index) in reports"
           :key="report.id"
+          :draft="true"
           :report="report"
           :editLink="true"
           :border="index !== reports.length - 1"
+          @reload="getCurrent"
         />
       </div>
       <div class="flex items-center justify-end space-x-2">
@@ -62,6 +64,15 @@ export default {
     }
   },
   methods: {
+    async getCurrent() {
+      let reportResponse = await this.$store.dispatch(
+        'api/get',
+        `/reports/customer_service/drafts?page=${this.currentPage}`
+      )
+      this.maxPage = Math.ceil(reportResponse.count / 25)
+      this.reports = reportResponse.results
+      this.isLoading = false
+    },
     async getNext() {
       if (this.currentPage < this.maxPage) {
         this.isLoading = true
@@ -90,13 +101,7 @@ export default {
     },
   },
   async created() {
-    let reportResponse = await this.$store.dispatch(
-      'api/get',
-      '/reports/customer_service/drafts/'
-    )
-    this.maxPage = Math.ceil(reportResponse.count / 25)
-    this.reports = reportResponse.results
-    this.isLoading = false
+    await this.getCurrent()
   },
 }
 </script>
