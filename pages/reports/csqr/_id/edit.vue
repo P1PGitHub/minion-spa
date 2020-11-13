@@ -5,9 +5,7 @@
         New CSQR Report
       </h1>
       <h1 class="text-xl md:space-x-2" v-else>
-        <span>
-          CSQR Draft Edit
-        </span>
+        <span> CSQR Draft Edit </span>
         <span
           v-if="report"
           class="block md:inline text-base text-gray-700 dark:text-gray-300"
@@ -143,6 +141,9 @@ export default {
       let timeRecords = [...reportObj.time_records]
       delete reportObj.inventory_checkouts
       delete reportObj.time_records
+      if (reportObj.signature) {
+        delete reportObj.signature
+      }
       let updateResponse
       if (this.$route.params.id !== 'new') {
         updateResponse = await this.$store.dispatch('api/put', {
