@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="fixed left-0 top-0 py-4 z-30 transform duration-300 ease-in-out h-screen"
+      class="fixed left-0 top-0 py-4 pb-16 md:pb-4 z-30 transform duration-300 ease-in-out h-screen"
       :class="{ '-translate-x-128': !show, 'mx-4': show }"
     >
       <div
@@ -46,8 +46,9 @@
               :value="company.id"
               v-for="company in $store.state.team.cwCompanies"
               :key="company.id"
-              >{{ company.name }}</option
             >
+              {{ company.name }}
+            </option>
           </select>
         </div>
         <div class="space-y-2">
@@ -212,6 +213,7 @@ export default {
   },
   methods: {
     close() {
+      this.$root.$emit('unlockScoll')
       this.show = false
     },
     formatEntry() {
@@ -249,6 +251,7 @@ export default {
       }
     },
     open() {
+      this.$root.$emit('lockScoll')
       this.show = true
     },
     reset() {

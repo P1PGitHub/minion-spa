@@ -1,17 +1,20 @@
 <template>
   <nav
-    class="flex justify-between items-center w-full p-4 text-gray-800 fixed top-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 dark:text-white"
+    class="flex justify-between items-center w-full p-4 text-gray-800 fixed top-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 dark:text-white transition-all duration-300"
+    :class="{ 'py-2': compact }"
     id="navbar"
   >
     <div class="flex items-center space-x-4">
       <nuxt-link
-        class="text-2xl font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        class="font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300"
+        :class="{ 'text-lg': compact, 'text-2xl': !compact }"
         to="/"
         id="brand"
       >
         <inline-svg
           :src="require('@/assets/svg/other/minion_logo.svg')"
-          class="h-6 w-6"
+          class="transition-all duration-300"
+          :class="{ 'h-5 w-auto': compact, 'h-6 w-auto': !compact }"
           v-if="$colorMode.value !== 'dark'"
         ></inline-svg>
         <inline-svg
@@ -219,6 +222,7 @@ export default {
   },
   data() {
     return {
+      compact: false,
       isOpen: false,
     }
   },
@@ -231,6 +235,12 @@ export default {
     toggle() {
       this.isOpen = !this.isOpen
     },
+  },
+  created() {
+    setTimeout(() => {
+      this.compact = true
+      this.$emit('compact')
+    }, 5000)
   },
 }
 </script>

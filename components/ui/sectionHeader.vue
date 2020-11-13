@@ -5,12 +5,12 @@
       'text-blue-700 dark:text-blue-300': color == 'primary',
       'text-black dark:text-white': color == 'black',
       'text-gray-700 dark:text-gray-300': color == 'gray',
-      'text-sm': size == 'xxs',
-      'text-base': size == 'xs',
-      'text-lg': size == 'sm',
-      'text-xl': size == 'md',
-      'text-2xl': size == 'lg',
-      'text-4xl': size == 'xl',
+      'text-xs md:text-sm': size == 'xxs',
+      'text-sm md:text-base': size == 'xs',
+      'text-md md:text-lg': size == 'sm',
+      'text-lg md:text-xl': size == 'md',
+      'text-xl md:text-2xl': size == 'lg',
+      'text-2xl md:text-4xl': size == 'xl',
     }"
   >
     {{ text }}
@@ -43,5 +43,3 @@ export default {
   },
 }
 </script>
-
-<style></style>

@@ -24,10 +24,26 @@
           <inline-svg
             :src="require('@/assets/svg/alerts/bolt.svg')"
             fill="fill-current"
-            class="h-4 w-auto text-white"
+            class="h-4 w-auto text-white dark:text-gray-800"
           ></inline-svg>
         </div>
         <p class="text-lg">{{ message.text }}</p>
+      </div>
+      <div class="flex pl-10 mt-2" v-if="message.action">
+        <button
+          class="px-4 py-1 rounded"
+          :class="{
+            'bg-blue-300 hover:bg-blue-600 hover:text-white dark:bg-blue-500 dark:text-white dark:hover:bg-blue-700':
+              message.type == 'info',
+            'bg-teal-300 hover:bg-teal-600 hover:text-white dark:bg-teal-500 dark:text-white dark:hover:bg-teal-700':
+              message.type == 'success',
+            'bg-red-300 hover:bg-red-600 hover:text-white dark:bg-red-500 dark:text-white dark:hover:bg-red-700':
+              message.type == 'error',
+          }"
+          @click="pushActionLink"
+        >
+          {{ message.action.text }}
+        </button>
       </div>
       <button
         type="button"
@@ -74,6 +90,12 @@ export default {
           this.message = null
         }
       }, 500)
+    },
+    pushActionLink() {
+      if (this.message.action) {
+        this.$router.push(this.message.action.link)
+        this.close()
+      }
     },
   },
   created() {

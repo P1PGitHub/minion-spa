@@ -3,11 +3,11 @@
     <template v-slot:page-header>
       <SectionHeader text="Bello!" />
       <div
-        class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center"
+        class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center text-sm"
       >
         <inline-svg
           :src="require('@/assets/svg/other/boy.svg')"
-          class="h-6 w-auto text-white"
+          class="h-5 w-auto text-white"
         ></inline-svg>
         <span>
           {{ $store.state.account.account.last_name }},
@@ -50,7 +50,7 @@
               </div>
             </div>
 
-            <HeaderAside v-if="(!loadingLogs && !logs.length)">
+            <HeaderAside v-if="!loadingLogs && !logs.length">
               No time tracking entries found for today.
             </HeaderAside>
             <div class="space-y-4">
@@ -157,6 +157,7 @@ export default {
       loadingRecents: false,
       drafts: [],
       recents: [],
+      staleReports: [],
       logs: [],
       logOrdering: 'ASC',
       today: moment(),
@@ -170,6 +171,7 @@ export default {
         .then((drafts) => {
           this.drafts = drafts.splice(0, 2)
           this.loadingDrafts = false
+          this.getStaleReports()
         })
     },
     getLogs() {
@@ -201,6 +203,50 @@ export default {
         .then((recents) => {
           this.recents = recents.splice(0, 2)
           this.loadingRecents = false
+        })
+    },
+    getStaleReports() {
+      let staleReports = this.$store
+        .dispatch('api/get', '/reports/stale/')
+        .then((staleReports) => {
+          if (staleReports.length <= 5) {
+            staleReports.forEach((report) => {
+              let dateDiff = moment
+                .duration(
+                  moment(report.created_at).diff(
+                    moment().subtract(
+                      this.$store.state.team.team.stale_report_age,
+                      'days'
+                    )
+                  )
+                )
+                .as('days')
+              this.$root.$emit('showToast', {
+                text: `Draft for ${report.company_name} is ${Math.round(
+                  Math.abs(dateDiff)
+                )} days old. If possible, please address this report.`,
+                type: 'success',
+                action: {
+                  link: {
+                    name: 'reports-csqr-id-edit',
+                    params: { id: report.id },
+                  },
+                  text: 'Edit Draft',
+                },
+              })
+            })
+          } else {
+            this.$root.$emit('showToast', {
+              text: `You have ${staleReports.length} reports that are older than ${this.$store.state.team.team.stale_report_age} days. Please address these reports.`,
+              type: 'success',
+              action: {
+                link: {
+                  name: 'reports-csqr-drafts',
+                },
+                text: 'View Drafts',
+              },
+            })
+          }
         })
     },
     toggleLogOrder() {
