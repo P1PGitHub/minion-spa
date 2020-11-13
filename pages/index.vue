@@ -212,14 +212,7 @@ export default {
           if (staleReports.length <= 5) {
             staleReports.forEach((report) => {
               let dateDiff = moment
-                .duration(
-                  moment(report.created_at).diff(
-                    moment().subtract(
-                      this.$store.state.team.team.stale_report_age,
-                      'days'
-                    )
-                  )
-                )
+                .duration(moment(report.created_at).diff(moment()))
                 .as('days')
               this.$root.$emit('showToast', {
                 text: `Draft for ${report.company_name} is ${Math.round(
