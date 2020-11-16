@@ -21,8 +21,9 @@
               :value="company.id"
               v-for="company in $store.state.team.cwCompanies"
               :key="company.id"
-              >{{ company.name }}</option
             >
+              {{ company.name }}
+            </option>
           </select>
         </div>
         <div class="w-full md:w-1/2 space-y-2">
@@ -78,7 +79,12 @@
         </div>
       </FlexSection>
       <div class="space-y-2">
-        <label for="description" class="block">Description</label>
+        <label for="description" class="block"
+          >Reason for Service
+          <span class="ml-2 text-sm text-gray-600 dark:text-gray-400"
+            >Description</span
+          ></label
+        >
         <input
           type="text"
           name="description"
