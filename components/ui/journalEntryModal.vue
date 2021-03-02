@@ -34,7 +34,7 @@
             id="company-id"
             class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             :class="{
-              'border-red-400 dark:border-red-400 dark:border-red-400 dark:border-red-400': this.errors.includes(
+              'border-red-400 dark:border-red-400': this.errors.includes(
                 'company_id'
               ),
             }"
@@ -140,7 +140,6 @@
           <input
             name="resolved"
             id="resolved"
-            placeholder="John Doe"
             class="form-checkbox rounded-full bg-gray-200 border-gray-600"
             type="checkbox"
             v-model="entry.resolved"

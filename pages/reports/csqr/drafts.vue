@@ -10,7 +10,9 @@
       >
     </template>
     <template v-slot:page-content>
-      <div class="space-y-2">
+      <SolidSection>
+        <SectionHeader :bold="true" text="All Drafts" size="lg" />
+
         <ReportListItem
           v-for="(report, index) in reports"
           :key="report.id"
@@ -20,18 +22,19 @@
           :border="index !== reports.length - 1"
           @reload="getCurrent"
         />
-      </div>
-      <div class="flex items-center justify-end space-x-2">
-        <ActionButton theme="hollow" spacing="sm" @click="getPrevious"
-          >&lt;</ActionButton
-        >
-        <ActionButton theme="primary" spacing="sm"
-          >{{ currentPage }} / {{ maxPage }}</ActionButton
-        >
-        <ActionButton theme="hollow" spacing="sm" @click="getNext"
-          >&gt;</ActionButton
-        >
-      </div>
+
+        <div class="flex items-center justify-end space-x-2">
+          <ActionButton theme="hollow" spacing="sm" @click="getPrevious"
+            >&lt;</ActionButton
+          >
+          <ActionButton theme="primary" spacing="sm"
+            >{{ currentPage }} / {{ maxPage }}</ActionButton
+          >
+          <ActionButton theme="hollow" spacing="sm" @click="getNext"
+            >&gt;</ActionButton
+          >
+        </div>
+      </SolidSection>
     </template>
   </PageBody>
 </template>
@@ -42,6 +45,8 @@ import ButtonLink from '@/components/ui/buttonLink'
 import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
+import SectionHeader from '@/components/ui/sectionHeader'
+import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'CSQRList',
   middleware: ['auth'],
@@ -54,6 +59,8 @@ export default {
     Loading,
     PageBody,
     ReportListItem,
+    SectionHeader,
+    SolidSection,
   },
   data() {
     return {

@@ -76,7 +76,6 @@
             class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
-        <span>Team</span>
       </li>
       <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
@@ -164,19 +163,19 @@
           </span>
           <span>CSQR</span>
         </nuxt-link>
-        <li
-          class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
-        >
-          <span>
-            <inline-svg
-              :src="require('@/assets/svg/other/user-list.svg')"
-              fill="fill-current"
-              class="h-6 w-6 text-gray-800 dark:text-white"
-            ></inline-svg>
-          </span>
-          <span>Team</span>
-        </li>
+
         <div class="flex items-center">
+          <li
+            class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+          >
+            <span>
+              <inline-svg
+                :src="require('@/assets/svg/other/user-list.svg')"
+                fill="fill-current"
+                class="h-6 w-6 text-gray-800 dark:text-white"
+              ></inline-svg>
+            </span>
+          </li>
           <nuxt-link
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
             :to="{ name: 'settings' }"

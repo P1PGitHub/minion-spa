@@ -10,41 +10,42 @@
       >
     </template>
     <template v-slot:page-content>
-      <div class="space-y-2">
+      <SolidSection>
+        <SectionHeader :bold="true" text="All Reports" size="lg" />
         <ReportListItem
           v-for="(report, index) in reports"
           :key="report.id"
           :report="report"
           :border="index !== reports.length - 1"
         />
-      </div>
-      <div class="flex items-center justify-end space-x-2">
-        <ButtonLink
-          theme="hollow"
-          spacing="sm"
-          :link="{
-            name: 'reports-csqr-list-page',
-            params: { page: currentPage - 1 },
-          }"
-          :disable="!(currentPage > 1)"
-          >&lt;</ButtonLink
-        >
-        <ActionButton theme="primary" spacing="sm"
-          >{{ currentPage }} / {{ maxPage }}</ActionButton
-        >
-        <ButtonLink
-          theme="hollow"
-          spacing="sm"
-          :link="{
-            name: 'reports-csqr-list-page',
-            params: {
-              page: currentPage + 1,
-            },
-          }"
-          :disable="currentPage >= maxPage"
-          >&gt;</ButtonLink
-        >
-      </div>
+        <div class="flex items-center justify-end space-x-2">
+          <ButtonLink
+            theme="hollow"
+            spacing="sm"
+            :link="{
+              name: 'reports-csqr-list-page',
+              params: { page: currentPage - 1 },
+            }"
+            :disable="!(currentPage > 1)"
+            >&lt;</ButtonLink
+          >
+          <ActionButton theme="primary" spacing="sm"
+            >{{ currentPage }} / {{ maxPage }}</ActionButton
+          >
+          <ButtonLink
+            theme="hollow"
+            spacing="sm"
+            :link="{
+              name: 'reports-csqr-list-page',
+              params: {
+                page: currentPage + 1,
+              },
+            }"
+            :disable="currentPage >= maxPage"
+            >&gt;</ButtonLink
+          >
+        </div>
+      </SolidSection>
     </template>
   </PageBody>
 </template>
@@ -55,6 +56,7 @@ import ButtonLink from '@/components/ui/buttonLink'
 import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
+import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'CSQRList',
   middleware: ['auth'],
@@ -67,6 +69,7 @@ export default {
     Loading,
     PageBody,
     ReportListItem,
+    SolidSection,
   },
   data() {
     return {

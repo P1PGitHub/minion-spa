@@ -2,13 +2,26 @@
   <PageBody>
     <template v-slot:page-header>
       <h1 class="text-xl">Customer Service Quality Report</h1>
-      <ButtonLink
-        :link="{ name: 'reports-csqr-id-edit', params: { id: 'new' } }"
-        spacing="sm"
-      >
-        <span>New</span>
-        <span class="font-bold text-xl">+</span>
-      </ButtonLink>
+      <div class="flex items-center space-x-4">
+        <ButtonLink
+          :link="{ name: 'reports-csqr-search', params: { id: 'new' } }"
+          spacing="sm"
+          theme="hollow"
+        >
+          <inline-svg
+            :src="require('@/assets/svg/buttons/search.svg')"
+            class="h-6 w-auto"
+          />
+          <span>Search</span>
+        </ButtonLink>
+        <ButtonLink
+          :link="{ name: 'reports-csqr-id-edit', params: { id: 'new' } }"
+          spacing="sm"
+        >
+          <span>New</span>
+          <span class="font-bold text-xl">+</span>
+        </ButtonLink>
+      </div>
     </template>
     <template v-slot:page-content>
       <div

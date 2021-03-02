@@ -2,8 +2,18 @@
   <div
     class="p-2 bg-gray-100 dark:bg-gray-700 border-2 border-blue-400 rounded space-y-1 text-gray-800 dark:text-white relative"
   >
-    <h3 class="font-bold text-blue-800 dark:text-blue-500">
-      {{ report.company_name }}
+    <h3
+      class="font-bold text-blue-800 dark:text-white text-lg space-x-2 flex items-center"
+    >
+      <span>
+        {{ report.company_name }}
+      </span>
+      <span v-if="draft" class="inline-block p-1 bg-blue-600 rounded">
+        <inline-svg
+          :src="require('@/assets/svg/design/edit-white.svg')"
+          class="h-4 w-auto"
+        />
+      </span>
     </h3>
 
     <h5 class="text-gray-700 dark:text-gray-200">{{ report.client_name }}</h5>
