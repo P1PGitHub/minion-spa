@@ -118,7 +118,7 @@
 import moment from 'moment'
 
 import ActionButton from '@/components/ui/actionButton'
-import PageBody from '@/components/ui/PageBody'
+import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection.vue'
