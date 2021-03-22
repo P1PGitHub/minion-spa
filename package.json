@@ -12,8 +12,6 @@
     "@nuxtjs/color-mode": "^1.1.1",
     "@nuxtjs/firebase": "^6.1.1",
     "@nuxtjs/pwa": "^3.1.2",
-    "@nuxtjs/tailwindcss": "^3.1.0",
-    "@tailwindcss/custom-forms": "^0.2.1",
     "firebase": "^7.19.1",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
@@ -21,15 +19,17 @@
     "redirect-ssl": "^2.0.0",
     "signature_pad": "^3.0.0-beta.3",
     "slugify": "^1.4.5",
-    "tailwindcss": "^1.8.12",
-    "v-calendar": "^1.0.8",
+    "v-calendar": "^2.3.0",
     "vue-inline-svg": "^2.0.0",
     "vue-moment": "^4.1.0",
     "vue-server-renderer": "^2.6.11"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^3.1.0",
+    "@tailwindcss/custom-forms": "^0.2.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "tailwindcss": "^1.8.12"
   }
 }
