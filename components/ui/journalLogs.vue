@@ -160,6 +160,9 @@
 <script>
 import ActionButton from '@/components/ui/actionButton'
 import ButtonLink from '@/components/ui/buttonLink'
+import HeaderAside from '@/components/ui/headerAside'
+import Loading from "@/components/common/loading"
+import SectionHeader from "@/components/ui/sectionHeader"
 import SolidSection from '@/components/ui/solidSection'
 import TimeEntry from '@/components/ui/timeEntry'
 import moment from 'moment'
@@ -177,6 +180,9 @@ export default {
   components: {
     ActionButton,
     ButtonLink,
+    HeaderAside,
+    Loading,
+    SectionHeader,
     SolidSection,
     TimeEntry,
   },

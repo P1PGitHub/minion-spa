@@ -18,6 +18,7 @@
 <script>
 import JournalEntryModal from '@/components/ui/journalEntryModal'
 import Modal from '@/components/ui/modal'
+import Navbar from "@/components/common/Navbar"
 import PageLoading from '@/components/ui/pageLoading'
 import Toast from '@/components/ui/toast'
 export default {
@@ -25,6 +26,7 @@ export default {
   components: {
     JournalEntryModal,
     Modal,
+    Navbar,
     PageLoading,
     Toast,
   },
@@ -52,7 +54,6 @@ export default {
     this.$root.$on('unlockScroll', () => {
       this.scrollLock = false
     })
-    console.log(this.$colorMode)
   },
 }
 </script>

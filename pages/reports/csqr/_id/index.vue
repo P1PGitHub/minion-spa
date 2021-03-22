@@ -208,6 +208,7 @@
 <script>
 var slugify = require('slugify')
 import moment from 'moment'
+import ActionButton from "@/components/ui/actionButton"
 import AgreementClause from '@/components/ui/agreementClause'
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
@@ -229,6 +230,7 @@ export default {
     title: 'Minion - CSQR Preview',
   },
   components: {
+    ActionButton,
     AgreementClause,
     ButtonLink,
     HeaderAside,

@@ -57,7 +57,9 @@
 import moment from 'moment'
 import ActionButton from '@/components/ui/actionButton'
 import AdditionalInfoFormHelper from '@/components/ui/formHelpers/additionalInfo'
+import ButtonLink from "@/components/ui/buttonLink"
 import ClientDetailsFormHelper from '@/components/ui/formHelpers/clientDetails'
+import FlexSection from "@/components/ui/flexSection"
 import InventoryUsedFormHelper from '@/components/ui/formHelpers/inventoryUsed'
 import PageBody from '@/components/ui/pageBody'
 import RouteLeaveConfirm from '@/components/common/RouteLeaveConfirm'
@@ -71,8 +73,10 @@ export default {
   },
   components: {
     ActionButton,
+    ButtonLink,
     AdditionalInfoFormHelper,
     ClientDetailsFormHelper,
+    FlexSection,
     InventoryUsedFormHelper,
     PageBody,
     RouteLeaveConfirm,

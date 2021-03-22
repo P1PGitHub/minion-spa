@@ -95,12 +95,14 @@
 <script>
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
+import SectionHeader from "@/components/ui/sectionHeader"
 import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'AdditionalInfoFormHelper',
   components: {
     DashedSection,
     FlexSection,
+    SectionHeader,
     SolidSection,
   },
   props: {

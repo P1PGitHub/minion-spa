@@ -56,6 +56,7 @@ import ButtonLink from '@/components/ui/buttonLink'
 import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
+import SectionHeader from "@/components/ui/sectionHeader"
 import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'CSQRList',
@@ -69,6 +70,7 @@ export default {
     Loading,
     PageBody,
     ReportListItem,
+    SectionHeader,
     SolidSection,
   },
   data() {
