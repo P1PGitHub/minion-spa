@@ -24,31 +24,33 @@
         denyText="Cancel"
         ref="routeLeaveConfirm"
       />
-      <ClientDetailsFormHelper v-model="clientDetails" ref="clientDetails" />
-      <TimeRecordsFormHelper
-        v-model="report.time_records"
-        :reportID="String($route.params.id)"
-        ref="timeRecords"
-      />
-      <InventoryUsedFormHelper v-model="report.inventory_checkouts" />
-      <WorkSummaryFormHelper
-        v-model="report.summary"
-        ref="workSummary"
-        @generate="generateSummary"
-      />
-      <AdditionalInfoFormHelper v-model="addInfo" />
-      <FlexSection>
-        <ActionButton
-          spacing="sm"
-          theme="hollow"
-          @click="save(true)"
-          class="w-full md:w-1/2"
-          >Save as Draft</ActionButton
-        >
-        <ActionButton spacing="sm" @click="save" class="w-full md:w-1/2"
-          >Save & Preview</ActionButton
-        >
-      </FlexSection>
+      <div class="space-y-12">
+        <ClientDetailsFormHelper v-model="clientDetails" ref="clientDetails" />
+        <TimeRecordsFormHelper
+          v-model="report.time_records"
+          :reportID="String($route.params.id)"
+          ref="timeRecords"
+        />
+        <InventoryUsedFormHelper v-model="report.inventory_checkouts" />
+        <WorkSummaryFormHelper
+          v-model="report.summary"
+          ref="workSummary"
+          @generate="generateSummary"
+        />
+        <AdditionalInfoFormHelper v-model="addInfo" />
+        <FlexSection>
+          <ActionButton
+            spacing="sm"
+            theme="hollow"
+            @click="save(true)"
+            class="w-full md:w-1/2"
+            >Save as Draft</ActionButton
+          >
+          <ActionButton spacing="sm" @click="save" class="w-full md:w-1/2"
+            >Save & Preview</ActionButton
+          >
+        </FlexSection>
+      </div>
     </template>
   </PageBody>
 </template>
@@ -57,9 +59,9 @@
 import moment from 'moment'
 import ActionButton from '@/components/ui/actionButton'
 import AdditionalInfoFormHelper from '@/components/ui/formHelpers/additionalInfo'
-import ButtonLink from "@/components/ui/buttonLink"
+import ButtonLink from '@/components/ui/buttonLink'
 import ClientDetailsFormHelper from '@/components/ui/formHelpers/clientDetails'
-import FlexSection from "@/components/ui/flexSection"
+import FlexSection from '@/components/ui/flexSection'
 import InventoryUsedFormHelper from '@/components/ui/formHelpers/inventoryUsed'
 import PageBody from '@/components/ui/pageBody'
 import RouteLeaveConfirm from '@/components/common/RouteLeaveConfirm'

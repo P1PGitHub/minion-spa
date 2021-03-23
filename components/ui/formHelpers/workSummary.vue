@@ -1,5 +1,5 @@
 <template>
-  <DashedSection>
+  <div class="space-y-4">
     <div class="flex items center justify-between">
       <SectionHeader text="Work Summary" />
       <ActionButton spacing="sm" theme="hollow" @click="generate">
@@ -27,19 +27,17 @@
       v-model="value"
       @input="update"
     ></textarea>
-  </DashedSection>
+  </div>
 </template>
 
 <script>
 import ActionButton from '@/components/ui/actionButton'
-import DashedSection from '@/components/ui/dashedSection'
 import HeaderAside from '@/components/ui/headerAside'
 import SectionHeader from '@/components/ui/sectionHeader'
 export default {
   name: 'WorkSummaryFormHelper',
   components: {
     ActionButton,
-    DashedSection,
     HeaderAside,
     SectionHeader,
   },

@@ -1,5 +1,5 @@
 <template>
-  <DashedSection>
+  <div class="space-y-4">
     <SectionHeader text="Client & Job Details" />
     <SolidSection>
       <FlexSection>
@@ -99,18 +99,16 @@
         />
       </div>
     </SolidSection>
-  </DashedSection>
+  </div>
 </template>
 
 <script>
-import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'ClientDetailsFormHelper',
   components: {
-    DashedSection,
     FlexSection,
     SectionHeader,
     SolidSection,
