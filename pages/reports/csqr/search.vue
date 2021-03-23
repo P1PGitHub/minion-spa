@@ -21,22 +21,41 @@
           class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4"
         >
           <fieldset>
-            <label for="search-date-range">Date Range</label>
+            <label for="search-date-range-start" class="block">Date Range</label>
             <v-date-picker
               color="blue"
-              :input-props="{
-                class:
-                  'form-input w-full mt-2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600',
-                id: 'searh-date-range',
-                name: 'search-date-range',
-              }"
               :is-dark="$colorMode.value == 'dark'"
               :max-date="new Date()"
               :popover="{ visibility: 'click' }"
               title-position="left"
-              mode="range"
+              is-range
               v-model="query.dates"
-            />
+            >
+              <template v-slot="{ inputValue, inputEvents }">
+                <div class="mt-2 flex items-center space-x-2">
+                  <input
+                    type="text"
+                    class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    id="search-date-range-start"
+                    name="search-date-range-start"
+                    :value="inputValue.start"
+                    v-on="inputEvents.start"
+                  />
+                  <inline-svg
+                    :src="require('@/assets/svg/arrows/arrow-right.svg')"
+                    class="h-6 w-auto text-gray-700 dark:text-gray-200"
+                  />
+                  <input
+                    type="text"
+                    class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    id="search-date-range-end"
+                    name="search-date-range-end"
+                    :value="inputValue.end"
+                    v-on="inputEvents.end"
+                  />
+                </div>
+              </template>
+            </v-date-picker>
           </fieldset>
           <fieldset class="space-y-2">
             <label for="search-author">Report Author</label>
@@ -45,14 +64,16 @@
               id="search-author"
               class="form-select bg-gray-100 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
               v-model="query.author"
-              ><option :value="null">All Authors</option>
+            >
+              <option :value="null">All Authors</option>
               <option disabled>---------------</option>
               <option
                 :value="member.id"
                 v-for="member in $store.state.team.members"
                 :key="member.id"
-                >{{ member.last_name }}, {{ member.first_name }}</option
               >
+                {{ member.last_name }}, {{ member.first_name }}
+              </option>
             </select>
           </fieldset>
           <fieldset class="space-y-2">
@@ -87,7 +108,12 @@
           </fieldset>
         </form>
       </SolidSection>
-      <SolidSection v-if="reports && reports.length">
+      <SolidSection v-if="isLoading">
+        <div class="flex items-center justify-center w-full">
+        <Loading size="xl" />
+        </div>
+      </SolidSection>
+      <SolidSection v-else-if="reports && reports.length">
         <ReportListItem
           v-for="(report, index) in reports"
           :key="report.id"
@@ -118,6 +144,7 @@
 import moment from 'moment'
 
 import ActionButton from '@/components/ui/actionButton'
+import Loading from "@/components/common/loading"
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
@@ -126,6 +153,7 @@ export default {
   name: 'CSQRSearch',
   components: {
     ActionButton,
+    Loading,
     PageBody,
     ReportListItem,
     SectionHeader,
