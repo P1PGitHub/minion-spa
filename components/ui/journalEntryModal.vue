@@ -85,23 +85,11 @@
 
         <div>
           <label for="journal-entry-date" class="block w-full">Date</label>
-          <!-- <v-date-picker
-            color="blue"
-            :input-props="{
-              class:
-                'form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600',
-              id: 'journal-entry-date',
-            }"
-            :is-dark="$colorMode.value == 'dark'"
-            :max-date="new Date()"
-            :popover="{ visibility: 'click' }"
-            title-position="left"
-            v-model="entry.date"
-          /> -->
           <v-date-picker
             v-model="entry.date"
             color="blue"
             :is-dark="$colorMode.value == 'dark'"
+            :popover="{ visibility: 'click' }"
             :max-date="new Date()"
             title-position="left"
           >
@@ -119,55 +107,45 @@
         <div class="space-x-2 flex items-start">
           <div class="space-y-2 w-1/2">
             <label for="entry-start" class="block">Start</label>
-            <!-- <TimePicker
-              nameID="entry-start"
-              v-model="entry.start"
-              ref="journalEntryStartTime"
-            /> -->
             <v-date-picker
-            v-model="entry.start"
-            color="blue"
-            :is-dark="$colorMode.value == 'dark'"
-            title-position="left"
-            mode="time"
-            ref="entryStartTimepicker"
-          >
-            <template v-slot="{ inputValue, inputEvents }">
-              <input
-                class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                id="entry-start"
-                :value="inputValue"
-                v-on="inputEvents"
-              />
-            </template>
-          </v-date-picker>
-
+              v-model="entry.start"
+              color="blue"
+              :is-dark="$colorMode.value == 'dark'"
+              :popover="{ visibility: 'click' }"
+              title-position="left"
+              mode="time"
+              ref="entryStartTimepicker"
+            >
+              <template v-slot="{ inputValue, inputEvents }">
+                <input
+                  class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  id="entry-start"
+                  :value="inputValue"
+                  v-on="inputEvents"
+                />
+              </template>
+            </v-date-picker>
           </div>
           <div class="space-y-2 w-1/2">
             <label for="entry-end" class="block">End</label>
-            <!-- <TimePicker
-              nameID="entry-end"
-              side="right"
-              v-model="entry.end"
-              ref="journalEntryEndTime"
-            /> -->
             <v-date-picker
-            v-model="entry.end"
-            color="blue"
-            :is-dark="$colorMode.value == 'dark'"
-            title-position="left"
-            mode="time"
-            ref="entryEndTimepicker"
-          >
-            <template v-slot="{ inputValue, inputEvents }">
-              <input
-                class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                id="entry-end"
-                :value="inputValue"
-                v-on="inputEvents"
-              />
-            </template>
-          </v-date-picker>
+              v-model="entry.end"
+              color="blue"
+              :is-dark="$colorMode.value == 'dark'"
+              :popover="{ visibility: 'click' }"
+              title-position="left"
+              mode="time"
+              ref="entryEndTimepicker"
+            >
+              <template v-slot="{ inputValue, inputEvents }">
+                <input
+                  class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  id="entry-end"
+                  :value="inputValue"
+                  v-on="inputEvents"
+                />
+              </template>
+            </v-date-picker>
           </div>
         </div>
 
@@ -262,12 +240,20 @@ export default {
     }
   },
   watch: {
-    "entry.date": function (newVal, oldVal) {
-      this.entry.start.setFullYear(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
-      this.entry.end.setFullYear(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
+    'entry.date': function (newVal, oldVal) {
+      this.entry.start.setFullYear(
+        newVal.getFullYear(),
+        newVal.getMonth(),
+        newVal.getDate()
+      )
+      this.entry.end.setFullYear(
+        newVal.getFullYear(),
+        newVal.getMonth(),
+        newVal.getDate()
+      )
       this.$refs.entryStartTimepicker.updateValue(this.entry.start)
       this.$refs.entryEndTimepicker.updateValue(this.entry.end)
-    }
+    },
   },
   methods: {
     close() {
@@ -392,7 +378,7 @@ export default {
             .set({ hours: 0, minutes: 0, seconds: 0 })
             .toDate(),
           start: moment(entry.start).toDate(),
-          end: moment(entry.end).toDate()
+          end: moment(entry.end).toDate(),
         }
         this.open()
       } catch (err) {
