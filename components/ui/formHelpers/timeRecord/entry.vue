@@ -4,50 +4,47 @@
     :class="{ 'md:pr-2': index % 2 == 0, 'md:pl-2': index % 2 == 1 }"
   >
     <div
-      class="relative w-full bg-white border border-blue-600 rounded shadow dark:bg-gray-800"
+      class="relative w-full bg-white border border-blue-600 rounded shadow-lg dark:bg-gray-800"
     >
-      <div class="bg-blue-600 w-full flex items-center justify-center">
-        <v-date-picker
-          :popover="{ placement: 'bottom', visibility: 'click' }"
-          :value="value.start"
-          v-model="value.start"
-          @input="update"
-          :is-dark="$colorMode.value == 'dark'"
-        >
-          <button
-            type="button"
-            class="flex items-center justify-center space-x-2 p-2 bg-blue-700 text-white text-center"
-          >
-            <h3>{{ value.start | moment('MMM DD, YYYY') }}</h3>
-            <span
-              ><img
-                src="@/assets/svg/alerts/calendar-dates-white.svg"
-                alt="Calendar Icon"
-            /></span>
-          </button>
-        </v-date-picker>
-      </div>
-
       <div class="p-4 space-y-2 w-full">
-        <div class="space-x-2 flex">
-          <div class="w-1/2">
-            <label :for="'startTime' + '-' + index" class="block w-full"
-              >Start Time</label
-            >
-            <TimePicker
-              v-model="startTime"
-              :nameID="'startTime' + '-' + index"
-            />
-          </div>
-          <div class="w-1/2">
-            <label :for="'endTime' + '-' + index" class="block">End Time</label>
-            <TimePicker
-              v-model="endTime"
-              :nameID="'endTime' + '-' + index"
-              :side="'right'"
-            />
-          </div>
-        </div>
+        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400">
+          {{ dateRange.start | moment('MMM DD, YYYY') }}
+        </h3>
+        <v-date-picker
+          color="blue"
+          :is-dark="$colorMode.value == 'dark'"
+          :popover="{ visibility: 'click' }"
+          title-position="left"
+          is-range
+          mode="datetime"
+          :minute-increment="5"
+          v-model="dateRange"
+        >
+          <template v-slot="{ inputValue, inputEvents }">
+            <div class="mt-2 flex items-center space-x-2">
+              <input
+                type="text"
+                class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                :id="'search-date-range-start' + `-${index}`"
+                :name="'search-date-range-start' + `-${index}`"
+                :value="inputValue.start"
+                v-on="inputEvents.start"
+              />
+              <inline-svg
+                :src="require('@/assets/svg/arrows/arrow-right.svg')"
+                class="h-6 w-auto text-gray-700 dark:text-gray-200"
+              />
+              <input
+                type="text"
+                class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                :id="'search-date-range-end' + `-${index}`"
+                :name="'search-date-range-end' + `-${index}`"
+                :value="inputValue.end"
+                v-on="inputEvents.end"
+              />
+            </div>
+          </template>
+        </v-date-picker>
         <div>
           <div class="space-y-2 md:flex md:space-x-2 md:space-y-0">
             <div class="md:w-1/2">
@@ -64,8 +61,9 @@
                   :value="member.id"
                   v-for="member in $store.state.team.members"
                   :key="member.id"
-                  >{{ member.last_name }}, {{ member.first_name }}</option
                 >
+                  {{ member.last_name }}, {{ member.first_name }}
+                </option>
               </select>
             </div>
             <div class="md:w-1/2">
@@ -99,13 +97,8 @@
 </template>
 
 <script>
-import moment from 'moment'
-import TimePicker from '@/components/ui/timePicker'
 export default {
   name: 'TimeRecordEntry',
-  components: {
-    TimePicker,
-  },
   props: {
     index: {
       type: Number,
@@ -118,8 +111,10 @@ export default {
   },
   data() {
     return {
-      startTime: moment(this.value.start).format('H:mm'),
-      endTime: moment(this.value.end).format('H:mm'),
+      dateRange: {
+        start: this.value.start,
+        end: this.value.end,
+      },
     }
   },
   watch: {
@@ -133,20 +128,8 @@ export default {
   computed: {
     record: function () {
       let recordObj = {
-        end: moment(this.value.start)
-          .set({
-            hours: this.endTime.split(':')[0],
-            minutes: this.endTime.split(':')[1],
-            seconds: 0,
-          })
-          .toDate(),
-        start: moment(this.value.start)
-          .set({
-            hours: this.startTime.split(':')[0],
-            minutes: this.startTime.split(':')[1],
-            seconds: 0,
-          })
-          .toDate(),
+        end: this.dateRange.end,
+        start: this.dateRange.start,
         users: this.value.users,
         report: this.value.report,
         notes: this.value.notes,

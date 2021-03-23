@@ -48,9 +48,13 @@ export default {
   },
   methods: {
     add() {
+      let end = new Date()
+      end.setMinutes(Math.ceil(5 / end.getMinutes()) * 5)
+      let start = moment(end).subtract(1, 'hours').toDate()
+
       this.value.push({
-        end: new Date(),
-        start: moment().subtract(1, 'hours').toDate(),
+        end,
+        start,
         report: this.reportID,
         users: [],
       })
