@@ -85,7 +85,7 @@
 
         <div>
           <label for="journal-entry-date" class="block w-full">Date</label>
-          <v-date-picker
+          <!-- <v-date-picker
             color="blue"
             :input-props="{
               class:
@@ -97,26 +97,77 @@
             :popover="{ visibility: 'click' }"
             title-position="left"
             v-model="entry.date"
-          />
+          /> -->
+          <v-date-picker
+            v-model="entry.date"
+            color="blue"
+            :is-dark="$colorMode.value == 'dark'"
+            :max-date="new Date()"
+            title-position="left"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <input
+                class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                id="journal-entry-date"
+                :value="inputValue"
+                v-on="inputEvents"
+              />
+            </template>
+          </v-date-picker>
         </div>
 
         <div class="space-x-2 flex items-start">
           <div class="space-y-2 w-1/2">
             <label for="entry-start" class="block">Start</label>
-            <TimePicker
+            <!-- <TimePicker
               nameID="entry-start"
               v-model="entry.start"
               ref="journalEntryStartTime"
-            />
+            /> -->
+            <v-date-picker
+            v-model="entry.start"
+            color="blue"
+            :is-dark="$colorMode.value == 'dark'"
+            title-position="left"
+            mode="time"
+            ref="entryStartTimepicker"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <input
+                class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                id="entry-start"
+                :value="inputValue"
+                v-on="inputEvents"
+              />
+            </template>
+          </v-date-picker>
+
           </div>
           <div class="space-y-2 w-1/2">
             <label for="entry-end" class="block">End</label>
-            <TimePicker
+            <!-- <TimePicker
               nameID="entry-end"
               side="right"
               v-model="entry.end"
               ref="journalEntryEndTime"
-            />
+            /> -->
+            <v-date-picker
+            v-model="entry.end"
+            color="blue"
+            :is-dark="$colorMode.value == 'dark'"
+            title-position="left"
+            mode="time"
+            ref="entryEndTimepicker"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <input
+                class="form-input mt-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                id="entry-end"
+                :value="inputValue"
+                v-on="inputEvents"
+              />
+            </template>
+          </v-date-picker>
           </div>
         </div>
 
@@ -199,8 +250,8 @@ export default {
         company_name: null,
         client_name: null,
         date: new Date(),
-        start: moment().subtract('30', 'minutes').format('HH:mm'),
-        end: moment().format('HH:mm'),
+        start: moment().subtract('30', 'minutes').toDate(),
+        end: moment().toDate(),
         description: null,
         summary: null,
         resolved: true,
@@ -210,26 +261,22 @@ export default {
       show: false,
     }
   },
+  watch: {
+    "entry.date": function (newVal, oldVal) {
+      this.entry.start.setFullYear(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
+      this.entry.end.setFullYear(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
+      this.$refs.entryStartTimepicker.updateValue(this.entry.start)
+      this.$refs.entryEndTimepicker.updateValue(this.entry.end)
+    }
+  },
   methods: {
     close() {
       this.$root.$emit('unlockScoll')
       this.show = false
     },
     formatEntry() {
-      console.log(this.entry.start)
-      console.log(this.entry.end)
-      let endDate = moment(this.entry.date).set({
-        hours: this.entry.end.split(':')[0],
-        minutes: this.entry.end.split(':')[1],
-      })
-      let startDate = moment(this.entry.date).set({
-        hours: this.entry.start.split(':')[0],
-        minutes: this.entry.start.split(':')[1],
-      })
       return {
         ...this.entry,
-        end: endDate.toDate(),
-        start: startDate.toDate(),
         team: this.$store.state.team.team.id,
         user: this.$store.state.account.account.id,
       }
@@ -260,29 +307,20 @@ export default {
         company_name: null,
         client_name: null,
         date: moment().set({ hours: 0, minutes: 0, seconds: 0 }).toDate(),
-        start: moment().subtract('30', 'minutes').format('HH:mm'),
-        end: moment().format('HH:mm'),
+        start: moment().subtract('30', 'minutes').toDate(),
+        end: moment().toDate(),
         description: null,
         summary: null,
         resolved: true,
-      }
-      if (this.$refs.journalEntryStartTime) {
-        this.$refs.journalEntryStartTime.reset(
-          moment().subtract('30', 'minutes').format('HH:mm')
-        )
-      }
-      if (this.$refs.journalEntryEndTime) {
-        this.$refs.journalEntryEndTime.reset(moment().format('HH:mm'))
       }
     },
     async saveEntry() {
       this.isLoading = true
       if (this.validate()) {
-        console.log('saving')
         let formattedEntry = this.formatEntry()
         try {
           if (formattedEntry.id) {
-            let entryResponse = await this.$store.dispatch('api/put', {
+            await this.$store.dispatch('api/put', {
               url: `/logs/entry/id/${formattedEntry.id}/`,
               data: formattedEntry,
             })
@@ -291,7 +329,7 @@ export default {
               type: 'success',
             })
           } else {
-            let entryResponse = await this.$store.dispatch('api/post', {
+            await this.$store.dispatch('api/post', {
               url: `/logs/entry/`,
               data: formattedEntry,
             })
@@ -353,14 +391,8 @@ export default {
           date: moment(entry.start)
             .set({ hours: 0, minutes: 0, seconds: 0 })
             .toDate(),
-          start: moment(entry.start).format('HH:mm'),
-          end: moment(entry.end).format('HH:mm'),
-        }
-        if (this.$refs.journalEntryStartTime) {
-          this.$refs.journalEntryStartTime.reset(this.entry.start)
-        }
-        if (this.$refs.journalEntryEndTime) {
-          this.$refs.journalEntryEndTime.reset(this.entry.end)
+          start: moment(entry.start).toDate(),
+          end: moment(entry.end).toDate()
         }
         this.open()
       } catch (err) {

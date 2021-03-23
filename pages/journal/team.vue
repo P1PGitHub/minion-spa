@@ -46,7 +46,9 @@
 </template>
 
 <script>
+import ActionButton from "@/components/ui/actionButton"
 import Loading from '@/components/common/loading'
+import JournalDatePicker from "@/components/ui/journalDatePicker"
 import JournalLogs from '@/components/ui/journalLogs'
 import PageBody from '@/components/ui/pageBody'
 import SectionHeader from '@/components/ui/sectionHeader'
@@ -55,7 +57,9 @@ export default {
   name: 'JournalTeam',
   middleware: ['admin', 'auth'],
   components: {
+    ActionButton,
     Loading,
+    JournalDatePicker,
     JournalLogs,
     PageBody,
     SectionHeader,

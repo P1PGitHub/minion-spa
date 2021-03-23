@@ -9,7 +9,7 @@
         :is-dark="$colorMode.value == 'dark'"
         is-inline
         :max-date="new Date()"
-        mode="range"
+        is-range
         title-position="left"
         v-model="dateRange"
         ref="vDatePicker"
@@ -81,6 +81,7 @@ export default {
         end: moment(this.dateRange.end).subtract({ days: 1 }).toDate(),
         start: moment(this.dateRange.start).subtract({ days: 1 }).toDate(),
       }
+      this.$refs.vDatePicker.updateValue(this.dateRange)
       this.$emit('update', this.dateRange)
     },
     incrementDates() {
@@ -107,8 +108,8 @@ export default {
           .toDate()
         changeStatus = true
       }
-      console.log(changeStatus)
       if (changeStatus) {
+        this.$refs.vDatePicker.updateValue(this.dateRange)
         this.$emit('update', this.dateRange)
       }
     },
@@ -137,5 +138,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
