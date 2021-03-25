@@ -41,8 +41,9 @@
         </span>
         <span>Journal</span>
       </nuxt-link>
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        :to="{ name: 'projects' }"
       >
         <span>
           <inline-svg
@@ -52,7 +53,7 @@
           ></inline-svg>
         </span>
         <span>Projects</span>
-      </li>
+      </nuxt-link>
       <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
         :to="{ name: 'reports-csqr' }"
@@ -138,8 +139,9 @@
           </span>
           <span>Journal</span>
         </nuxt-link>
-        <li
+        <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+          :to="{ name: 'projects' }"
         >
           <span>
             <inline-svg
@@ -149,7 +151,7 @@
             ></inline-svg>
           </span>
           <span>Projects</span>
-        </li>
+        </nuxt-link>
         <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
           :to="{ name: 'reports-csqr' }"
