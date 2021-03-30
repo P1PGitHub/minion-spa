@@ -1,8 +1,9 @@
 import moment from 'moment'
 
 const getDefaultState = () => {
-  let baseURL =
-    'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
+  // let baseURL =
+  //   'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
+  let baseURL = 'http://localhost:8000'
   if (process.env.NODE_ENV == 'production') {
     baseURL = 'https://minion-api.herokuapp.com'
   }
@@ -15,7 +16,7 @@ const getDefaultState = () => {
   }
 }
 
-export const state = getDefaultState()
+export const state = () => getDefaultState()
 
 export const mutations = {
   setAccessToken(state, val) {

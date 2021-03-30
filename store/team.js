@@ -8,7 +8,7 @@ const getDefaultState = () => ({
   cwCompanies: [],
 })
 
-export const state = getDefaultState()
+export const state = () => getDefaultState()
 
 export const mutations = {
   setMembers(state, val) {
