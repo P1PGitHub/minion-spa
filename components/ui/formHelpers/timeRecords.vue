@@ -55,7 +55,7 @@ export default {
       this.value.push({
         end,
         start,
-        report: this.reportID,
+        report: Number(this.reportID),
         users: [],
       })
       this.update()
