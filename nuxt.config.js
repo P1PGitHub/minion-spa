@@ -1,15 +1,11 @@
 import redirectSSL from 'redirect-ssl'
 export default {
   /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
-  mode: 'universal',
-  /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
+  ssr: false,
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -42,7 +38,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/assets/css/base.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -62,12 +58,7 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    [
-      '@nuxtjs/color-mode',
-      {
-        classSuffix: '',
-      },
-    ],
+    '@nuxtjs/color-mode',
     [
       '@nuxtjs/pwa',
       {
@@ -80,8 +71,12 @@ export default {
         },
       },
     ],
+    '@nuxt/postcss8',
     '@nuxtjs/tailwindcss',
   ],
+  colorMode: {
+    classSuffix: '',
+  },
   /*
    ** Nuxt.js modules
    */
@@ -115,6 +110,7 @@ export default {
         },
       },
     ],
+    'cookie-universal-nuxt',
   ],
   serverMiddleware: [
     redirectSSL.create({
