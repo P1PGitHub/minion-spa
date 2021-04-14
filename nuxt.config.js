@@ -38,7 +38,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['~/assets/css/base.css'],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -67,7 +67,7 @@ export default {
           short_name: 'Minion',
           description:
             "Priority1 POS's key to staying organized and provided plenty of inside joke laughs.",
-          theme_color: '#81e6d9',
+          theme_color: '#0F172A',
         },
       },
     ],
