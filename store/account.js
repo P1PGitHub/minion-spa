@@ -4,7 +4,7 @@ const getDefaultState = () => {
   }
 }
 
-export const state = getDefaultState()
+export const state = () => getDefaultState()
 
 export const mutations = {
   setAccount(state, val) {
@@ -19,6 +19,8 @@ export const actions = {
   logout(context) {
     context.commit('reset')
     context.commit('api/reset', {}, { root: true })
+    context.commit('api/logout', {}, { root: true })
     context.commit('team/reset', {}, { root: true })
+    context.commit('project/reset', {}, { root: true })
   },
 }

@@ -47,7 +47,7 @@
                 <input
                   type="text"
                   placeholder="jane.doe@hello.com"
-                  class="form-input bg-gray-100 border border-gray-400 w-full pl-12 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                  class="rounded bg-gray-100 border border-gray-400 w-full pl-12 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                   v-model="user.email"
                 />
                 <div
@@ -65,7 +65,7 @@
                 <input
                   type="password"
                   placeholder="super-secure-password"
-                  class="form-input bg-gray-100 border border-gray-400 w-full pl-12 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                  class="rounded bg-gray-100 border border-gray-400 w-full pl-12 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                   v-model="user.password"
                 />
                 <div
@@ -86,21 +86,7 @@
             >
               Login
             </button>
-            <div
-              class="w-full flex items-center justify-between text-gray-700 dark:text-white"
-            >
-              <a
-                href="#"
-                class="inline-block w-2/5 px-2 underline whitespace-no-wrap"
-                >Forgot?</a
-              >
-              <span class="tracking-widest">&#183;&#183;&#183;</span>
-              <nuxt-link
-                :to="{ name: 'auth-signup' }"
-                class="inline-block w-2/5 text-right px-2 underline"
-                >Sign Up</nuxt-link
-              >
-            </div>
+            <button type="button" @click="loginFromCookies">Test</button>
           </form>
         </div>
       </div>
@@ -131,6 +117,9 @@ export default {
     }
   },
   methods: {
+    async loginFromCookies() {
+      console.log(await this.$store.dispatch('api/loginFromCookies'))
+    },
     async login() {
       this.error = false
       if (this.user.email && this.user.password) {
@@ -145,6 +134,8 @@ export default {
         this.$store.commit('account/setAccount', account)
         this.$store.commit('team/setTeam', team)
         Promise.all([
+          this.$store.dispatch('project/getProjectStatusChoices'),
+          this.$store.dispatch('project/getUpdateStatusChoices'),
           this.$store.dispatch('team/getMembers'),
           this.$store.dispatch('team/getCompanies'),
         ]).then(() => {
@@ -172,9 +163,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 #login-page {
   background-image: url('~assets/svg/other/banana-bg.svg');
   background-repeat: repeat;
+}
+
+input[type='text'],
+input[type='password'],
+textarea {
+  @apply rounded p-2 pl-12 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600;
 }
 </style>
