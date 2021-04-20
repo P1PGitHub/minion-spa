@@ -6,6 +6,9 @@ export default {
    */
   target: 'server',
   ssr: false,
+  server: {
+    host: '0.0.0.0',
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
