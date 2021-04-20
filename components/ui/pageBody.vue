@@ -1,12 +1,14 @@
 <template>
-  <div class="flex flex-col items-center min-h-screen">
-    <header
-      class="flex items-center justify-between w-full pb-4 px-2 border-b border-dashed border-gray-400 text-gray-800 dark:text-white"
-    >
-      <slot name="page-header"> </slot>
+  <div class="flex flex-col items-center min-h-screen overflow-y-hidden">
+    <header class="w-full pb-4 px-4 container mx-auto">
+      <div
+        class="flex items-center justify-between text-gray-800 dark:text-white bg-white dark:bg-gray-800 border-2 border-blue-500 shadow rounded p-4"
+      >
+        <slot name="page-header"> </slot>
+      </div>
     </header>
     <main
-      class="px-6 py-4 md:px-8 text-gray-800 dark:text-white container h-full"
+      class="px-6 pt-4 pb-8 md:px-8 text-gray-800 dark:text-white container h-full"
       :class="{
         'space-y-0': spacing == 'none',
         'space-y-2': spacing == 'sm',
@@ -16,6 +18,9 @@
     >
       <slot name="page-content"></slot>
     </main>
+    <div>
+      <slot name="modals"></slot>
+    </div>
     <footer
       class="w-full mt-auto bg-gray-200 dark:bg-gray-900 border-t border-dashed border-gray-400 dark:border-gray-700 p-4 text-gray-700 dark:text-gray-200 space-y-1 text-sm"
     >

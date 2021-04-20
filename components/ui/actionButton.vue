@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'buttonLink',
+  name: 'ActionButton',
   props: {
     disabled: {
       type: Boolean,

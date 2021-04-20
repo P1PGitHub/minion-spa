@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-center fixed bottom-0 mx-auto z-30 px-4 mb-4 transform duration-300 ease-in-out"
+    class="flex items-center justify-center fixed bottom-0 mx-auto z-50 px-4 mb-4 transform duration-300 ease-in-out"
     :class="{ 'translate-y-48': !show }"
   >
     <div

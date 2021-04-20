@@ -1,75 +1,111 @@
 <template>
-  <div
-    class="fixed top-0 z-30 max-w-128 bg-white border-2 border-teal-300 rounded shadow-lg mt-4 mx-4 p-4 space-y-4 transform duration-300 ease-in-out dark:bg-gray-800 dark:text-white"
-    :class="{ '-translate-y-96': !show }"
-  >
-    <div class="flex items-center space-x-4">
-      <div class="p-1 rounded-full bg-teal-300">
-        <inline-svg
-          :src="require('@/assets/svg/alerts/bolt.svg')"
-          fill="fill-current"
-          class="h-6 w-auto text-gray-800"
-        ></inline-svg>
-      </div>
-      <h1 class="text-xl font-bold">Bello</h1>
-    </div>
-    <div>
-      <p>{{ options.message }}</p>
-    </div>
-    <div class="flex items-center justify-center space-x-4">
-      <ActionButton spacing="sm" theme="secondary" @click="deny">
-        <span class="font-normal">
-          {{ options.denyText }}
-        </span></ActionButton
+  <div>
+    <div
+      class="transform -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 fixed z-30"
+    >
+      <transition
+        enter-active-class="transition transform duration-200 ease-in-out"
+        leave-active-class="transition transform duration-200 ease-in-out"
+        enter-class="opacity-0 scale-75"
+        enter-to-class="opacity-100 scale-100"
+        leave-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-75"
       >
-      <ActionButton spacing="sm" @click="allow">
-        <span class="font-normal">
-          {{ options.allowText }}
-        </span>
-      </ActionButton>
+        <div
+          class="p-4 bg-white w-80 md:w-96 border-2 border-blue-400 dark:bg-gray-800 text-gray-800 dark:text-white rounded relative shadow-lg"
+          v-show="isOpen"
+        >
+          <div class="flex items-center space-x-2">
+            <inline-svg :src="icon" class="h-8 w-8" v-if="icon" />
+            <h1 class="text-xl font-semibold">{{ title }}</h1>
+          </div>
+          <h4
+            class="text-gray-600 dark:text-gray-300 md:text-lg ml-10"
+            v-if="subheading"
+          >
+            {{ subheading }}
+          </h4>
+
+          <slot></slot>
+
+          <button
+            class="bg-red-200 border border-red-400 text-red-700 hover:bg-red-400 transition-colors duration-200 p-1 rounded absolute top-0 right-0 -mt-4 -mr-4 text-3xl font-bold h-8 w-8 flex items-center justify-center"
+            @click="close"
+          >
+            <span class="leading-none">&times;</span>
+          </button>
+        </div>
+      </transition>
     </div>
+
+    <transition
+      enter-active-class="transition transform duration-200 ease-in-out"
+      leave-active-class="transition transform duration-200 ease-in-out"
+      enter-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div
+        class="fixed block inset-0 w-full h-full bg-gray-700 bg-opacity-25 z-20"
+        v-show="isOpen"
+        @click="close"
+      ></div>
+    </transition>
   </div>
 </template>
 
 <script>
-import ActionButton from '@/components/ui/actionButton'
 export default {
   name: 'Modal',
-  components: {
-    ActionButton,
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    icon: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    subheading: {
+      type: String,
+      required: false,
+      default: () => '',
+    },
   },
   data() {
     return {
-      options: {
-        allowText: 'Yes',
-        denyText: 'No',
-        message: 'Are you sure you want to do this?',
-      },
-      show: false,
+      isOpen: false,
     }
   },
   methods: {
-    allow() {
-      this.show = false
-      this.$root.$emit('modalClose', true)
+    close() {
+      this.isOpen = false
+      document.body.style.overflow = 'auto'
+      this.$emit('close')
     },
-    deny() {
-      this.show = false
-      this.$root.$emit('modalClose', false)
+    open() {
+      this.isOpen = true
+      document.body.style.overflow = 'hidden'
+      this.$emit('open')
+    },
+    toggle() {
+      this.isOpen = !this.isOpen
+      if (this.isOpen) {
+        this.$root.$emit('lockScroll')
+      } else {
+        this.$root.$emit('unlockScroll')
+      }
     },
   },
-  created() {
-    this.$root.$on('showModal', (options) => {
-      if (options) {
-        this.options = options
-      } else {
-        this.options = {
-          allowText: 'Yes',
-          denyText: 'No',
-          message: 'Are you sure you want to do this?',
+  mounted() {
+    window.addEventListener('keyup', (event) => {
+      if (event.key === 'Esc' || event.key === 'Escape') {
+        if (this.isOpen) {
+          this.close()
         }
       }
-      this.show = true
     })
   },
 }

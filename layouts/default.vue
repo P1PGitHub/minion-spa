@@ -1,69 +1,69 @@
 <template>
   <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-    <Navbar @compact="toggleCompactNav" />
+    <Navbar />
+    <NotificationSlideOver />
     <JournalEntryModal />
-    <Modal />
+    <ModalConfirm />
     <Toast />
     <PageLoading />
-    <Nuxt
-      :class="{
-        'overflow-y-hidden': scrollLock,
-        'pt-16': compactNav,
-        'pt-22': !compactNav,
-      }"
-    />
+    <Nuxt class="pt-18" />
   </div>
 </template>
 
 <script>
-import JournalEntryModal from '@/components/ui/journalEntryModal'
-import Modal from '@/components/ui/modal'
-import Navbar from "@/components/common/Navbar"
+import JournalEntryModal from '@/components/ui/modals/journalEntryModal'
+import ModalConfirm from '@/components/ui/modalConfirm'
+import Navbar from '@/components/common/Navbar'
+import NotificationSlideOver from '@/components/ui/notificationSlideOver'
 import PageLoading from '@/components/ui/pageLoading'
 import Toast from '@/components/ui/toast'
 export default {
   name: 'DefaultLayout',
   components: {
     JournalEntryModal,
-    Modal,
+    ModalConfirm,
     Navbar,
+    NotificationSlideOver,
     PageLoading,
     Toast,
   },
   data() {
     return {
       compactNav: false,
-      scrollLock: false,
     }
-  },
-  methods: {
-    toggleCompactNav() {
-      this.compactNav = !this.compactNav
-    },
-  },
-  created() {
-    this.$root.$on('showModal', () => {
-      this.scrollLock = true
-    })
-    this.$root.$on('modalClose', () => {
-      this.scrollLock = false
-    })
-    this.$root.$on('lockScoll', () => {
-      this.scrollLock = true
-    })
-    this.$root.$on('unlockScroll', () => {
-      this.scrollLock = false
-    })
   },
 }
 </script>
 
-<style>
+<style lang="postcss">
 html {
   background-color: #edf2f7;
 }
 
 html.dark {
   background-color: #1a202c;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='tel'] {
+  @apply form-input rounded p-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600;
+}
+
+input[type='checkbox'] {
+  @apply form-checkbox rounded-full h-6 w-6 bg-gray-200 border-gray-600;
+}
+
+textarea {
+  @apply form-textarea rounded p-2 w-full bg-gray-100 dark:bg-gray-700 border border-gray-600 dark:text-white;
+}
+
+.select {
+  @apply form-select appearance-none rounded p-2 w-full bg-gray-100 dark:bg-gray-700 border border-gray-600 dark:text-white;
+}
+
+.multiselect {
+  @apply form-multiselect p-2 appearance-none rounded w-full bg-gray-100 dark:bg-gray-700 border border-gray-600 dark:text-white;
 }
 </style>

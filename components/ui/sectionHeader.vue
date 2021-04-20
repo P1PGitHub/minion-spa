@@ -1,7 +1,7 @@
 <template>
   <h1
     :class="{
-      'font-bold': bold,
+      'font-bold tracking-wide': bold,
       'text-blue-700 dark:text-blue-300': color == 'primary',
       'text-black dark:text-white': color == 'black',
       'text-gray-700 dark:text-gray-300': color == 'gray',

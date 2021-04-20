@@ -86,7 +86,15 @@
             >
               Login
             </button>
-            <button type="button" @click="loginFromCookies">Test</button>
+            <div class="flex items-center justify-center">
+              <button
+                class="p-1 px-4 text-sm rounded bg-white shadow"
+                @click="loginFromCookies"
+                v-if="$cookies.get('refreshToken')"
+              >
+                Use Saved Login
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -95,6 +103,7 @@
 </template>
 
 <script>
+import Actionbutton from '@/components/ui/actionButton'
 import Loading from '@/components/common/loading'
 
 export default {
@@ -104,6 +113,7 @@ export default {
     title: 'Minion Login',
   },
   components: {
+    Actionbutton,
     Loading,
   },
   data() {
@@ -118,7 +128,7 @@ export default {
   },
   methods: {
     async loginFromCookies() {
-      console.log(await this.$store.dispatch('api/loginFromCookies'))
+      await this.$store.dispatch('api/loginFromCookies')
     },
     async login() {
       this.error = false
@@ -152,11 +162,8 @@ export default {
         } else {
           this.error = true
           this.isLoading = false
-          console.log('failed login')
         }
         this.isLoading = false
-      } else {
-        console.log('no credentials')
       }
     },
   },

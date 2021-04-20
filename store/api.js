@@ -1,10 +1,9 @@
-import { app } from 'firebase'
 import moment from 'moment'
 
 const getDefaultState = () => {
   // let baseURL =
   //   'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
-  let baseURL = 'http://localhost:8000'
+  let baseURL = `http://${location.host.split(':')[0]}:8000`
   if (process.env.NODE_ENV == 'production') {
     baseURL = 'https://minion-api.herokuapp.com'
   }
@@ -358,7 +357,6 @@ export const actions = {
     if (!this.$cookies.get('refreshToken')) {
       return false
     }
-    console.log(this.$cookies)
     try {
       context.dispatch(
         'setUpdateRefreshToken',
@@ -376,7 +374,6 @@ export const actions = {
         context.dispatch('team/getCompanies', {}, { root: true }),
       ])
       context.commit('stopLoading', {}, { root: true })
-      console.log('woohoo')
       return true
     } catch (error) {
       console.log(error)

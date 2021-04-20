@@ -19,7 +19,7 @@ export const actions = {
   logout(context) {
     context.commit('reset')
     context.commit('api/reset', {}, { root: true })
-    context.commit('api/logout', {}, { root: true })
+    context.dispatch('api/logout', {}, { root: true })
     context.commit('team/reset', {}, { root: true })
     context.commit('project/reset', {}, { root: true })
   },

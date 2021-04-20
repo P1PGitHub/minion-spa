@@ -1,7 +1,7 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <SectionHeader text="Bello!" />
+      <SectionHeader text="Dashboard" bold size="lg" />
       <div
         class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center text-sm"
       >
@@ -79,7 +79,7 @@
               @reload="getTasks"
             />
             <ButtonLink
-              :link="{ name: 'journal' }"
+              :link="{ name: 'projects' }"
               spacing="sm"
               theme="hollow"
               class="w-full"
@@ -157,7 +157,7 @@ import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
-import TaskListItem from '@/components/ui/taskListItem'
+import TaskListItem from '@/components/ui/listItems/taskListItem'
 import TimeEntry from '@/components/ui/timeEntry'
 export default {
   name: 'HomePage',
@@ -207,7 +207,10 @@ export default {
     },
     getLogs() {
       this.loadingLogs = true
-      let ordering = localStorage.getItem('logOrdering')
+      let ordering = 'DESC'
+      if (process.client) {
+        ordering = localStorage.getItem('logOrdering')
+      }
       if (ordering) {
         this.logOrdering = ordering
       }
@@ -286,7 +289,9 @@ export default {
       } else {
         this.logOrdering = 'ASC'
       }
-      localStorage.setItem('logOrdering', this.logOrdering)
+      if (process.client0) {
+        localStorage.setItem('logOrdering', this.logOrdering)
+      }
       this.logs.reverse()
     },
   },

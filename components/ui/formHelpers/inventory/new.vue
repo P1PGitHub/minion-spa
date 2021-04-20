@@ -8,7 +8,7 @@
         name="inventory-description"
         id="inventory-description"
         type="text"
-        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        class="rounded p-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"
@@ -24,7 +24,7 @@
         name="inventory-sn"
         id="inventory-sn"
         type="text"
-        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        class="rounded p-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"
@@ -42,7 +42,7 @@
         name="inventory-model-number"
         id="inventory-model-number"
         type="text"
-        class="form-input w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        class="rounded p-2 w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         :class="{
           'border-red-400': error,
         }"

@@ -8,7 +8,7 @@
             type="checkbox"
             name="billable"
             id="billable"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.billable"
             @input="update"
           />
@@ -19,7 +19,7 @@
             type="checkbox"
             name="completed"
             id="completed"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.completed"
             @input="update"
           />
@@ -32,7 +32,7 @@
             type="checkbox"
             name="tested"
             id="tested"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.tested"
             @input="update"
           />
@@ -43,7 +43,7 @@
             type="checkbox"
             name="pictures"
             id="pictures"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.pictures"
             @input="update"
           />
@@ -56,7 +56,7 @@
             type="checkbox"
             name="reviewed"
             id="reviewed"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.reviewed"
             @input="update"
           />
@@ -67,7 +67,7 @@
             type="checkbox"
             name="satisfied"
             id="satisfied"
-            class="form-checkbox bg-gray-100 rounded-full border-gray-400"
+            class="bg-gray-100 rounded-full border-gray-400"
             v-model="value.satisfied"
             @input="update"
           />
@@ -77,12 +77,12 @@
       <div
         class="w-full md:flex items-center space-y-2 md:space-x-2 md:space-y-0"
       >
-        <label for="follow-up-notes" class="whitespace-no-wrap"
+        <label for="follow-up-notes" class="whitespace-nowrap"
           >Follow Up?</label
         >
         <input
           type="text"
-          class="form-input w-full bg-gray-100 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          class="rounded p-2 w-full bg-gray-100 text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
           placeholder="Return with New Printer"
           v-model="value.followup"
           @input="update"

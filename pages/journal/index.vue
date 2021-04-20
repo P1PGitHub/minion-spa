@@ -6,6 +6,7 @@
           <SectionHeader
             size="lg"
             :text="$store.state.account.account.first_name + `'s Journal`"
+            bold
           />
           <ActionButton spacing="sm" theme="hollow" v-if="!showPicker">
             <inline-svg

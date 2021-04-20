@@ -5,6 +5,7 @@
         <div class="w-full flex items-center justify-between">
           <SectionHeader
             size="lg"
+            bold
             :text="$store.state.team.team.name + `'s Journal`"
           />
           <ActionButton spacing="sm" theme="hollow" v-if="!showPicker">
@@ -46,9 +47,9 @@
 </template>
 
 <script>
-import ActionButton from "@/components/ui/actionButton"
+import ActionButton from '@/components/ui/actionButton'
 import Loading from '@/components/common/loading'
-import JournalDatePicker from "@/components/ui/journalDatePicker"
+import JournalDatePicker from '@/components/ui/journalDatePicker'
 import JournalLogs from '@/components/ui/journalLogs'
 import PageBody from '@/components/ui/pageBody'
 import SectionHeader from '@/components/ui/sectionHeader'

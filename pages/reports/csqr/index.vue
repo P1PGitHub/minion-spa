@@ -1,7 +1,7 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <h1 class="text-xl">Customer Service Quality Report</h1>
+      <SectionHeader bold size="lg" text="Customer Service Quality" />
       <div class="flex items-center space-x-4">
         <ButtonLink
           :link="{ name: 'reports-csqr-search', params: { id: 'new' } }"
@@ -19,7 +19,7 @@
           spacing="sm"
         >
           <span>New</span>
-          <span class="font-bold text-xl">+</span>
+          <span class="font-bold">+</span>
         </ButtonLink>
       </div>
     </template>
