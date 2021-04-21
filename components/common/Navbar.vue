@@ -148,7 +148,7 @@
     </div>
 
     <nav
-      class="md:hidden fixed top-0 right-0 bottom-0 overflow-y-scroll bg-white p-4 transition-transform duration-300 ease-in-out z-30 shadow-lg dark:bg-gray-900"
+      class="md:hidden fixed top-0 right-0 bottom-0 overflow-y-auto bg-white p-4 transition-transform duration-300 ease-in-out z-30 shadow-lg dark:bg-gray-900"
       :class="{ 'transform translate-x-40': !isOpen }"
       id="sidebar"
     >

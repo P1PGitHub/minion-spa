@@ -28,6 +28,7 @@
 
       <span
         class="text-lg font-bold p-1 hover:text-red-600 dark:hover:text-red-400 -mt-2"
+        v-if="!notif.is_dismissed"
         >&times;</span
       >
     </button>

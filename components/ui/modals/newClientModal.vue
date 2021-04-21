@@ -86,7 +86,7 @@
           class="w-full"
           type="submit"
           :tabindex="tabIndex"
-          >Add Task</ActionButton
+          >Add Client</ActionButton
         >
       </div>
     </form>
