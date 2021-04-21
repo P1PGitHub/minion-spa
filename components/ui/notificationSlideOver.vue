@@ -76,7 +76,6 @@
               v-for="notif in dismissed"
               :key="notif.id"
               :notif="notif"
-              @dismiss="dismissNotif"
             />
           </template>
         </section>
@@ -133,8 +132,10 @@ export default {
       this.dismissed = this.dismissed.sort(
         (a, b) => b.created_at > a.created_at
       )
+      this.$emit('updateNotifIcon', false)
     },
     dismissNotif(notif) {
+      console.log('dismissing')
       this.dismissed.unshift(notif)
       this.current = this.current.filter(
         (currentNotif) => currentNotif.id !== notif.id
@@ -142,11 +143,21 @@ export default {
       this.dismissed = this.dismissed.sort(
         (a, b) => b.created_at > a.created_at
       )
+      if (this.current.length) {
+        this.$emit('updateNotifIcon', true)
+      } else {
+        this.$emit('updateNotifIcon', false)
+      }
     },
     async getCurrent() {
       this.loadingCurrent = true
       this.current = await this.$store.dispatch('api/get', '/notifications/')
       this.loadingCurrent = false
+      if (this.current.length) {
+        this.$emit('updateNotifIcon', true)
+      } else {
+        this.$emit('updateNotifIcon', false)
+      }
     },
     async getDimissed() {
       this.loadingDismissed = true

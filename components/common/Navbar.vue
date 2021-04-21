@@ -106,6 +106,7 @@
           <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0">
             <div
               class="w-full h-full bg-teal-300 rounded-full animate-ping"
+              v-if="showNotifIcon"
             ></div>
           </div>
         </span>
@@ -129,6 +130,7 @@
           <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0">
             <div
               class="w-full h-full bg-teal-300 rounded-full animate-ping"
+              v-if="showNotifIcon"
             ></div>
           </div>
         </span>
@@ -241,6 +243,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      showNotifIcon: true,
     }
   },
   watch: {
@@ -249,6 +252,9 @@ export default {
     },
   },
   methods: {
+    updateNotifIcon(val) {
+      this.showNotifIcon = val
+    },
     openNotifications() {
       this.isOpen = false
       this.$root.$emit('toggleNotifications')

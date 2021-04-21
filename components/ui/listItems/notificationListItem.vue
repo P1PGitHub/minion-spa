@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button
+    <div
       class="w-full flex items-start justify-start text-left space-x-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded p-2 cursor-pointer text-sm"
       @click="isOpen = !isOpen"
       @dblclick="dismiss"
@@ -26,12 +26,14 @@
         </p>
       </div>
 
-      <span
+      <button
         class="text-lg font-bold p-1 hover:text-red-600 dark:hover:text-red-400 -mt-2"
         v-if="!notif.is_dismissed"
-        >&times;</span
+        @click="dismiss"
       >
-    </button>
+        &times;
+      </button>
+    </div>
   </div>
 </template>
 
@@ -51,16 +53,15 @@ export default {
   },
   methods: {
     async dismiss() {
+      console.log('dismissing')
       if (this.notif.is_dismissed) {
         return
       }
-      this.$emit(
-        'dismiss',
-        await this.$store.dispatch(
-          'api/get',
-          `/notifications/${this.notif.id}/dismiss/`
-        )
+      let notifRes = await this.$store.dispatch(
+        'api/get',
+        `/notifications/${this.notif.id}/dismiss/`
       )
+      this.$emit('dismiss', notifRes)
     },
   },
 }

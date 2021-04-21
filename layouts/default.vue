@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-    <Navbar />
-    <NotificationSlideOver />
+    <Navbar ref="navbar" />
+    <NotificationSlideOver @updateNotifIcon="updateNotif" />
     <JournalEntryModal />
     <ModalConfirm />
     <Toast />
@@ -31,6 +31,11 @@ export default {
     return {
       compactNav: false,
     }
+  },
+  methods: {
+    updateNotif(val) {
+      this.$refs.navbar.updateNotifIcon(val)
+    },
   },
 }
 </script>
