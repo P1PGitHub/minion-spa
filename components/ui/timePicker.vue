@@ -3,7 +3,7 @@
     <div class="relative">
       <input
         type="text"
-        class="form-input w-full pl-10 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        class="rounded w-full pl-10 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
         @click="show"
         v-if="this.hour !== null"
         v-model="time"

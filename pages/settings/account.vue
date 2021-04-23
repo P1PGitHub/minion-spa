@@ -2,16 +2,18 @@
   <PageBody>
     <template v-slot:page-header>
       <SectionHeader text="Settings" />
-      <select
-        name="settings-page"
-        id="settings-page"
-        class="form-select bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-        @change="onSelectChange"
-        v-model="selectedPage"
-      >
-        <option value="application">Application</option>
-        <option value="account">Account</option>
-      </select>
+      <div class="w-40">
+        <select
+          name="settings-page"
+          id="settings-page"
+          class="select"
+          @change="onSelectChange"
+          v-model="selectedPage"
+        >
+          <option value="application">Application</option>
+          <option value="account">Account</option>
+        </select>
+      </div>
     </template>
     <template v-slot:page-content>Application Settings</template>
   </PageBody>

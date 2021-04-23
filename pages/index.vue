@@ -1,7 +1,7 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <SectionHeader text="Bello!" />
+      <SectionHeader text="Dashboard" bold size="lg" />
       <div
         class="bg-blue-600 text-white px-4 py-2 rounded border border-blue-600 space-x-2 flex items-center text-sm"
       >
@@ -17,15 +17,13 @@
     </template>
     <template v-slot:page-content>
       <FlexSection>
-        <div class="w-full md:w-1/2">
+        <div class="w-full md:w-1/2 space-y-4">
           <SolidSection class="w-full">
             <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
-                <SectionHeader :text="today.format('ddd MMM Do')" />
-                <Loading v-if="loadingLogs" />
-              </div>
+              <SectionHeader :text="today.format('ddd MMM Do')" />
 
               <div class="flex items-center space-x-2">
+                <Loading v-if="loadingLogs" />
                 <ActionButton
                   spacing="sm"
                   theme="hollow"
@@ -65,6 +63,29 @@
               >View All...</ButtonLink
             >
           </SolidSection>
+          <SolidSection>
+            <div class="flex items-center justify-between">
+              <SectionHeader text="Tasks to Complete" />
+              <Loading v-if="loadingTasks" />
+            </div>
+            <HeaderAside v-if="!loadingTasks && !tasks.length"
+              >Congrats! There's nothing for you to do here!</HeaderAside
+            >
+            <TaskListItem
+              v-for="task in tasks"
+              :key="task.id"
+              :project="task.project"
+              :task="task"
+              @reload="getTasks"
+            />
+            <ButtonLink
+              :link="{ name: 'projects' }"
+              spacing="sm"
+              theme="hollow"
+              class="w-full"
+              >View All...</ButtonLink
+            >
+          </SolidSection>
         </div>
 
         <div class="w-full md:w-1/2 space-y-4">
@@ -73,6 +94,9 @@
               <SectionHeader text="CSQR Drafts" />
               <Loading v-if="loadingDrafts" />
             </div>
+            <HeaderAside v-if="!loadingDrafts && !drafts.length"
+              >No CSQR drafts found.</HeaderAside
+            >
             <ReportListItem
               v-for="(draft, index) in drafts"
               :key="draft.id"
@@ -97,6 +121,9 @@
               <Loading v-if="loadingRecents" />
             </div>
 
+            <HeaderAside v-if="!loadingRecents && !recents.length"
+              >No recent CSQRs found.</HeaderAside
+            >
             <ReportListItem
               v-for="(recent, index) in recents"
               :key="recent.id"
@@ -130,6 +157,7 @@ import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
+import TaskListItem from '@/components/ui/listItems/taskListItem'
 import TimeEntry from '@/components/ui/timeEntry'
 export default {
   name: 'HomePage',
@@ -148,6 +176,7 @@ export default {
     ReportListItem,
     SectionHeader,
     SolidSection,
+    TaskListItem,
     TimeEntry,
   },
   data() {
@@ -155,11 +184,13 @@ export default {
       loadingDrafts: false,
       loadingLogs: false,
       loadingRecents: false,
+      loadingTasks: false,
       drafts: [],
       recents: [],
       staleReports: [],
       logs: [],
       logOrdering: 'ASC',
+      tasks: [],
       today: moment(),
     }
   },
@@ -176,7 +207,10 @@ export default {
     },
     getLogs() {
       this.loadingLogs = true
-      let ordering = localStorage.getItem('logOrdering')
+      let ordering = 'DESC'
+      if (process.client) {
+        ordering = localStorage.getItem('logOrdering')
+      }
       if (ordering) {
         this.logOrdering = ordering
       }
@@ -242,13 +276,22 @@ export default {
           }
         })
     },
+    getTasks() {
+      this.loadingTasks = true
+      this.$store.dispatch('api/get', '/projects/tasks/user/').then((tasks) => {
+        this.tasks = tasks
+        this.loadingTasks = false
+      })
+    },
     toggleLogOrder() {
       if (this.logOrdering == 'ASC') {
         this.logOrdering = 'DESC'
       } else {
         this.logOrdering = 'ASC'
       }
-      localStorage.setItem('logOrdering', this.logOrdering)
+      if (process.client0) {
+        localStorage.setItem('logOrdering', this.logOrdering)
+      }
       this.logs.reverse()
     },
   },
@@ -256,6 +299,7 @@ export default {
     this.getDrafts()
     this.getLogs()
     this.getRecents()
+    this.getTasks()
     this.$root.$on('updateEntries', () => {
       this.getLogs()
     })

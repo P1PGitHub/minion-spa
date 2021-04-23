@@ -1,7 +1,7 @@
 <template>
   <PageBody>
     <template v-slot:page-header>
-      <h1 class="text-xl">CSQR Search</h1>
+      <SectionHeader bold size="lg" text="CSQR Search" />
     </template>
     <template v-slot:page-content>
       <SolidSection>
@@ -21,12 +21,14 @@
           class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4"
         >
           <fieldset>
-            <label for="search-date-range-start" class="block">Date Range</label>
+            <label for="search-date-range-start" class="block"
+              >Date Range</label
+            >
             <v-date-picker
               color="blue"
               :is-dark="$colorMode.value == 'dark'"
               :max-date="new Date()"
-              :popover="{ visibility: 'click' }"
+              :popover="{ visibility: 'focus' }"
               title-position="left"
               is-range
               v-model="query.dates"
@@ -35,7 +37,7 @@
                 <div class="mt-2 flex items-center space-x-2">
                   <input
                     type="text"
-                    class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    class="rounded w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     id="search-date-range-start"
                     name="search-date-range-start"
                     :value="inputValue.start"
@@ -47,7 +49,7 @@
                   />
                   <input
                     type="text"
-                    class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    class="rounded w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                     id="search-date-range-end"
                     name="search-date-range-end"
                     :value="inputValue.end"
@@ -62,7 +64,7 @@
             <select
               name="search-author"
               id="search-author"
-              class="form-select bg-gray-100 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
+              class="select"
               v-model="query.author"
             >
               <option :value="null">All Authors</option>
@@ -81,7 +83,7 @@
             <select
               name="search-client"
               id="search-client"
-              class="form-select w-full bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+              class="select"
               v-model="query.client"
             >
               <option :value="null">All Companies</option>
@@ -99,7 +101,7 @@
               type="checkbox"
               name="search-include-drafts"
               id="search-include-drafts"
-              class="form-checkbox rounded h-8 w-8 bg-gray-200 dark:bg-gray-600 border-gray-600"
+              class="rounded h-8 w-8 bg-gray-200 dark:bg-gray-600 border-gray-600"
               v-model="query.drafts"
             />
             <label for="search-include-drafts" class="text-lg"
@@ -110,7 +112,7 @@
       </SolidSection>
       <SolidSection v-if="isLoading">
         <div class="flex items-center justify-center w-full">
-        <Loading size="xl" />
+          <Loading size="xl" />
         </div>
       </SolidSection>
       <SolidSection v-else-if="reports && reports.length">
@@ -144,7 +146,7 @@
 import moment from 'moment'
 
 import ActionButton from '@/components/ui/actionButton'
-import Loading from "@/components/common/loading"
+import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
 import SectionHeader from '@/components/ui/sectionHeader'

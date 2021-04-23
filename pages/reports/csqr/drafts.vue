@@ -2,7 +2,7 @@
   <PageBody>
     <template v-slot:page-header>
       <div class="flex items-center space-x-4">
-        <h1 class="text-xl">Team CSQR Reports</h1>
+        <SectionHeader bold size="lg" text="Team CSQR Reports" />
         <Loading v-if="isLoading" />
       </div>
       <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }" theme="hollow"

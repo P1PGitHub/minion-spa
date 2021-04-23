@@ -18,7 +18,7 @@
             <input
               type="text"
               placeholder="Jane"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img
@@ -34,7 +34,7 @@
             <input
               type="text"
               placeholder="Doe"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img src="@/assets/svg/other/boy.svg" alt="Last Name Face Icon" />
@@ -49,7 +49,7 @@
             <input
               type="text"
               placeholder="jane.doe@hello.com"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img src="@/assets/svg/other/mail.svg" alt="Email Icon" />
@@ -62,7 +62,7 @@
             <input
               type="password"
               placeholder="super-secure-password"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img src="@/assets/svg/other/keyhole.svg" alt="Password Icon" />
@@ -75,7 +75,7 @@
             <input
               type="password"
               placeholder="super-secure-password"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img src="@/assets/svg/other/keyhole.svg" alt="Password Icon" />
@@ -89,7 +89,7 @@
             <input
               type="text"
               placeholder="my-company"
-              class="form-input bg-gray-100 border border-gray-400 w-full pl-12"
+              class="rounded bg-gray-100 border border-gray-400 w-full pl-12"
             />
             <div class="absolute top-0 bottom-0 left-0 ml-3 flex items-center">
               <img

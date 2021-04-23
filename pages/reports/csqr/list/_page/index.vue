@@ -2,7 +2,7 @@
   <PageBody>
     <template v-slot:page-header>
       <div class="flex items-center space-x-4">
-        <h1 class="text-xl">Team CSQR Reports</h1>
+        <SectionHeader bold size="lg" text="Team CSQR Reports" />
         <Loading v-if="isLoading" />
       </div>
       <ButtonLink fontSize="sm" :link="{ name: 'reports-csqr' }" theme="hollow"
@@ -56,7 +56,7 @@ import ButtonLink from '@/components/ui/buttonLink'
 import Loading from '@/components/common/loading'
 import PageBody from '@/components/ui/pageBody'
 import ReportListItem from '@/components/ui/reportListItem'
-import SectionHeader from "@/components/ui/sectionHeader"
+import SectionHeader from '@/components/ui/sectionHeader'
 import SolidSection from '@/components/ui/solidSection'
 export default {
   name: 'CSQRList',

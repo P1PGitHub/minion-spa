@@ -206,7 +206,7 @@ export default {
         if (choice) {
           let refString = `${this.$store.state.team.team.slug}/reports/csqr/${this.report.id}.xlsx`
           let ref = this.$fireStorage.ref().child(refString)
-          let downloadurl = ref.getDownloadURL().then((url) => {
+          ref.getDownloadURL().then((url) => {
             const link = document.createElement('a')
             link.href = url
             link.download = `${this.report.id}.xlsx`

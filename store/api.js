@@ -1,8 +1,9 @@
 import moment from 'moment'
 
 const getDefaultState = () => {
-  let baseURL =
-    'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
+  // let baseURL =
+  //   'https://enigmatic-woodland-37685.herokuapp.com/https://minion-api-dev.herokuapp.com'
+  let baseURL = `http://${location.host.split(':')[0]}:8000`
   if (process.env.NODE_ENV == 'production') {
     baseURL = 'https://minion-api.herokuapp.com'
   }
@@ -10,14 +11,18 @@ const getDefaultState = () => {
     accessToken: null,
     baseURL,
     refreshToken: null,
-    accessExpiry: moment().add(5, 'minutes'),
-    refreshExpiry: moment().add(1, 'days'),
+    accessExpiry: moment().add(1, 'days'),
+    refreshExpiry: moment().add(7, 'days'),
+    isLoggingIn: false,
   }
 }
 
-export const state = getDefaultState()
+export const state = () => getDefaultState()
 
 export const mutations = {
+  setLoggingIn(state, val) {
+    state.isLoggingIn = val
+  },
   setAccessToken(state, val) {
     state.accessToken = val
   },
@@ -25,10 +30,10 @@ export const mutations = {
     state.refreshToken = val
   },
   updateAccessExpiry(state) {
-    state.accessExpiry = moment().add(5, 'minutes')
+    state.accessExpiry = moment().add(1, 'days')
   },
   updateRefreshExpiry(state) {
-    state.refreshExpiry = moment().add(1, 'days')
+    state.refreshExpiry = moment().add(7, 'days')
   },
   reset(state) {
     Object.assign(state, getDefaultState())
@@ -40,15 +45,27 @@ export const actions = {
   setUpdateAccessToken(context, token) {
     context.commit('setAccessToken', token)
     context.commit('updateAccessExpiry')
+    this.$cookies.set('accessToken', JSON.stringify(token), {
+      path: '/',
+      maxAge: 60 * 60 * 24,
+      sameSite: true,
+    })
   },
   setUpdateRefreshToken(context, token) {
     context.commit('setRefreshToken', token)
     context.commit('updateRefreshExpiry', token)
+    this.$cookies.set('refreshToken', JSON.stringify(token), {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: true,
+    })
   },
   async refresh(context) {
     if (context.state.refreshToken) {
-      let headers = new Headers()
-      headers.append('Content-Type', 'application/json')
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+        'Content-Type': 'application/json',
+      }
 
       let body = JSON.stringify({
         refresh: context.state.refreshToken,
@@ -68,6 +85,7 @@ export const actions = {
         if (refreshResponse.ok) {
           let refreshObj = await refreshResponse.json()
           context.dispatch('setUpdateAccessToken', refreshObj.access)
+          context.dispatch('setUpdateRefreshToken', refreshObj.refresh)
           return refreshObj.access
         } else {
           return null
@@ -86,8 +104,9 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let requestOptions = {
         method: 'DELETE',
@@ -114,8 +133,9 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -142,9 +162,10 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
-      headers.append('Content-Type', 'application/json')
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+        'Content-Type': 'application/json',
+      }
 
       let requestOptions = {
         method: 'POST',
@@ -172,9 +193,10 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
-      headers.append('Content-Type', 'application/json')
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+        'Content-Type': 'application/json',
+      }
 
       let requestOptions = {
         method: 'PUT',
@@ -203,8 +225,9 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -233,8 +256,9 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -263,8 +287,9 @@ export const actions = {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let requestOptions = {
         method: 'GET',
@@ -289,8 +314,9 @@ export const actions = {
     }
   },
   async login(context, credentials) {
-    let headers = new Headers()
-    headers.append('Content-Type', 'application/json')
+    let headers = {
+      'Content-Type': 'application/json',
+    }
 
     let raw = JSON.stringify(credentials)
 
@@ -322,13 +348,46 @@ export const actions = {
       return null
     }
   },
+  logout() {
+    this.$cookies.remove('refreshToken', { path: '/' })
+    this.$cookies.remove('accessToken', { path: '/' })
+  },
+  async loginFromCookies(context) {
+    context.commit('startLoading', {}, { root: true })
+    if (!this.$cookies.get('refreshToken')) {
+      return false
+    }
+    try {
+      context.dispatch(
+        'setUpdateRefreshToken',
+        this.$cookies.get('refreshToken')
+      )
+      await context.dispatch('refresh')
+      let account = await context.dispatch('getAccount')
+      let team = await context.dispatch('getTeam')
+      context.commit('account/setAccount', account, { root: true })
+      context.commit('team/setTeam', team, { root: true })
+      await Promise.all([
+        context.dispatch('project/getProjectStatusChoices', {}, { root: true }),
+        context.dispatch('project/getUpdateStatusChoices', {}, { root: true }),
+        context.dispatch('team/getMembers', {}, { root: true }),
+        context.dispatch('team/getCompanies', {}, { root: true }),
+      ])
+      context.commit('stopLoading', {}, { root: true })
+      return true
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  },
   async sign(context, data) {
     if (context.state.accessToken) {
       if (context.state.accessExpiry < moment()) {
         await context.dispatch('refresh')
       }
-      let headers = new Headers()
-      headers.append('Authorization', 'Bearer ' + context.state.accessToken)
+      let headers = {
+        Authorization: 'Bearer ' + context.state.accessToken,
+      }
 
       let formdata = new FormData()
       formdata.append('file', data.file, 'test.png')

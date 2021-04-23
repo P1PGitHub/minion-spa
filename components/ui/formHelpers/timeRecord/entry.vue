@@ -13,7 +13,7 @@
         <v-date-picker
           color="blue"
           :is-dark="$colorMode.value == 'dark'"
-          :popover="{ visibility: 'click' }"
+          :popover="{ visibility: 'focus' }"
           title-position="left"
           is-range
           mode="datetime"
@@ -24,7 +24,7 @@
             <div class="mt-2 flex items-center space-x-2">
               <input
                 type="text"
-                class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                class="rounded w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 :id="'search-date-range-start' + `-${index}`"
                 :name="'search-date-range-start' + `-${index}`"
                 :value="inputValue.start"
@@ -36,7 +36,7 @@
               />
               <input
                 type="text"
-                class="form-input w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                class="rounded w-1/2 bg-gray-100 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 :id="'search-date-range-end' + `-${index}`"
                 :name="'search-date-range-end' + `-${index}`"
                 :value="inputValue.end"
@@ -53,7 +53,7 @@
                 name="shift-employees"
                 id="shift-employees"
                 multiple
-                class="form-multiselect bg-gray-100 w-full h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                class="select"
                 v-model="value.users"
                 @click="update"
               >
@@ -71,7 +71,7 @@
               <textarea
                 name="shift-start-time"
                 id="shift-start-time"
-                class="form-textarea bg-gray-100 w-full h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                class="rounded bg-gray-100 w-full h-32 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 placeholder="AM Shift"
                 v-model="value.notes"
                 @input="update"

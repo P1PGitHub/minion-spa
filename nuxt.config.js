@@ -1,15 +1,14 @@
 import redirectSSL from 'redirect-ssl'
 export default {
   /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
-  mode: 'universal',
-  /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
+  ssr: false,
+  server: {
+    host: '0.0.0.0',
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -62,12 +61,7 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    [
-      '@nuxtjs/color-mode',
-      {
-        classSuffix: '',
-      },
-    ],
+    '@nuxtjs/color-mode',
     [
       '@nuxtjs/pwa',
       {
@@ -76,12 +70,16 @@ export default {
           short_name: 'Minion',
           description:
             "Priority1 POS's key to staying organized and provided plenty of inside joke laughs.",
-          theme_color: '#81e6d9',
+          theme_color: '#0F172A',
         },
       },
     ],
+    '@nuxt/postcss8',
     '@nuxtjs/tailwindcss',
   ],
+  colorMode: {
+    classSuffix: '',
+  },
   /*
    ** Nuxt.js modules
    */
@@ -115,6 +113,7 @@ export default {
         },
       },
     ],
+    'cookie-universal-nuxt',
   ],
   serverMiddleware: [
     redirectSSL.create({

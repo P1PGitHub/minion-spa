@@ -1,20 +1,17 @@
 <template>
   <nav
-    class="flex justify-between items-center w-full p-4 text-gray-800 fixed top-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 dark:text-white transition-all duration-300"
-    :class="{ 'py-2': compact }"
+    class="flex justify-between items-center w-full px-4 py-2 text-gray-800 fixed top-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 dark:text-white transition-all duration-300"
     id="navbar"
   >
     <div class="flex items-center space-x-4">
       <nuxt-link
-        class="font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300"
-        :class="{ 'text-lg': compact, 'text-2xl': !compact }"
+        class="font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 text-lg"
         to="/"
         id="brand"
       >
         <inline-svg
           :src="require('@/assets/svg/other/minion_logo.svg')"
-          class="transition-all duration-300"
-          :class="{ 'h-5 w-auto': compact, 'h-6 w-auto': !compact }"
+          class="transition-all duration-300 h-5 w-auto"
           v-if="$colorMode.value !== 'dark'"
         ></inline-svg>
         <inline-svg
@@ -22,7 +19,11 @@
           class="h-6 w-6"
           v-else
         ></inline-svg>
-        <span>Minion</span></nuxt-link
+        <span
+          class="transition-opacity duration-300 ease-in-out"
+          :class="{ 'opacity-0  md:opacity-100': isOpen }"
+          >Minion</span
+        ></nuxt-link
       >
       <Loading v-if="$store.state.isLoading" />
     </div>
@@ -41,8 +42,9 @@
         </span>
         <span>Journal</span>
       </nuxt-link>
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        :to="{ name: 'projects' }"
       >
         <span>
           <inline-svg
@@ -52,7 +54,7 @@
           ></inline-svg>
         </span>
         <span>Projects</span>
-      </li>
+      </nuxt-link>
       <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
         :to="{ name: 'reports-csqr' }"
@@ -66,17 +68,18 @@
         </span>
         <span>CSQR</span>
       </nuxt-link>
-      <li
+      <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        to="/resources/"
       >
         <span>
           <inline-svg
-            :src="require('@/assets/svg/other/user-list.svg')"
+            :src="require('@/assets/svg/file/box.svg')"
             fill="fill-current"
             class="h-6 w-6 text-gray-800 dark:text-white"
           ></inline-svg>
         </span>
-      </li>
+      </nuxt-link>
       <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
         :to="{ name: 'settings' }"
@@ -89,8 +92,10 @@
           ></inline-svg>
         </span>
       </nuxt-link>
-      <li
+      <button
+        type="button"
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        @click="$root.$emit('toggleNotifications')"
       >
         <span class="relative">
           <inline-svg
@@ -101,30 +106,62 @@
           <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0">
             <div
               class="w-full h-full bg-teal-300 rounded-full animate-ping"
+              v-if="showNotifIcon"
             ></div>
           </div>
         </span>
-      </li>
+      </button>
     </ul>
-    <button
-      type="button"
-      class="md:hidden p-1 rounded bg-white transition-transform duration-300 ease-in-out dark:bg-gray-700 dark:bg-gray-800"
+    <div
+      class="flex items-center space-x-2 transition-transform duration-300 ease-in-out md:hidden"
       :class="{ 'transform -translate-x-40': isOpen }"
-      @click="toggle"
-      id="sidebar-button"
     >
-      <inline-svg
-        :src="require('@/assets/svg/other/menu-cake.svg')"
-        fill="fill-current"
-        class="h-6 w-6 text-gray-800 dark:text-white"
-      ></inline-svg>
-    </button>
+      <button
+        type="button"
+        class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+        @click="openNotifications"
+      >
+        <span class="relative">
+          <inline-svg
+            :src="require('@/assets/svg/other/notifications.svg')"
+            fill="fill-current"
+            class="h-6 w-6 text-gray-800 dark:text-white"
+          ></inline-svg>
+          <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0">
+            <div
+              class="w-full h-full bg-teal-300 rounded-full animate-ping"
+              v-if="showNotifIcon"
+            ></div>
+          </div>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="p-1 rounded bg-white dark:bg-gray-800"
+        @click="toggle"
+        id="sidebar-button"
+      >
+        <inline-svg
+          :src="require('@/assets/svg/other/menu-cake.svg')"
+          fill="fill-current"
+          class="h-6 w-6 text-gray-800 dark:text-white"
+        ></inline-svg>
+      </button>
+    </div>
+
     <nav
-      class="md:hidden fixed top-0 right-0 bottom-0 overflow-y-scroll bg-white p-4 transition-transform duration-300 ease-in-out z-30 shadow-lg dark:bg-gray-900"
+      class="md:hidden fixed top-0 right-0 bottom-0 overflow-y-auto bg-white p-4 transition-transform duration-300 ease-in-out z-30 shadow-lg dark:bg-gray-900"
       :class="{ 'transform translate-x-40': !isOpen }"
       id="sidebar"
     >
       <ul class="space-y-4 text-xl">
+        <nuxt-link
+          class="font-bold flex items-center space-x-4 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-300 text-lg"
+          to="/"
+        >
+          <span>Minion</span></nuxt-link
+        >
+        <Loading v-if="$store.state.isLoading" />
         <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
           :to="{ name: 'journal' }"
@@ -138,8 +175,9 @@
           </span>
           <span>Journal</span>
         </nuxt-link>
-        <li
+        <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+          :to="{ name: 'projects' }"
         >
           <span>
             <inline-svg
@@ -149,7 +187,7 @@
             ></inline-svg>
           </span>
           <span>Projects</span>
-        </li>
+        </nuxt-link>
         <nuxt-link
           class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
           :to="{ name: 'reports-csqr' }"
@@ -165,17 +203,18 @@
         </nuxt-link>
 
         <div class="flex items-center">
-          <li
+          <nuxt-link
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+            to="/resources/"
           >
             <span>
               <inline-svg
-                :src="require('@/assets/svg/other/user-list.svg')"
+                :src="require('@/assets/svg/file/box.svg')"
                 fill="fill-current"
                 class="h-6 w-6 text-gray-800 dark:text-white"
               ></inline-svg>
             </span>
-          </li>
+          </nuxt-link>
           <nuxt-link
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
             :to="{ name: 'settings' }"
@@ -188,24 +227,6 @@
               ></inline-svg>
             </span>
           </nuxt-link>
-          <li
-            class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
-          >
-            <span class="relative">
-              <inline-svg
-                :src="require('@/assets/svg/other/notifications.svg')"
-                fill="fill-current"
-                class="h-6 w-6 text-gray-800 dark:text-white"
-              ></inline-svg>
-              <div
-                class="w-2 h-2 bg-blue-500 rounded-full absolute top-0 right-0"
-              >
-                <div
-                  class="w-full h-full bg-teal-300 rounded-full animate-ping"
-                ></div>
-              </div>
-            </span>
-          </li>
         </div>
       </ul>
     </nav>
@@ -221,8 +242,8 @@ export default {
   },
   data() {
     return {
-      compact: false,
       isOpen: false,
+      showNotifIcon: true,
     }
   },
   watch: {
@@ -231,15 +252,17 @@ export default {
     },
   },
   methods: {
+    updateNotifIcon(val) {
+      this.showNotifIcon = val
+    },
+    openNotifications() {
+      this.isOpen = false
+      this.$root.$emit('toggleNotifications')
+    },
     toggle() {
       this.isOpen = !this.isOpen
+      this.$root.$emit('closeNotifications')
     },
-  },
-  created() {
-    setTimeout(() => {
-      this.compact = true
-      this.$emit('compact')
-    }, 5000)
   },
 }
 </script>

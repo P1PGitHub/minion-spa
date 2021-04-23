@@ -2,9 +2,7 @@
   <PageBody>
     <template v-slot:page-header v-if="report">
       <h1 class="text-xl md:space-x-2">
-        <span>
-          CSQR Review
-        </span>
+        <span> CSQR Review </span>
         <span
           v-if="report"
           class="block md:inline text-base text-gray-700 dark:text-gray-300"
@@ -45,7 +43,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.billable"
                   disabled
                 />
@@ -54,7 +52,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.completed"
                   disabled
                 />
@@ -63,7 +61,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.tested"
                   disabled
                 />
@@ -74,7 +72,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.pictures"
                   disabled
                 />
@@ -83,7 +81,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.reviewed"
                   disabled
                 />
@@ -92,7 +90,7 @@
               <div class="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  class="form-checkbox border-gray-600 rounded-full"
+                  class="border-gray-600 rounded-full"
                   v-model="report.satisfied"
                   disabled
                 />
@@ -103,9 +101,7 @@
         </SolidSection>
       </FlexSection>
       <SolidSection v-if="report.time_records.length">
-        <h2 class="text-xl text-blue-700 dark:text-blue-300">
-          Time Records
-        </h2>
+        <h2 class="text-xl text-blue-700 dark:text-blue-300">Time Records</h2>
         <TimeRecordView
           v-for="(record, index) in report.time_records"
           :key="record.id"
@@ -123,7 +119,7 @@
               type="checkbox"
               name="count-view"
               id="count-view"
-              class="form-checkbox rounded-full border-gray-600"
+              class="rounded-full border-gray-600"
               v-model="inventoryCountView"
             />
             <label for="count-view">Count View</label>
@@ -158,7 +154,7 @@
             type="checkbox"
             name="client-agreement"
             id="client-agreement"
-            class="form-checkbox rounded-full border-gray-600 mt-1"
+            class="rounded-full border-gray-600 mt-1"
             v-model="clientAgreement"
             :disabled="clientAgreement"
           />
@@ -208,13 +204,13 @@
 <script>
 var slugify = require('slugify')
 import moment from 'moment'
-import ActionButton from "@/components/ui/actionButton"
+import ActionButton from '@/components/ui/actionButton'
 import AgreementClause from '@/components/ui/agreementClause'
 import ButtonLink from '@/components/ui/buttonLink'
 import HeaderAside from '@/components/ui/headerAside'
 import InventoryConsolidatedList from '@/components/ui/inventoryConsolidatedList'
 import InventoryListHeader from '@/components/ui/inventoryListHeader'
-import InventoryListItem from '@/components/ui/inventoryListItem'
+import InventoryListItem from '@/components/ui/listItems/inventoryListItem'
 import DashedSection from '@/components/ui/dashedSection'
 import FlexSection from '@/components/ui/flexSection'
 import PageBody from '@/components/ui/pageBody'
