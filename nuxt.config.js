@@ -84,8 +84,8 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/color-mode',
     [
-      '@nuxtjs/color-mode',
       '@nuxtjs/firebase',
       {
         config: {
