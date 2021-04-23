@@ -17,7 +17,7 @@
         >
           <div class="flex items-center space-x-2">
             <inline-svg :src="icon" class="h-8 w-8" v-if="icon" />
-            <h1 class="text-xl font-semibold">{{ title }}</h1>
+            <h1 class="text-xl font-semibold truncate">{{ title }}</h1>
           </div>
           <h4
             class="text-gray-600 dark:text-gray-300 md:text-lg ml-10"

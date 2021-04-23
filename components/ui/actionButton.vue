@@ -18,7 +18,7 @@
         theme == 'hollow',
       'text-white border border-white hover:bg-gray-400 hover:bg-opacity-25 dark:border-gray-800 dark:text-gray-800 dark:hover:bg-gray-200':
         theme == 'hollow-light',
-      ' bg-red-200 text-red-800 border border-red-300 hover:bg-red-300':
+      ' bg-red-200 text-red-800 border border-red-200 hover:border-red-300 hover:bg-red-300 dark:bg-red-600 dark:text-white dark:border-red-600 dark:hover:bg-red-700 dark:hover:border-red-700':
         theme == 'danger',
     }"
     :disabled="disabled"

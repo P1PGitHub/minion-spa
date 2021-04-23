@@ -66,7 +66,7 @@
             />
             <div
               class="w-full text-black dark:text-white bg-gray-200 dark:bg-gray-700 border border-gray-400 dark:border-gray-700 rounded p-2 px-4 space-y-2"
-              v-if="!current.length"
+              v-if="!current"
             >
               No notifications to show today.
             </div>
@@ -143,7 +143,7 @@ export default {
       this.dismissed = this.dismissed.sort(
         (a, b) => b.created_at > a.created_at
       )
-      if (this.current.length) {
+      if (this.current) {
         this.$emit('updateNotifIcon', true)
       } else {
         this.$emit('updateNotifIcon', false)
@@ -153,7 +153,7 @@ export default {
       this.loadingCurrent = true
       this.current = await this.$store.dispatch('api/get', '/notifications/')
       this.loadingCurrent = false
-      if (this.current.length) {
+      if (this.current) {
         this.$emit('updateNotifIcon', true)
       } else {
         this.$emit('updateNotifIcon', false)

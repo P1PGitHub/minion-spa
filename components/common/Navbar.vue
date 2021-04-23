@@ -70,7 +70,7 @@
       </nuxt-link>
       <nuxt-link
         class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
-        :to="{ name: 'resources' }"
+        to="/resources/"
       >
         <span>
           <inline-svg
@@ -205,7 +205,7 @@
         <div class="flex items-center">
           <nuxt-link
             class="flex items-center space-x-2 py-1 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
-            :to="{ name: 'resources' }"
+            to="/resources/"
           >
             <span>
               <inline-svg
