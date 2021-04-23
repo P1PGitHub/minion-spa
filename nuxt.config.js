@@ -61,7 +61,6 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/color-mode',
     [
       '@nuxtjs/pwa',
       {
@@ -86,6 +85,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     [
+      '@nuxtjs/color-mode',
       '@nuxtjs/firebase',
       {
         config: {
