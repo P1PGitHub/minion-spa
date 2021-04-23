@@ -26,13 +26,17 @@
             <HeaderAside v-if="!loadingProjects && !projects.length"
               >No projects to show here.</HeaderAside
             >
-            <ButtonLink
+            <ActionButton
               :link="{ name: 'projects' }"
               spacing="sm"
               theme="hollow"
               class="w-full"
-              >View More...</ButtonLink
+              v-if="projects.length > 5"
+              @click="limitProjects = !limitProjects"
             >
+              <span v-if="limitProjects">View More...</span>
+              <span v-else>View Less...</span>
+            </ActionButton>
           </SolidSection>
           <SolidSection>
             <div class="flex items-center justify-between">
@@ -49,13 +53,6 @@
               :task="task"
               @reload="getTasks"
             />
-            <ButtonLink
-              :link="{ name: 'projects' }"
-              spacing="sm"
-              theme="hollow"
-              class="w-full"
-              >View All...</ButtonLink
-            >
           </SolidSection>
         </div>
         <div class="w-full md:w-1/2 space-y-4">
@@ -77,20 +74,12 @@
                 spacing="sm"
                 theme="hollow"
                 class="w-full"
+                v-if="updates.length > 5"
                 @click="limitUpdates = !limitUpdates"
               >
                 <span v-if="limitUpdates">View More...</span>
                 <span v-else>View Less...</span>
               </ActionButton>
-              <ButtonLink
-                spacing="sm"
-                theme="hollow"
-                v-if="!limitUpdates"
-                :link="{ name: 'projects' }"
-                class="ml-2"
-              >
-                <span class="whitespace-nowrap">View All</span>
-              </ButtonLink>
             </div>
           </SolidSection>
           <SolidSection>
@@ -99,7 +88,7 @@
               <Loading v-if="loadingTeamProjects" />
             </div>
             <ProjectListItem
-              v-for="project in teamProjects"
+              v-for="project in limitedTeamProjectArray"
               :key="project.id"
               :project="project"
               @reload="getTeamProjects"
@@ -108,13 +97,25 @@
               >Seems like your team isn't working on anything
               currently.</HeaderAside
             >
-            <ButtonLink
-              :link="{ name: 'projects' }"
-              spacing="sm"
-              theme="hollow"
-              class="w-full"
-              >View More...</ButtonLink
-            >
+            <div class="flex items-center space-x-2">
+              <ActionButton
+                spacing="sm"
+                theme="hollow"
+                v-if="teamProjects.length > 5"
+              >
+                <span class="whitespace-nowrap px-4">View All</span>
+              </ActionButton>
+              <ActionButton
+                spacing="sm"
+                theme="hollow"
+                class="w-full"
+                v-if="teamProjects.length > 5"
+                @click="limitTeamProjects = !limitTeamProjects"
+              >
+                <span v-if="limitTeamProjects">View More...</span>
+                <span v-else>View Less...</span>
+              </ActionButton>
+            </div>
           </SolidSection>
         </div>
       </FlexSection>
@@ -163,6 +164,7 @@ export default {
       limitProjects: true,
       limitUpdates: true,
       loadingProjects: false,
+      limitTeamProjects: false,
       loadingTasks: false,
       loadingTeamProjects: false,
       loadingUpdates: false,
@@ -178,6 +180,13 @@ export default {
         return this.projects.slice(0, 5)
       } else {
         return this.projects
+      }
+    },
+    limitedTeamProjectArray() {
+      if (this.limitTeamProjects) {
+        return this.teamProjects.slice(0, 5)
+      } else {
+        return this.teamProjects
       }
     },
     limitedUpdateArray() {
@@ -206,7 +215,7 @@ export default {
     getTeamProjects() {
       this.loadingTeamProjects = true
       this.$store.dispatch('api/get', '/projects/').then((projectsResponse) => {
-        this.teamProjects = projectsResponse.results.slice(0, 5)
+        this.teamProjects = projectsResponse.results.slice(0, 10)
         this.loadingTeamProjects = false
       })
     },
