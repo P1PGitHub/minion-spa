@@ -5,7 +5,8 @@
     ref="modal"
     @close="tabIndex = -1"
     @open="tabIndex = 0"
-    ><form @submit.prevent class="mt-4 space-y-4">
+  >
+    <form @submit.prevent class="mt-4 space-y-4">
       <fieldset class="space-y-2">
         <label
           for="file-input"
@@ -183,15 +184,15 @@ import ActionButton from '@/components/ui/actionButton'
 import Loading from '@/components/common/loading'
 import Modal from '@/components/ui/modal'
 export default {
-  name: 'ProjectFileUploadModal',
+  name: 'FileUploadModal',
   components: {
     ActionButton,
     Loading,
     Modal,
   },
   props: {
-    projectID: {
-      type: Number,
+    baseRef: {
+      type: Object,
       required: true,
     },
   },
@@ -213,16 +214,10 @@ export default {
         this.reset()
       }
     },
-    value() {
-      this.$emit('input', this.value)
-    },
   },
   methods: {
     close() {
       this.$refs.modal.close()
-    },
-    open() {
-      this.$refs.modal.open()
     },
     onChange() {
       this.files = []
@@ -231,9 +226,8 @@ export default {
         this.files.push({ file, state: 'PAUSED', progress: 0.0 })
       })
     },
-    removeFile(index) {
-      let removedFile = this.files.splice(index, 1)[0]
-      this.totalFileSize -= removedFile.file.size
+    open() {
+      this.$refs.modal.open()
     },
     reset() {
       this.$refs.fileInput.value = ''
@@ -243,19 +237,15 @@ export default {
     uploadFiles() {
       this.isLoading = true
       const uploadTasks = []
-      const baseRef = `${this.$store.state.team.team.slug}/projects/${this.projectID}/files/`
       this.files.forEach((file) => {
         uploadTasks.push(
-          this.$fireStorage
-            .ref()
-            .child(baseRef + file.file.name)
-            .put(file.file, {
-              customMetadata: {
-                userID: this.$store.state.account.account.id,
-                userFirstName: this.$store.state.account.account.first_name,
-                userLastName: this.$store.state.account.account.last_name,
-              },
-            })
+          this.baseRef.child(file.file.name).put(file.file, {
+            customMetadata: {
+              userID: this.$store.state.account.account.id,
+              userFirstName: this.$store.state.account.account.first_name,
+              userLastName: this.$store.state.account.account.last_name,
+            },
+          })
         )
       })
       uploadTasks.forEach((task, index) => {
@@ -272,21 +262,6 @@ export default {
           () => {
             this.files[index].state = 'COMPLETED'
             let isComplete = true
-            this.$store.dispatch('api/post', {
-              url: `/projects/${this.projectID}/updates/`,
-              data: {
-                title: `${
-                  this.$store.state.account.account.first_name
-                } ${this.$store.state.account.account.last_name.substring(
-                  0,
-                  1
-                )} has uploaded file '${
-                  this.files[index].file.name
-                }' and added it to the project.`,
-                project: this.projectID,
-                status: 'REMARK',
-              },
-            })
             this.files.forEach((file) => {
               isComplete = isComplete && file.state === 'COMPLETED'
             })
